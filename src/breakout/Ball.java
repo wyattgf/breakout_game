@@ -28,6 +28,9 @@ public class Ball extends Circle{
     this.setFill(Color.BLACK);
   }
 
+  /**
+   * This method moves a Ball object to the center of the screen
+   */
   public void moveToCenter() {
     this.setCenterX(screenWidth/2.0);
     this.setCenterY(screenHeight/2.0);
@@ -37,10 +40,18 @@ public class Ball extends Circle{
     this.setCenterY(this.getCenterY() + mySpeed * elapsedTime);
   }
 
+  /**
+   * This method returns the mySpeed instance variable of a Ball
+   * @return int representing the mySpeed of a Ball object
+   */
   public int getSpeed(){
     return mySpeed;
   }
 
+  /**
+   * This method sets mySpeed of a Ball to the given parameter
+   * @param speed int representing desired speed to set mySpeed to
+   */
   public void setSpeed(int speed){
     mySpeed = speed;
   }
