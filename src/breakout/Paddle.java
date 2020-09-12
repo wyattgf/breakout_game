@@ -9,23 +9,33 @@ import javafx.scene.paint.Paint;
 
 public class Paddle extends Rectangle {
   //constants
-  private static final double BLOCK_HEIGHT = 1;
-  private static final double INITIAL_WIDTH = 5;
-  private static final double INITIAL_X = 50;
-  private static final double INITIAL_Y = 50;
+  private static final double BLOCK_HEIGHT = 50;
+  private static final double INITIAL_WIDTH = 150;
+  private static final double INITIAL_X = 0;
+  private static final double INITIAL_Y = 0;
   private static final int INITIAL_PADDLE_SPEED = 5;
   //instance variables
   private int mySpeed;
+  private double myWidth;
   private int screenWidth;
+  private int screenHeight;
 
-  public Paddle(int screenWidth){
+  public Paddle(int screenWidth, int screenHeight){
     super(INITIAL_X,INITIAL_Y,INITIAL_WIDTH,BLOCK_HEIGHT);
+    moveToCenter();
     mySpeed = INITIAL_PADDLE_SPEED;
     this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
     this.setFill(Color.BLACK);
   }
 
+  private void moveToCenter() {
+    this.setX(screenWidth/2.0 - myWidth/2.0);
+    this.setY(2.0/3*screenHeight);
+  }
+
   public void changeWidth(double newWidth){
+    myWidth = newWidth;
     this.setWidth(newWidth);
   }
 
