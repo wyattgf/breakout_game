@@ -27,7 +27,7 @@ public class Paddle extends Rectangle {
     this.setFill(Color.BLACK);
   }
 
-  private void moveToCenter() {
+  public void moveToCenter() {
     this.setX(screenWidth/2.0 - myWidth/2.0);
     this.setY(2.0/3*screenHeight);
   }
@@ -52,4 +52,5 @@ public class Paddle extends Rectangle {
       movePaddle();
     }
   }
+
 }

@@ -80,7 +80,13 @@ public class Game extends Application {
     switch (code) {
       case LEFT -> myPaddle.moveLeft();
       case RIGHT -> myPaddle.moveRight();
+      case R -> restPositions();
     }
+  }
+
+  private void restPositions() {
+    myPaddle.moveToCenter();
+    myBall.moveToCenter();
   }
 
 

@@ -28,7 +28,7 @@ public class Ball extends Circle{
     this.setFill(Color.BLACK);
   }
 
-  private void moveToCenter() {
+  public void moveToCenter() {
     this.setCenterX(screenWidth/2.0);
     this.setCenterY(screenHeight/2.0);
   }
