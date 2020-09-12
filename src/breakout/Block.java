@@ -10,15 +10,15 @@ import javafx.scene.paint.Paint;
  */
 public class Block extends Rectangle {
   //constants
-  private static final int BLOCK_WIDTH = 1;
-  private static final int BLOCK_HEIGHT = 1;
+  private static final double BLOCK_WIDTH = 1;
+  private static final double BLOCK_HEIGHT = 1;
   //instance variables
   private int myDurability;
   private Paint myColor;
 
-  public Block(int xPos, int yPos, int durability ){
+  public Block(double xPos, double yPos, int myDurability ){
     super(xPos,yPos,BLOCK_WIDTH,BLOCK_HEIGHT);
-    myDurability = durability;
+    this.myDurability = myDurability;
     setColor();
   }
 
