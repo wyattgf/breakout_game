@@ -1,8 +1,5 @@
 package breakout;
 
-import javafx.scene.paint.Paint;
-
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,10 +19,11 @@ public class Paddle extends Rectangle {
 
   public Paddle(int screenWidth, int screenHeight){
     super(INITIAL_X,INITIAL_Y,INITIAL_WIDTH,BLOCK_HEIGHT);
-    moveToCenter();
     mySpeed = INITIAL_PADDLE_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.myWidth = INITIAL_WIDTH;
+    moveToCenter();
     this.setFill(Color.BLACK);
   }
 

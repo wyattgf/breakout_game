@@ -20,7 +20,7 @@ import javafx.util.Duration;
 public class Game extends Application {
   public static final String TITLE = "Breakout JavaFX";
   public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 800;
+  public static final int SCREEN_HEIGHT = 400;
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final Paint BACKGROUND = Color.AZURE;
@@ -30,7 +30,7 @@ public class Game extends Application {
   // some things needed to remember during game
   private Scene myScene;
   private Paddle myPaddle;
-  //private Ball myBall;
+  private Ball myBall;
 
 
 
@@ -57,7 +57,9 @@ public class Game extends Application {
     // create one top level collection to organize the things in the scene
     Group root = new Group();
     myPaddle = new Paddle(SCREEN_WIDTH,SCREEN_HEIGHT);
+    myBall = new Ball(SCREEN_WIDTH,SCREEN_HEIGHT);
     root.getChildren().add(myPaddle);
+    root.getChildren().add(myBall);
     // create a place to see the shapes
     Scene scene = new Scene(root, width, height, background);
     // respond to input
@@ -70,7 +72,7 @@ public class Game extends Application {
   // - collisions, did things intersect and, if so, what should happen
   // - goals, did the game or level end?
   void step (double elapsedTime) {
-
+    myBall.moveBall(elapsedTime);
   }
 
 
