@@ -97,7 +97,7 @@ The objective of flying through the blocks was very interesting. It gave the bre
 
    * Method: checkRemainingHits (checks to see how many hits a block has remaining before it disappears)
 
- * Class 5: BlockReader
+ * Class 5: FileReader
    * Purpose: Reads in the text file and interprets the block configuration to be laid out in the initialization of the game
 
    * Method: readLine (reads a line from the text file to determine the block properties including coordinate positioning, type and size of block)
