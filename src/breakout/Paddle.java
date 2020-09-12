@@ -53,4 +53,12 @@ public class Paddle extends Rectangle {
     }
   }
 
+  public int getSpeed(){
+    return mySpeed;
+  }
+
+  public void setSpeed(int speed){
+    mySpeed = speed;
+  }
+
 }

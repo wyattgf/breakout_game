@@ -30,7 +30,9 @@ public class Game extends Application {
   // some things needed to remember during game
   private Scene myScene;
   private Paddle myPaddle;
+  private int paddleSpeed;
   private Ball myBall;
+  private int ballSpeed;
 
 
 
@@ -81,6 +83,20 @@ public class Game extends Application {
       case LEFT -> myPaddle.moveLeft();
       case RIGHT -> myPaddle.moveRight();
       case R -> resetPositions();
+      case SPACE -> pauseGame();
+    }
+  }
+
+  private void pauseGame() {
+    if (myPaddle.getSpeed()==0 && myBall.getSpeed()==0){
+      myPaddle.setSpeed(paddleSpeed);
+      myBall.setSpeed(ballSpeed);
+    }
+    else{
+      paddleSpeed = myPaddle.getSpeed();
+      myPaddle.setSpeed(0);
+      ballSpeed = myBall.getSpeed();
+      myBall.setSpeed(0);
     }
   }
 

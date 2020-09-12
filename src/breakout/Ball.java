@@ -36,4 +36,12 @@ public class Ball extends Circle{
   public void moveBall(double elapsedTime){
     this.setCenterY(this.getCenterY() + mySpeed * elapsedTime);
   }
+
+  public int getSpeed(){
+    return mySpeed;
+  }
+
+  public void setSpeed(int speed){
+    mySpeed = speed;
+  }
 }
