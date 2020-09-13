@@ -6,8 +6,8 @@ import javafx.scene.paint.Paint;
 
 public class Paddle extends Rectangle {
   //constants
-  private static final double BLOCK_HEIGHT = 50;
-  private static final double INITIAL_WIDTH = 150;
+  private static final double PADDLE_HEIGHT = 15;
+  private static final double INITIAL_WIDTH = 75;
   private static final double INITIAL_X = 0;
   private static final double INITIAL_Y = 0;
   private static final int INITIAL_PADDLE_SPEED = 5;
@@ -18,21 +18,21 @@ public class Paddle extends Rectangle {
   private int screenHeight;
 
   public Paddle(int screenWidth, int screenHeight){
-    super(INITIAL_X,INITIAL_Y,INITIAL_WIDTH,BLOCK_HEIGHT);
+    super(INITIAL_X,INITIAL_Y,INITIAL_WIDTH,PADDLE_HEIGHT);
     mySpeed = INITIAL_PADDLE_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.myWidth = INITIAL_WIDTH;
-    moveToCenter();
+    moveToStartingPosition();
     this.setFill(Color.BLACK);
   }
 
   /**
    * This method moves a Paddle object to the center of the screen
    */
-  public void moveToCenter() {
+  public void moveToStartingPosition() {
     this.setX(screenWidth/2.0 - myWidth/2.0);
-    this.setY(2.0/3*screenHeight);
+    this.setY(screenHeight - (2 * PADDLE_HEIGHT));
   }
 
   /**

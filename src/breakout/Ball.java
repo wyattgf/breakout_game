@@ -2,7 +2,6 @@ package breakout;
 
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 /**
  *
  *
@@ -10,20 +9,24 @@ import javafx.scene.paint.Paint;
  */
 public class Ball extends Circle{
   //constants
-  private static final double BALL_RADIUS = 20;
+  private static final double BALL_RADIUS = 5;
   private static final double INITIAL_X = 200;
-  private static final double INITIAL_Y = 400;
-  private static final int INITIAL_BALL_SPEED = 25;
+  private static final double INITIAL_Y = 200;
+  private static final int INITIAL_BALL_SPEED = 55;
   //instance variables
   private int mySpeed;
   private int screenWidth;
   private int screenHeight;
+  private int myXDirection;
+  private int myYDirection;
 
   public Ball(int screenWidth, int screenHeight){
     super(INITIAL_X,INITIAL_Y,BALL_RADIUS);
     mySpeed = INITIAL_BALL_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.myXDirection = 1;
+    this.myYDirection = -1;
     moveToCenter();
     this.setFill(Color.BLACK);
   }
@@ -37,7 +40,18 @@ public class Ball extends Circle{
   }
 
   public void moveBall(double elapsedTime){
-    this.setCenterY(this.getCenterY() + mySpeed * elapsedTime);
+    if(this.getCenterY() - this.getRadius() <= 0){
+      myYDirection *= -1;
+    }
+    if(this.getCenterY() - this.getRadius() >= screenHeight){
+      moveToCenter();
+    }
+    if(this.getCenterX() - this.getRadius() <= 0 ||
+        this.getCenterX() + this.getRadius() >= screenWidth){
+      myXDirection *= -1;
+    }
+    this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
+    this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
   }
 
   /**

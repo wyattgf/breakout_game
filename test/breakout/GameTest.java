@@ -39,15 +39,15 @@ class GameTest extends DukeApplicationTest{
   public void testInitialBallProperties () {
     assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterX());
     assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterY());
-    assertEquals(20, myBall.getRadius());
-    assertEquals(25,myBall.getSpeed());
+    assertEquals(5, myBall.getRadius());
+    assertEquals(55,myBall.getSpeed());
   }
 
   @Test
   public void testInitialPaddlePositionAndSize () {
     assertEquals(Game.SCREEN_WIDTH/2.0 - myPaddle.getWidth()/2.0 , myPaddle.getX());
-    assertEquals(2.0/3 * Game.SCREEN_HEIGHT, myPaddle.getY());
-    assertEquals( 150,myPaddle.getWidth());
+    assertEquals(Game.SCREEN_HEIGHT - (2*myPaddle.getHeight()), myPaddle.getY());
+    assertEquals( 75,myPaddle.getWidth());
   }
 
   @Test
@@ -78,6 +78,15 @@ class GameTest extends DukeApplicationTest{
     assertEquals(0, block1.getY());
     assertEquals(0, block5.getX());
     assertEquals(15, block5.getY());
+  }
+
+  @Test
+  public void testBallBounceOffCorner () {
+    myBall.setCenterX(395);
+    myBall.setCenterY(5);
+    myGame.step(Game.SECOND_DELAY);
+    assertTrue(370< myBall.getCenterX() && myBall.getCenterX()  < 395);
+    assertTrue(25> myBall.getCenterY() && myBall.getCenterY()  > 5);
   }
 
 }

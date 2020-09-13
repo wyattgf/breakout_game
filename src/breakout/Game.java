@@ -112,7 +112,7 @@ public class Game extends Application {
   }
 
   private void resetPositions() {
-    myPaddle.moveToCenter();
+    myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
   }
 
