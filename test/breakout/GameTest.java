@@ -3,15 +3,18 @@ package breakout;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest extends DukeApplicationTest{
+class GameTest extends DukeApplicationTest {
   // create an instance of our game to be able to call in tests (like step())
   private final Game myGame = new Game();
+  private final int INITIAL_BALL_SPEED = 100;
+  private final int BALL_RADIUS = 5;
+  private final int INITIAL_PADDLE_WIDTH = 75;
+  private static final int INITIAL_PADDLE_SPEED = 5;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
@@ -39,15 +42,15 @@ class GameTest extends DukeApplicationTest{
   public void testInitialBallProperties () {
     assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterX());
     assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterY());
-    assertEquals(5, myBall.getRadius());
-    assertEquals(55,myBall.getSpeed());
+    assertEquals(BALL_RADIUS, myBall.getRadius());
+    assertEquals(INITIAL_BALL_SPEED,myBall.getSpeed());
   }
 
   @Test
   public void testInitialPaddlePositionAndSize () {
     assertEquals(Game.SCREEN_WIDTH/2.0 - myPaddle.getWidth()/2.0 , myPaddle.getX());
     assertEquals(Game.SCREEN_HEIGHT - (2*myPaddle.getHeight()), myPaddle.getY());
-    assertEquals( 75,myPaddle.getWidth());
+    assertEquals( INITIAL_PADDLE_WIDTH,myPaddle.getWidth());
   }
 
   @Test
@@ -56,8 +59,7 @@ class GameTest extends DukeApplicationTest{
     myPaddle.setY(200);
 
     press(myScene, KeyCode.RIGHT);
-
-    assertEquals(205, myPaddle.getX());
+    assertEquals(200+INITIAL_PADDLE_SPEED, myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
@@ -68,7 +70,7 @@ class GameTest extends DukeApplicationTest{
 
     press(myScene, KeyCode.LEFT);
 
-    assertEquals(195, myPaddle.getX());
+    assertEquals(200-INITIAL_PADDLE_SPEED, myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 

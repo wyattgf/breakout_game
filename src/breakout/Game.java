@@ -107,6 +107,7 @@ public class Game extends Application {
     for(Block block : level1Blocks){
       if(myBall.getBoundsInParent().intersects(block.getBoundsInParent())){
         myBall.bounce();
+        break;
       }
     }
   }
