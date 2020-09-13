@@ -49,4 +49,26 @@ class GameTest extends DukeApplicationTest{
     assertEquals( 150,myPaddle.getWidth());
   }
 
+  @Test
+  public void testPaddleMovementRight () {
+    myPaddle.setX(200);
+    myPaddle.setY(200);
+
+    press(myScene, KeyCode.RIGHT);
+
+    assertEquals(205, myPaddle.getX());
+    assertEquals(200, myPaddle.getY());
+  }
+
+  @Test
+  public void testPaddleMovementLeft () {
+    myPaddle.setX(200);
+    myPaddle.setY(200);
+
+    press(myScene, KeyCode.LEFT);
+
+    assertEquals(195, myPaddle.getX());
+    assertEquals(200, myPaddle.getY());
+  }
+
 }
