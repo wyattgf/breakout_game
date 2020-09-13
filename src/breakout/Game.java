@@ -59,7 +59,9 @@ public class Game extends Application {
     // create one top level collection to organize the things in the scene
     Group root = new Group();
     myPaddle = new Paddle(SCREEN_WIDTH,SCREEN_HEIGHT);
+    myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH,SCREEN_HEIGHT);
+    myBall.setId("ball");
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
     // create a place to see the shapes
