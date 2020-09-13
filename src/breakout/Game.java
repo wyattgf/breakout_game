@@ -35,6 +35,7 @@ public class Game extends Application {
   private int paddleSpeed;
   private Ball myBall;
   private int ballSpeed;
+  private List<Block> level1Blocks;
 
 
 
@@ -65,7 +66,7 @@ public class Game extends Application {
     myBall = new Ball(SCREEN_WIDTH,SCREEN_HEIGHT);
     myBall.setId("ball");
     blockReader = new BlockReader();
-    List<Block> level1Blocks = blockReader.getBlocks();
+    level1Blocks = blockReader.getBlocks();
     int i = 1;
     for(Block block : level1Blocks){
       root.getChildren().add(block);
@@ -86,6 +87,7 @@ public class Game extends Application {
   // - goals, did the game or level end?
   void step (double elapsedTime) {
     myBall.moveBall(elapsedTime);
+    checkCollisions();
   }
 
 
@@ -95,6 +97,17 @@ public class Game extends Application {
       case RIGHT -> myPaddle.moveRight();
       case R -> resetPositions();
       case SPACE -> pauseGame();
+    }
+  }
+
+  private void checkCollisions () {
+    if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())){
+      myBall.bounce();
+    }
+    for(Block block : level1Blocks){
+      if(myBall.getBoundsInParent().intersects(block.getBoundsInParent())){
+        myBall.bounce();
+      }
     }
   }
 

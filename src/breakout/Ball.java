@@ -12,7 +12,7 @@ public class Ball extends Circle{
   private static final double BALL_RADIUS = 5;
   private static final double INITIAL_X = 200;
   private static final double INITIAL_Y = 200;
-  private static final int INITIAL_BALL_SPEED = 55;
+  private static final int INITIAL_BALL_SPEED = 100;
   //instance variables
   private int mySpeed;
   private int screenWidth;
@@ -50,8 +50,12 @@ public class Ball extends Circle{
         this.getCenterX() + this.getRadius() >= screenWidth){
       myXDirection *= -1;
     }
-    this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
-    this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
+    this.setCenterX(this.getCenterX() + .5 * myXDirection * mySpeed * elapsedTime);
+    this.setCenterY(this.getCenterY() +  myYDirection * mySpeed * elapsedTime);
+  }
+
+  public void bounce(){
+    myYDirection *= -1;
   }
 
   /**
