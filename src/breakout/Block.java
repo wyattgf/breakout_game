@@ -10,8 +10,8 @@ import javafx.scene.paint.Paint;
  */
 public class Block extends Rectangle {
   //constants
-  private static final double BLOCK_WIDTH = 1;
-  private static final double BLOCK_HEIGHT = 1;
+  private static final double BLOCK_WIDTH = 35;
+  private static final double BLOCK_HEIGHT = 15;
   //instance variables
   private int myDurability;
   private Paint myColor;
@@ -26,7 +26,7 @@ public class Block extends Rectangle {
     switch (myDurability) {
       case -1 -> this.setFill(Color.BLACK);
       case 3 -> this.setFill(Color.DARKGREY);
-      case 2 -> this.setFill(Color.WHITESMOKE);
+      case 2 -> this.setFill(Color.BLUE);
       case 1 -> this.setFill(Color.RED);
     }
   }

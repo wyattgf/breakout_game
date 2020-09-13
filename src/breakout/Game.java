@@ -1,5 +1,6 @@
 package breakout;
 
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -30,6 +31,7 @@ public class Game extends Application {
   // some things needed to remember during game
   private Scene myScene;
   private Paddle myPaddle;
+  private BlockReader blockReader;
   private int paddleSpeed;
   private Ball myBall;
   private int ballSpeed;
@@ -62,6 +64,13 @@ public class Game extends Application {
     myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH,SCREEN_HEIGHT);
     myBall.setId("ball");
+    blockReader = new BlockReader();
+    List<Block> level1Blocks = blockReader.getBlocks();
+    int i = 1;
+    for(Block block : level1Blocks){
+      root.getChildren().add(block);
+      block.setId("block" + i++);
+    }
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
     // create a place to see the shapes

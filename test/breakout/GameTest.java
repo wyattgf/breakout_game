@@ -2,8 +2,6 @@ package breakout;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
@@ -18,6 +16,7 @@ class GameTest extends DukeApplicationTest{
   private Scene myScene;
   private Paddle myPaddle;
   private Ball myBall;
+  private Block block1, block5;
 
   /**
    * Start special test version of application that does not animate on its own before each test.
@@ -32,6 +31,8 @@ class GameTest extends DukeApplicationTest{
 
     myPaddle = lookup("#paddle").query();
     myBall = lookup("#ball").query();
+    block1 = lookup("#block1").query();
+    block5 = lookup("#block5").query();
   }
 
   @Test
@@ -69,6 +70,14 @@ class GameTest extends DukeApplicationTest{
 
     assertEquals(195, myPaddle.getX());
     assertEquals(200, myPaddle.getY());
+  }
+
+  @Test
+  public void testBlockPositionsBasedOnFile () {
+    assertEquals(0, block1.getX());
+    assertEquals(0, block1.getY());
+    assertEquals(0, block5.getX());
+    assertEquals(15, block5.getY());
   }
 
 }

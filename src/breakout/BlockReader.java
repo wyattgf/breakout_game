@@ -16,15 +16,16 @@ public class BlockReader {
   private List<Block> listOfBlocks;
 
   public BlockReader(){
-    listOfBlocks = new ArrayList<Block>();
+    listOfBlocks = new ArrayList<>();
+    readCreateBlocks();
   }
 
   private void readCreateBlocks(){
     File file = new File(DIRECTORY+DESIRED_FILE_NAME);
     try{
       BufferedReader br = new BufferedReader(new FileReader(file));
-      String line = br.readLine();
-      while (line!=null){
+      String line;
+      while ((line = br.readLine()) != null){
         Block b = createBlock(line);
         listOfBlocks.add(b);
       }
@@ -40,7 +41,7 @@ public class BlockReader {
 
   private Block createBlock(String fileLine){
     String[] blockData = fileLine.split(" ");
-    Block b = new Block(Double.parseDouble(blockData[0]),Double.parseDouble(blockData[1]),Integer.parseInt(blockData[3]));
+    Block b = new Block(Double.parseDouble(blockData[0]),Double.parseDouble(blockData[1]),Integer.parseInt(blockData[2]));
     return b;
   }
 }
