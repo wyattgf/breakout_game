@@ -39,6 +39,10 @@ public class Ball extends Circle{
     this.setCenterY(screenHeight/2.0);
   }
 
+  /**
+   *
+   * @param elapsedTime
+   */
   public void moveBall(double elapsedTime){
     if(this.getCenterY() - this.getRadius() <= 0){
       myYDirection *= -1;
@@ -72,5 +76,12 @@ public class Ball extends Circle{
    */
   public void setSpeed(int speed){
     mySpeed = speed;
+  }
+
+  public void setMyXDirection(int direction){
+    myXDirection = direction;
+  }
+  public void setMyYDirection(int direction){
+    myYDirection = direction;
   }
 }

@@ -25,8 +25,7 @@ public class Game extends Application {
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final Paint BACKGROUND = Color.AZURE;
-  public static final Paint HIGHLIGHT = Color.OLIVEDRAB;
-  public static final int VERTICAL_OFFSET = 80;
+  public static final int BALL_VERTICAL_OFFSET = 5;
 
   // some things needed to remember during game
   private Scene myScene;
@@ -108,8 +107,10 @@ public class Game extends Application {
   }
 
   private void checkCollisions () {
-    if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())){
-      myBall.bounce();
+    if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
+      if (myBall.getCenterY() + myBall.getRadius() - BALL_VERTICAL_OFFSET <= myPaddle.getY()) {
+        myBall.bounce();
+      }
     }
     for(Block block : level1Blocks){
       if(myBall.getBoundsInParent().intersects(block.getBoundsInParent())){

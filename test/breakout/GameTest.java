@@ -91,14 +91,14 @@ class GameTest extends DukeApplicationTest {
     myBall.setCenterX(395);
     myBall.setCenterY(5);
     myGame.step(Game.SECOND_DELAY);
-    assertTrue(370< myBall.getCenterX() && myBall.getCenterX()  < 395);
-    assertTrue(25> myBall.getCenterY() && myBall.getCenterY()  > 5);
+    assertEquals(395 - (INITIAL_BALL_SPEED* Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(5 + (INITIAL_BALL_SPEED* Game.SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
   public void testResetCheatKey () {
     myBall.setCenterX(395);
-    myBall.setCenterX(5);
+    myBall.setCenterY(5);
     myPaddle.setX(0);
     myPaddle.setY(0);
     press(myScene, KeyCode.R);
@@ -114,6 +114,24 @@ class GameTest extends DukeApplicationTest {
     press(myScene, KeyCode.SPACE);
     assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
     assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    myGame.step(Game.SECOND_DELAY);
+    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+  }
+
+  @Test
+  public void testBallBouncesOffPaddle () {
+    myBall.setCenterY(Game.SCREEN_HEIGHT - 36);
+    myBall.setMyXDirection(0);
+    myBall.setMyYDirection(1);
+    myGame.step(Game.SECOND_DELAY);
+    assertEquals(Game.SCREEN_WIDTH/2, myBall.getCenterX());
+    assertEquals(Game.SCREEN_HEIGHT -36 + (INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+  }
+
+  @Test
+  public void testBallGoesToCenterAfterLeavingScreen () {
+    myBall.setCenterY(500);
     myGame.step(Game.SECOND_DELAY);
     assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
     assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
