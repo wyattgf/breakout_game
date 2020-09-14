@@ -102,4 +102,5 @@ public class Ball extends Circle{
   public void controlPause(){
     paused = !paused;
   }
+
 }

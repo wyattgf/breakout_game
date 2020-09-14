@@ -117,8 +117,9 @@ public class Game extends Application {
   }
 
   private void handleBlockCollisions(Block block) {
-    if (myBall.getCenterX() <= block.getX() || myBall.getCenterX() >= block.getX()+ block.getBlockWidth()){
+    if (myBall.getCenterX()+myBall.getRadius() <= block.getX() || myBall.getCenterX()+myBall.getRadius() >= block.getX()+ block.getBlockWidth()){
       myBall.bounceX();
+
     }
     else if (myBall.getCenterY() <= block.getY() || myBall.getCenterY() >= block.getY()) {
       myBall.bounceY();
@@ -129,22 +130,14 @@ public class Game extends Application {
     if (myBall.getCenterY() <= myPaddle.getY()) {
       myBall.bounceY();
     }
-    else if (myBall.getCenterX() <= myPaddle.getX() || myBall.getCenterX() >= myPaddle.getX()){
+    else if (myBall.getCenterX()+myBall.getRadius() <= myPaddle.getX() || myBall.getCenterX() >= myPaddle.getX()){
       myBall.bounceX();
     }
   }
 
   private void pauseGame() {
-    if (myBall.getSpeed()==0){
       myPaddle.controlPause();
       myBall.controlPause();
-
-    }
-    else{
-      myPaddle.controlPause();
-      myBall.controlPause();
-
-    }
   }
 
   private void resetPositions() {
