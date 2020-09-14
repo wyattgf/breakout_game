@@ -62,8 +62,19 @@ public class Ball extends Circle{
     }
   }
 
-  public void bounce(){
-    myYDirection *= -1;
+  public void bounce(boolean isY){
+    if (isY) {
+      myYDirection *= -1;
+    }
+    else {
+      myXDirection *=-1;
+    }
+  }
+  public void bounceX(){
+    bounce(false);
+  }
+  public void bounceY(){
+    bounce(true);
   }
 
   /**

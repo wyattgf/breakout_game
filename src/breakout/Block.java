@@ -16,8 +16,8 @@ public class Block extends Rectangle {
   private int myDurability;
   private Paint myColor;
 
-  public Block(double xPos, double yPos, int myDurability ){
-    super(xPos,yPos,BLOCK_WIDTH,BLOCK_HEIGHT);
+  public Block(double myXPos, double myYPos, int myDurability ){
+    super(myXPos,myYPos,BLOCK_WIDTH,BLOCK_HEIGHT);
     this.myDurability = myDurability;
     setColor();
   }
@@ -30,6 +30,14 @@ public class Block extends Rectangle {
       case 1 -> this.setFill(Color.RED);
     }
   }
+
+  public double getBlockWidth(){
+    return BLOCK_WIDTH;
+  }
+  public double getBlockHeight(){
+    return BLOCK_HEIGHT;
+  }
+
 
 
 }

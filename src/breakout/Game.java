@@ -106,15 +106,31 @@ public class Game extends Application {
 
   private void checkCollisions () {
     if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-      if (myBall.getCenterY() <= myPaddle.getY()) {
-        myBall.bounce();
-      }
+      handlePaddleCollision();
     }
     for(Block block : level1Blocks){
       if(myBall.getBoundsInParent().intersects(block.getBoundsInParent())){
-        myBall.bounce();
+        handleBlockCollisions(block);
         break;
       }
+    }
+  }
+
+  private void handleBlockCollisions(Block block) {
+    if (myBall.getCenterX() <= block.getX() || myBall.getCenterX() >= block.getX()+ block.getBlockWidth()){
+      myBall.bounceX();
+    }
+    else if (myBall.getCenterY() <= block.getY() || myBall.getCenterY() >= block.getY()) {
+      myBall.bounceY();
+    }
+  }
+
+  private void handlePaddleCollision() {
+    if (myBall.getCenterY() <= myPaddle.getY()) {
+      myBall.bounceY();
+    }
+    else if (myBall.getCenterX() <= myPaddle.getX() || myBall.getCenterX() >= myPaddle.getX()){
+      myBall.bounceX();
     }
   }
 
