@@ -50,7 +50,7 @@ public class Ball extends Circle{
         this.getCenterX() + this.getRadius() >= screenWidth){
       myXDirection *= -1;
     }
-    this.setCenterX(this.getCenterX() + .5 * myXDirection * mySpeed * elapsedTime);
+    this.setCenterX(this.getCenterX() +  myXDirection * mySpeed * elapsedTime);
     this.setCenterY(this.getCenterY() +  myYDirection * mySpeed * elapsedTime);
   }
 

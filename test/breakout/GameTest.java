@@ -95,4 +95,28 @@ class GameTest extends DukeApplicationTest {
     assertTrue(25> myBall.getCenterY() && myBall.getCenterY()  > 5);
   }
 
+  @Test
+  public void testResetCheatKey () {
+    myBall.setCenterX(395);
+    myBall.setCenterX(5);
+    myPaddle.setX(0);
+    myPaddle.setY(0);
+    press(myScene, KeyCode.R);
+    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterX());
+    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterY());
+    assertEquals(Game.SCREEN_WIDTH/2.0 - myPaddle.getWidth()/2.0 , myPaddle.getX());
+    assertEquals(Game.SCREEN_HEIGHT - (2*myPaddle.getHeight()), myPaddle.getY());
+  }
+
+  @Test
+  public void testPauseCheatKey () {
+    myGame.step(Game.SECOND_DELAY);
+    press(myScene, KeyCode.SPACE);
+    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    myGame.step(Game.SECOND_DELAY);
+    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+  }
+
 }
