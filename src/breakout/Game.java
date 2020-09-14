@@ -78,6 +78,7 @@ public class Game extends Application {
     Scene scene = new Scene(root, width, height, background);
     // respond to input
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
     return scene;
   }
 
@@ -87,6 +88,7 @@ public class Game extends Application {
   // - goals, did the game or level end?
   void step (double elapsedTime) {
     myBall.moveBall(elapsedTime);
+    myPaddle.movePaddle(elapsedTime);
     checkCollisions();
   }
 
@@ -97,6 +99,11 @@ public class Game extends Application {
       case RIGHT -> myPaddle.moveRight();
       case R -> resetPositions();
       case SPACE -> pauseGame();
+    }
+  }
+  private void handleKeyRelease(KeyCode code) {
+    if(code == KeyCode.RIGHT || code == KeyCode.LEFT){
+      myPaddle.setSpeed(0);
     }
   }
 
@@ -113,13 +120,12 @@ public class Game extends Application {
   }
 
   private void pauseGame() {
-    if (myPaddle.getSpeed()==0 && myBall.getSpeed()==0){
-      myPaddle.setSpeed(paddleSpeed);
+    if (myBall.getSpeed()==0){
+      myPaddle.controlPause();
       myBall.setSpeed(ballSpeed);
     }
     else{
-      paddleSpeed = myPaddle.getSpeed();
-      myPaddle.setSpeed(0);
+      myPaddle.controlPause();
       ballSpeed = myBall.getSpeed();
       myBall.setSpeed(0);
     }

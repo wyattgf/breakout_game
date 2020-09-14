@@ -1,5 +1,6 @@
 package breakout;
 
+import java.util.concurrent.TimeUnit;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ class GameTest extends DukeApplicationTest {
   private final int INITIAL_BALL_SPEED = 100;
   private final int BALL_RADIUS = 5;
   private final int INITIAL_PADDLE_WIDTH = 75;
-  private static final int INITIAL_PADDLE_SPEED = 5;
+  private static final int INITIAL_PADDLE_SPEED = 100;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
@@ -59,7 +60,9 @@ class GameTest extends DukeApplicationTest {
     myPaddle.setY(200);
 
     press(myScene, KeyCode.RIGHT);
-    assertEquals(200+INITIAL_PADDLE_SPEED, myPaddle.getX());
+    myGame.step(Game.SECOND_DELAY);
+
+    assertEquals(200+(INITIAL_PADDLE_SPEED*Game.SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
@@ -69,8 +72,9 @@ class GameTest extends DukeApplicationTest {
     myPaddle.setY(200);
 
     press(myScene, KeyCode.LEFT);
+    myGame.step(Game.SECOND_DELAY);
 
-    assertEquals(200-INITIAL_PADDLE_SPEED, myPaddle.getX());
+    assertEquals(200-(INITIAL_PADDLE_SPEED*Game.SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 

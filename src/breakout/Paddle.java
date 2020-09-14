@@ -2,7 +2,6 @@ package breakout;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class Paddle extends Rectangle {
   //constants
@@ -10,19 +9,20 @@ public class Paddle extends Rectangle {
   private static final double INITIAL_WIDTH = 75;
   private static final double INITIAL_X = 0;
   private static final double INITIAL_Y = 0;
-  private static final int INITIAL_PADDLE_SPEED = 5;
+  private static final int PADDLE_SPEED_AT_REST = 0;
   //instance variables
   private int mySpeed;
   private double myWidth;
   private int screenWidth;
   private int screenHeight;
+  private boolean paused;
 
   public Paddle(int screenWidth, int screenHeight){
     super(INITIAL_X,INITIAL_Y,INITIAL_WIDTH,PADDLE_HEIGHT);
-    mySpeed = INITIAL_PADDLE_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.myWidth = INITIAL_WIDTH;
+    this.paused = false;
     moveToStartingPosition();
     this.setFill(Color.BLACK);
   }
@@ -33,6 +33,7 @@ public class Paddle extends Rectangle {
   public void moveToStartingPosition() {
     this.setX(screenWidth/2.0 - myWidth/2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
+    mySpeed = PADDLE_SPEED_AT_REST;
   }
 
   /**
@@ -44,27 +45,30 @@ public class Paddle extends Rectangle {
     this.setWidth(newWidth);
   }
 
-  private void movePaddle(){
-    this.setX(this.getX() + mySpeed);
+  public void movePaddle(double elapsedTime){
+    if(!paused){
+      if((this.getX()>0 || mySpeed > 0) &&
+          (this.getX()+this.getWidth()<screenWidth || mySpeed< 0)) {
+        this.setX(this.getX() + elapsedTime * mySpeed);
+      }
+    }
   }
   /**
    * This method causes a Paddle object to move left
    */
   public void moveLeft(){
-    if (this.getX()>0) {
-      mySpeed = Math.abs(mySpeed) * -1;
-      movePaddle();
-    }
+      mySpeed = -100;
   }
 
   /**
    * This method causes a Paddle object to move right
    */
   public void moveRight(){
-    if (this.getX()+this.getWidth()<screenWidth) {
-      mySpeed = Math.abs(mySpeed);
-      movePaddle();
-    }
+      mySpeed = 100;
+  }
+
+  public void controlPause(){
+    paused = !paused;
   }
 
   /**
