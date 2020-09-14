@@ -31,9 +31,7 @@ public class Game extends Application {
   private Scene myScene;
   private Paddle myPaddle;
   private BlockReader blockReader;
-  private int paddleSpeed;
   private Ball myBall;
-  private int ballSpeed;
   private List<Block> level1Blocks;
 
 
@@ -123,12 +121,13 @@ public class Game extends Application {
   private void pauseGame() {
     if (myBall.getSpeed()==0){
       myPaddle.controlPause();
-      myBall.setSpeed(ballSpeed);
+      myBall.controlPause();
+
     }
     else{
       myPaddle.controlPause();
-      ballSpeed = myBall.getSpeed();
-      myBall.setSpeed(0);
+      myBall.controlPause();
+
     }
   }
 

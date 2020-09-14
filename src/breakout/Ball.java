@@ -19,6 +19,7 @@ public class Ball extends Circle{
   private int screenHeight;
   private int myXDirection;
   private int myYDirection;
+  private boolean paused;
 
   public Ball(int screenWidth, int screenHeight){
     super(INITIAL_X,INITIAL_Y,BALL_RADIUS);
@@ -27,6 +28,7 @@ public class Ball extends Circle{
     this.screenHeight = screenHeight;
     this.myXDirection = 1;
     this.myYDirection = -1;
+    this.paused = false;
     moveToCenter();
     this.setFill(Color.BLACK);
   }
@@ -44,18 +46,20 @@ public class Ball extends Circle{
    * @param elapsedTime
    */
   public void moveBall(double elapsedTime){
-    if(this.getCenterY() - this.getRadius() <= 0){
-      myYDirection *= -1;
+    if(!paused) {
+      if (this.getCenterY() - this.getRadius() <= 0) {
+        myYDirection *= -1;
+      }
+      if (this.getCenterY() - this.getRadius() >= screenHeight) {
+        moveToCenter();
+      }
+      if (this.getCenterX() - this.getRadius() <= 0 ||
+          this.getCenterX() + this.getRadius() >= screenWidth) {
+        myXDirection *= -1;
+      }
+      this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
+      this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
     }
-    if(this.getCenterY() - this.getRadius() >= screenHeight){
-      moveToCenter();
-    }
-    if(this.getCenterX() - this.getRadius() <= 0 ||
-        this.getCenterX() + this.getRadius() >= screenWidth){
-      myXDirection *= -1;
-    }
-    this.setCenterX(this.getCenterX() +  myXDirection * mySpeed * elapsedTime);
-    this.setCenterY(this.getCenterY() +  myYDirection * mySpeed * elapsedTime);
   }
 
   public void bounce(){
@@ -83,5 +87,8 @@ public class Ball extends Circle{
   }
   public void setMyYDirection(int direction){
     myYDirection = direction;
+  }
+  public void controlPause(){
+    paused = !paused;
   }
 }
