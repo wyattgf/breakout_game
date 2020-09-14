@@ -106,7 +106,7 @@ public class Game extends Application {
 
   private void checkCollisions () {
     if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-      if (myBall.getCenterY() + myBall.getRadius() - BALL_VERTICAL_OFFSET <= myPaddle.getY()) {
+      if (myBall.getCenterY() <= myPaddle.getY()) {
         myBall.bounce();
       }
     }
