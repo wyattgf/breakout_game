@@ -25,7 +25,6 @@ public class Game extends Application {
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final Paint BACKGROUND = Color.AZURE;
-  public static final int BALL_VERTICAL_OFFSET = 5;
 
   // some things needed to remember during game
   private Scene myScene;

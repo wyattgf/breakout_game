@@ -14,7 +14,6 @@ public class Block extends Rectangle {
   private static final double BLOCK_HEIGHT = 15;
   //instance variables
   private int myDurability;
-  private Paint myColor;
 
   public Block(double myXPos, double myYPos, int myDurability ){
     super(myXPos,myYPos,BLOCK_WIDTH,BLOCK_HEIGHT);
