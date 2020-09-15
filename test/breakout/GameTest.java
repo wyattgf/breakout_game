@@ -10,6 +10,7 @@ import util.DukeApplicationTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest extends DukeApplicationTest {
+
   // create an instance of our game to be able to call in tests (like step())
   private final Game myGame = new Game();
   private final int INITIAL_BALL_SPEED = 100;
@@ -24,11 +25,11 @@ class GameTest extends DukeApplicationTest {
 
   /**
    * Start special test version of application that does not animate on its own before each test.
-   *
+   * <p>
    * Automatically called @BeforeEach by TestFX.
    */
   @Override
-  public void start (Stage stage) {
+  public void start(Stage stage) {
     myScene = myGame.setupScene(Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT, Game.BACKGROUND);
     stage.setScene(myScene);
     stage.show();
@@ -40,46 +41,46 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testInitialBallProperties () {
-    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterX());
-    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterY());
+  public void testInitialBallProperties() {
+    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterX());
+    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterY());
     assertEquals(BALL_RADIUS, myBall.getRadius());
-    assertEquals(INITIAL_BALL_SPEED,myBall.getSpeed());
+    assertEquals(INITIAL_BALL_SPEED, myBall.getSpeed());
   }
 
   @Test
-  public void testInitialPaddlePositionAndSize () {
-    assertEquals(Game.SCREEN_WIDTH/2.0 - myPaddle.getWidth()/2.0 , myPaddle.getX());
-    assertEquals(Game.SCREEN_HEIGHT - (2*myPaddle.getHeight()), myPaddle.getY());
-    assertEquals( INITIAL_PADDLE_WIDTH,myPaddle.getWidth());
+  public void testInitialPaddlePositionAndSize() {
+    assertEquals(Game.SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
+    assertEquals(Game.SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
+    assertEquals(INITIAL_PADDLE_WIDTH, myPaddle.getWidth());
   }
 
   @Test
-  public void testPaddleMovementRight () {
+  public void testPaddleMovementRight() {
     myPaddle.setX(200);
     myPaddle.setY(200);
 
     press(myScene, KeyCode.RIGHT);
     myGame.step(Game.SECOND_DELAY);
 
-    assertEquals(200+(INITIAL_PADDLE_SPEED*Game.SECOND_DELAY), myPaddle.getX());
+    assertEquals(200 + (INITIAL_PADDLE_SPEED * Game.SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
   @Test
-  public void testPaddleMovementLeft () {
+  public void testPaddleMovementLeft() {
     myPaddle.setX(200);
     myPaddle.setY(200);
 
     press(myScene, KeyCode.LEFT);
     myGame.step(Game.SECOND_DELAY);
 
-    assertEquals(200-(INITIAL_PADDLE_SPEED*Game.SECOND_DELAY), myPaddle.getX());
+    assertEquals(200 - (INITIAL_PADDLE_SPEED * Game.SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
   @Test
-  public void testBlockPositionsBasedOnFile () {
+  public void testBlockPositionsBasedOnFile() {
     assertEquals(0, block1.getX());
     assertEquals(0, block1.getY());
     assertEquals(0, block5.getX());
@@ -87,54 +88,55 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testBallBounceOffCorner () {
+  public void testBallBounceOffCorner() {
     myBall.setCenterX(395);
     myBall.setCenterY(5);
     myGame.step(Game.SECOND_DELAY);
-    assertEquals(395 - (INITIAL_BALL_SPEED* Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(5 + (INITIAL_BALL_SPEED* Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(395 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(5 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
-  public void testResetCheatKey () {
+  public void testResetCheatKey() {
     myBall.setCenterX(395);
     myBall.setCenterY(5);
     myPaddle.setX(0);
     myPaddle.setY(0);
     press(myScene, KeyCode.R);
-    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterX());
-    assertEquals(Game.SCREEN_WIDTH/2.0, myBall.getCenterY());
-    assertEquals(Game.SCREEN_WIDTH/2.0 - myPaddle.getWidth()/2.0 , myPaddle.getX());
-    assertEquals(Game.SCREEN_HEIGHT - (2*myPaddle.getHeight()), myPaddle.getY());
+    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterX());
+    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterY());
+    assertEquals(Game.SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
+    assertEquals(Game.SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
   }
 
   @Test
-  public void testPauseCheatKey () {
+  public void testPauseCheatKey() {
     myGame.step(Game.SECOND_DELAY);
     press(myScene, KeyCode.SPACE);
-    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
     myGame.step(Game.SECOND_DELAY);
-    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
-  public void testBallBouncesOffPaddle () {
+  public void testBallBouncesOffPaddle() {
     myBall.setCenterY(Game.SCREEN_HEIGHT - 36);
     myBall.setMyXDirection(0);
     myBall.setMyYDirection(1);
     myGame.step(Game.SECOND_DELAY);
-    assertEquals(Game.SCREEN_WIDTH/2, myBall.getCenterX());
-    assertEquals(Game.SCREEN_HEIGHT -36 + (INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(Game.SCREEN_WIDTH / 2, myBall.getCenterX());
+    assertEquals(Game.SCREEN_HEIGHT - 36 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY),
+        myBall.getCenterY());
   }
 
   @Test
-  public void testBallGoesToCenterAfterLeavingScreen () {
+  public void testBallGoesToCenterAfterLeavingScreen() {
     myBall.setCenterY(500);
     myGame.step(Game.SECOND_DELAY);
-    assertEquals(200+(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200-(INITIAL_BALL_SPEED*Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
   }
 
 }

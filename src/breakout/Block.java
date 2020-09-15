@@ -3,20 +3,20 @@ package breakout;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+
 /**
- *
- *
  * @author Hosam Tageldin, Wyatt Focht
  */
 public class Block extends Rectangle {
+
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
   //instance variables
   private int myDurability;
 
-  public Block(double myXPos, double myYPos, int myDurability ){
-    super(myXPos,myYPos,BLOCK_WIDTH,BLOCK_HEIGHT);
+  public Block(double myXPos, double myYPos, int myDurability) {
+    super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
     this.myDurability = myDurability;
     setColor();
   }
@@ -30,13 +30,13 @@ public class Block extends Rectangle {
     }
   }
 
-  public double getBlockWidth(){
+  public double getBlockWidth() {
     return BLOCK_WIDTH;
   }
-  public double getBlockHeight(){
+
+  public double getBlockHeight() {
     return BLOCK_HEIGHT;
   }
-
 
 
 }

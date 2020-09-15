@@ -15,33 +15,34 @@ public class BlockReader {
   //instance variables
   private List<Block> listOfBlocks;
 
-  public BlockReader(){
+  public BlockReader() {
     listOfBlocks = new ArrayList<>();
     readCreateBlocks();
   }
 
-  private void readCreateBlocks(){
-    File file = new File(DIRECTORY+DESIRED_FILE_NAME);
-    try{
+  private void readCreateBlocks() {
+    File file = new File(DIRECTORY + DESIRED_FILE_NAME);
+    try {
       BufferedReader br = new BufferedReader(new FileReader(file));
       String line;
-      while ((line = br.readLine()) != null){
+      while ((line = br.readLine()) != null) {
         Block b = createBlock(line);
         listOfBlocks.add(b);
       }
+    } catch (Exception e) {
     }
-    catch(Exception e){ }
 
   }
 
 
-  public List<Block> getBlocks(){
+  public List<Block> getBlocks() {
     return listOfBlocks;
   }
 
-  private Block createBlock(String fileLine){
+  private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    Block b = new Block(Double.parseDouble(blockData[0]),Double.parseDouble(blockData[1]),Integer.parseInt(blockData[2]));
+    Block b = new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
+        Integer.parseInt(blockData[2]));
     return b;
   }
 }

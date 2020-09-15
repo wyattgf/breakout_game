@@ -14,11 +14,10 @@ import javafx.util.Duration;
 
 
 /**
- *
- *
  * @author Hosam Tageldin, Wyatt Focht
  */
 public class Game extends Application {
+
   public static final String TITLE = "Breakout JavaFX";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 400;
@@ -34,12 +33,11 @@ public class Game extends Application {
   private List<Block> level1Blocks;
 
 
-
   /**
    * Initialize what will be displayed and how it will be updated.
    */
   @Override
-  public void start (Stage stage) {
+  public void start(Stage stage) {
     // attach scene to the stage and display it
     myScene = setupScene(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
@@ -54,17 +52,17 @@ public class Game extends Application {
   }
 
   // Create the game's "scene": what shapes will be in the game and their starting properties
-  Scene setupScene (int width, int height, Paint background) {
+  Scene setupScene(int width, int height, Paint background) {
     // create one top level collection to organize the things in the scene
     Group root = new Group();
-    myPaddle = new Paddle(SCREEN_WIDTH,SCREEN_HEIGHT);
+    myPaddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
     myPaddle.setId("paddle");
-    myBall = new Ball(SCREEN_WIDTH,SCREEN_HEIGHT);
+    myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall.setId("ball");
     blockReader = new BlockReader();
     level1Blocks = blockReader.getBlocks();
     int i = 1;
-    for(Block block : level1Blocks){
+    for (Block block : level1Blocks) {
       root.getChildren().add(block);
       block.setId("block" + i++);
     }
@@ -82,14 +80,14 @@ public class Game extends Application {
   // - movement, how do things change over time
   // - collisions, did things intersect and, if so, what should happen
   // - goals, did the game or level end?
-  void step (double elapsedTime) {
+  void step(double elapsedTime) {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
     checkCollisions();
   }
 
 
-  private void handleKeyInput (KeyCode code) {
+  private void handleKeyInput(KeyCode code) {
     switch (code) {
       case LEFT -> myPaddle.moveLeft();
       case RIGHT -> myPaddle.moveRight();
@@ -97,18 +95,19 @@ public class Game extends Application {
       case SPACE -> pauseGame();
     }
   }
+
   private void handleKeyRelease(KeyCode code) {
-    if(code == KeyCode.RIGHT || code == KeyCode.LEFT){
+    if (code == KeyCode.RIGHT || code == KeyCode.LEFT) {
       myPaddle.setSpeed(0);
     }
   }
 
-  private void checkCollisions () {
+  private void checkCollisions() {
     if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
       handlePaddleCollision();
     }
-    for(Block block : level1Blocks){
-      if(myBall.getBoundsInParent().intersects(block.getBoundsInParent())){
+    for (Block block : level1Blocks) {
+      if (myBall.getBoundsInParent().intersects(block.getBoundsInParent())) {
         handleBlockCollisions(block);
         break;
       }
@@ -116,11 +115,11 @@ public class Game extends Application {
   }
 
   private void handleBlockCollisions(Block block) {
-    if (myBall.getCenterX()+myBall.getRadius() <= block.getX() || myBall.getCenterX()+myBall.getRadius() >= block.getX()+ block.getBlockWidth()){
+    if (myBall.getCenterX() + myBall.getRadius() <= block.getX()
+        || myBall.getCenterX() + myBall.getRadius() >= block.getX() + block.getBlockWidth()) {
       myBall.bounceX();
 
-    }
-    else if (myBall.getCenterY() <= block.getY() || myBall.getCenterY() >= block.getY()) {
+    } else if (myBall.getCenterY() <= block.getY() || myBall.getCenterY() >= block.getY()) {
       myBall.bounceY();
     }
   }
@@ -128,15 +127,15 @@ public class Game extends Application {
   private void handlePaddleCollision() {
     if (myBall.getCenterY() <= myPaddle.getY()) {
       myBall.bounceY();
-    }
-    else if (myBall.getCenterX()+myBall.getRadius() <= myPaddle.getX() || myBall.getCenterX() >= myPaddle.getX()){
+    } else if (myBall.getCenterX() + myBall.getRadius() <= myPaddle.getX()
+        || myBall.getCenterX() >= myPaddle.getX()) {
       myBall.bounceX();
     }
   }
 
   private void pauseGame() {
-      myPaddle.controlPause();
-      myBall.controlPause();
+    myPaddle.controlPause();
+    myBall.controlPause();
   }
 
   private void resetPositions() {
@@ -148,7 +147,7 @@ public class Game extends Application {
   /**
    * Start the program.
    */
-  public static void main (String[] args) {
+  public static void main(String[] args) {
     launch(args);
   }
 }

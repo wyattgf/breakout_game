@@ -2,12 +2,12 @@ package breakout;
 
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+
 /**
- *
- *
  * @author Hosam Tageldin, Wyatt Focht
  */
-public class Ball extends Circle{
+public class Ball extends Circle {
+
   //constants
   private static final double BALL_RADIUS = 5;
   private static final double INITIAL_X = 200;
@@ -21,8 +21,8 @@ public class Ball extends Circle{
   private int myYDirection;
   private boolean paused;
 
-  public Ball(int screenWidth, int screenHeight){
-    super(INITIAL_X,INITIAL_Y,BALL_RADIUS);
+  public Ball(int screenWidth, int screenHeight) {
+    super(INITIAL_X, INITIAL_Y, BALL_RADIUS);
     mySpeed = INITIAL_BALL_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
@@ -37,16 +37,15 @@ public class Ball extends Circle{
    * This method moves a Ball object to the center of the screen
    */
   public void moveToCenter() {
-    this.setCenterX(screenWidth/2.0);
-    this.setCenterY(screenHeight/2.0);
+    this.setCenterX(screenWidth / 2.0);
+    this.setCenterY(screenHeight / 2.0);
   }
 
   /**
-   *
    * @param elapsedTime
    */
-  public void moveBall(double elapsedTime){
-    if(!paused) {
+  public void moveBall(double elapsedTime) {
+    if (!paused) {
       if (this.getCenterY() - this.getRadius() <= 0) {
         myYDirection *= -1;
       }
@@ -62,44 +61,49 @@ public class Ball extends Circle{
     }
   }
 
-  private void bounce(boolean isY){
+  private void bounce(boolean isY) {
     if (isY) {
       myYDirection *= -1;
-    }
-    else {
-      myXDirection *=-1;
+    } else {
+      myXDirection *= -1;
     }
   }
-  public void bounceX(){
+
+  public void bounceX() {
     bounce(false);
   }
-  public void bounceY(){
+
+  public void bounceY() {
     bounce(true);
   }
 
   /**
    * This method returns the mySpeed instance variable of a Ball
+   *
    * @return int representing the mySpeed of a Ball object
    */
-  public int getSpeed(){
+  public int getSpeed() {
     return mySpeed;
   }
 
   /**
    * This method sets mySpeed of a Ball to the given parameter
+   *
    * @param speed int representing desired speed to set mySpeed to
    */
-  public void setSpeed(int speed){
+  public void setSpeed(int speed) {
     mySpeed = speed;
   }
 
-  public void setMyXDirection(int direction){
+  public void setMyXDirection(int direction) {
     myXDirection = direction;
   }
-  public void setMyYDirection(int direction){
+
+  public void setMyYDirection(int direction) {
     myYDirection = direction;
   }
-  public void controlPause(){
+
+  public void controlPause() {
     paused = !paused;
   }
 
