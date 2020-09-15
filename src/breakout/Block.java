@@ -2,7 +2,7 @@ package breakout;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
 
 /**
  * @author Hosam Tageldin, Wyatt Focht
@@ -23,10 +23,18 @@ public class Block extends Rectangle {
 
   private void setColor() {
     switch (myDurability) {
-      case -1 -> this.setFill(Color.BLACK);
-      case 3 -> this.setFill(Color.DARKGREY);
-      case 2 -> this.setFill(Color.BLUE);
-      case 1 -> this.setFill(Color.RED);
+      case -1:
+        this.setFill(Color.BLACK);
+        break;
+      case 3:
+        this.setFill(Color.DARKGREY);
+        break;
+      case 2:
+        this.setFill(Color.BLUE);
+        break;
+      case 1:
+        this.setFill(Color.RED);
+        break;
     }
   }
 

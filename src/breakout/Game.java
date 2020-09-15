@@ -89,10 +89,18 @@ public class Game extends Application {
 
   private void handleKeyInput(KeyCode code) {
     switch (code) {
-      case LEFT -> myPaddle.moveLeft();
-      case RIGHT -> myPaddle.moveRight();
-      case R -> resetPositions();
-      case SPACE -> pauseGame();
+      case LEFT:
+        myPaddle.moveLeft();
+        break;
+      case RIGHT:
+        myPaddle.moveRight();
+        break;
+      case R:
+        resetPositions();
+        break;
+      case SPACE:
+        pauseGame();
+        break;
     }
   }
 
