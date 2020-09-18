@@ -60,14 +60,14 @@ public class Paddle extends Rectangle {
    * This method causes a Paddle object to move left
    */
   public void moveLeft() {
-    mySpeed = -100;
+    mySpeed = -175;
   }
 
   /**
    * This method causes a Paddle object to move right
    */
   public void moveRight() {
-    mySpeed = 100;
+    mySpeed = 175;
   }
 
   public void controlPause() {

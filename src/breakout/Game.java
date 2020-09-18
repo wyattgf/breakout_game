@@ -19,7 +19,8 @@ import javafx.util.Duration;
  */
 public class Game extends Application {
 
-  public static final String TITLE = "Breakout JavaFX";
+  private static final String TITLE = "Breakout JavaFX";
+  private static final String GAME_OVER = "Game is over!\nFinal Score: ";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 400;
   public static final int FRAMES_PER_SECOND = 60;
@@ -29,10 +30,13 @@ public class Game extends Application {
   // some things needed to remember during game
   private Scene myScene;
   private Paddle myPaddle;
+  private Player myPlayer = new Player();
   private Group root;
+  private Text scoreBoard;
   private BlockReader blockReader;
   private Ball myBall;
   private List<Block> level1Blocks;
+  private Timeline animation;
 
 
   /**
@@ -47,7 +51,7 @@ public class Game extends Application {
     stage.show();
     // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
-    Timeline animation = new Timeline();
+    animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
@@ -86,6 +90,8 @@ public class Game extends Application {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
     checkCollisions();
+    updateScoreBoard();
+    endGame();
   }
 
 
@@ -103,6 +109,8 @@ public class Game extends Application {
       case SPACE:
         pauseGame();
         break;
+      case L:
+        myPlayer.setPlayerLives(myPlayer.getLives() + 1);
     }
   }
 
@@ -124,14 +132,28 @@ public class Game extends Application {
     }
   }
 
-  private void handleBlockCollisions(Block block) {
-    if (myBall.getCenterX() + myBall.getRadius() <= block.getX()
-        || myBall.getCenterX() + myBall.getRadius() >= block.getX() + block.getBlockWidth()) {
-      myBall.bounceX();
+  private void updateScoreBoard(){
+    root.getChildren().remove(scoreBoard);
+    scoreBoard = new Text(10, 150, "Lives: " + (myPlayer.getLives() - myBall.livesLost())
+        + "  Score: " + myPlayer.getScore());
+    scoreBoard.setFont(new Font(20));
+    root.getChildren().add(scoreBoard);
+  }
 
-    } else if (myBall.getCenterY() <= block.getY() || myBall.getCenterY() >= block.getY()) {
+  private void handleBlockCollisions(Block block) {
+    if (myBall.getCenterX() <= block.getX()
+        || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
+      myBall.bounceX();
+      root.getChildren().remove(block);
+      level1Blocks.remove(block);
+
+    } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
+        || myBall.getCenterY()+ myBall.getRadius() >= block.getY()) {
       myBall.bounceY();
+      root.getChildren().remove(block);
+      level1Blocks.remove(block);
     }
+    myPlayer.setPlayerScore(myPlayer.getScore()+ 200);
   }
 
   private void handlePaddleCollision() {
@@ -151,6 +173,16 @@ public class Game extends Application {
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
+  }
+
+  private void endGame() {
+    if(myPlayer.getLives() - myBall.livesLost() == 0 || level1Blocks.size() == 0){
+      animation.stop();
+      root.getChildren().clear();
+      Text t = new Text(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, GAME_OVER + myPlayer.getScore());
+      t.setFont(new Font(20));
+      root.getChildren().add(t);
+    }
   }
 
 
