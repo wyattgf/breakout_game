@@ -4,6 +4,7 @@ package breakout;
  * @author Hosam Tageldin, Wyatt Focht
  */
 public class Player {
+
   //instance variables
   private int playerScore;
   private int playerLives;
@@ -14,34 +15,30 @@ public class Player {
   }
 
   /**
-   * 
    * @return the current score of the player
    */
-  public int getScore(){
+  public int getScore() {
     return this.playerScore;
   }
 
   /**
-   * 
-   * @return player's current number of lives 
+   * @return player's current number of lives
    */
-  public int getLives(){
+  public int getLives() {
     return this.playerLives;
   }
 
   /**
-   * 
    * @param score the new score for the player
    */
-  public void setPlayerScore(int score){
+  public void setPlayerScore(int score) {
     this.playerScore = score;
   }
 
   /**
-   *
    * @param lives the new number of lives for the player
    */
-  public void setPlayerLives(int lives){
+  public void setPlayerLives(int lives) {
     this.playerLives = lives;
   }
 

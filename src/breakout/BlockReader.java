@@ -10,18 +10,15 @@ public class BlockReader {
 
   //constants
   private static final String DIRECTORY = "data";
-  private static final String DESIRED_FILE_NAME = "/initialFile.txt";
-
   //instance variables
   private List<Block> listOfBlocks;
 
   public BlockReader() {
     listOfBlocks = new ArrayList<>();
-    readCreateBlocks();
   }
 
-  private void readCreateBlocks() {
-    File file = new File(DIRECTORY + DESIRED_FILE_NAME);
+  private void readCreateBlocks(String filename) {
+    File file = new File(DIRECTORY + "/" +filename);
     try {
       BufferedReader br = new BufferedReader(new FileReader(file));
       String line;
@@ -35,7 +32,8 @@ public class BlockReader {
   }
 
 
-  public List<Block> getBlocks() {
+  public List<Block> getBlocks(String filename) {
+    readCreateBlocks(filename);
     return listOfBlocks;
   }
 
