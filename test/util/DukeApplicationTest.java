@@ -124,7 +124,4 @@ public class DukeApplicationTest extends ApplicationTest {
     // make it "later" so the requested event has time to run
     WaitForAsyncUtils.waitForFxEvents();
   }
-
-
-
 }
