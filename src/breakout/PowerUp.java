@@ -19,12 +19,18 @@ public class PowerUp extends Circle {
     this.screenHeight = screenHeight;
     this.paused = false;
     this.myRoot = myRoot;
+    addPowerUpToRoot();
   }
-
+  public void addPowerUpToRoot(){
+    myRoot.getChildren().add(this);
+  }
+  public void removePowerUpFromRoot(){
+    myRoot.getChildren().remove(this);
+  }
   public void movePowerUp(double elapsedTime) {
     if (!paused) {
       if (this.getCenterY() - this.getRadius() >= screenHeight) {
-        myRoot.getChildren().remove(this);
+        removePowerUpFromRoot();
       }
       this.setCenterY(this.getCenterY() + MY_Y_DIRECTION * POWER_UP_SPEED * elapsedTime);
     }

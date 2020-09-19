@@ -1,5 +1,6 @@
 package breakout;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,6 +37,7 @@ public class Game extends Application {
   private BlockReader blockReader;
   private Ball myBall;
   private List<Block> level1Blocks;
+  private List<PowerUp> currentPowerUps;
   private Timeline animation;
 
 
@@ -90,8 +92,15 @@ public class Game extends Application {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
     checkCollisions();
+    updatePowerUps(elapsedTime);
     updateScoreBoard();
     endGame();
+  }
+
+  private void updatePowerUps(double elapsedTime) {
+    for (PowerUp p: currentPowerUps){
+      p.movePowerUp(elapsedTime);
+    }
   }
 
 
@@ -182,6 +191,17 @@ public class Game extends Application {
       Text t = new Text(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, GAME_OVER + myPlayer.getScore());
       t.setFont(new Font(20));
       root.getChildren().add(t);
+    }
+  }
+
+  private void createPowerUp(int initialX, int initialY){
+    if (currentPowerUps == null){
+      currentPowerUps = new ArrayList<>();
+    }
+    if (Math.random() <= 0.3){
+      PowerUp newPowerUp = new PowerUp(initialX, initialY, root, SCREEN_HEIGHT);
+      currentPowerUps.add(newPowerUp);
+
     }
   }
 
