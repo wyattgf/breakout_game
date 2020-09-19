@@ -128,6 +128,9 @@ public class Game extends Application {
         break;
       case L:
         myPlayer.setPlayerLives(myPlayer.getLives() + 1);
+        break;
+      case P:
+        createPowerUp(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,1);
     }
   }
 
@@ -226,8 +229,8 @@ public class Game extends Application {
     }
   }
 
-  public Group getRoot() {
-    return root;
+  public List<PowerUp> getCurrentPowerUps() {
+    return currentPowerUps;
   }
 
   /**

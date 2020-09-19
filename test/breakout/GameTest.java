@@ -175,4 +175,12 @@ class GameTest extends DukeApplicationTest {
     p.activatePowerUp();
     assertEquals(expectedWidth, myPaddle.getWidth());
   }
+
+  @Test
+  public void testPowerUpCheatKey() {
+    int expectedPowerUpCount = myGame.getCurrentPowerUps().size()+1;
+    press(myScene, KeyCode.P);
+    assertEquals(expectedPowerUpCount, myGame.getCurrentPowerUps().size());
+
+  }
 }
