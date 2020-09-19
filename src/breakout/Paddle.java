@@ -8,6 +8,7 @@ public class Paddle extends Rectangle {
   //constants
   private static final double PADDLE_HEIGHT = 15;
   private static final double INITIAL_WIDTH = 75;
+  private static final double MAX_WIDTH = 150;
   private static final double INITIAL_X = 0;
   private static final double INITIAL_Y = 0;
   private static final int PADDLE_SPEED_AT_REST = 0;
@@ -43,6 +44,7 @@ public class Paddle extends Rectangle {
    * @param newWidth double representing the new desired width of a Paddle object
    */
   public void changeWidth(double newWidth) {
+    if (myWidth < MAX_WIDTH)
     myWidth = newWidth;
     this.setWidth(newWidth);
   }

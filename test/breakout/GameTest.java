@@ -1,6 +1,7 @@
 package breakout;
 
 import java.util.concurrent.TimeUnit;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -17,9 +18,13 @@ class GameTest extends DukeApplicationTest {
   private final int BALL_RADIUS = 5;
   private final int INITIAL_PADDLE_WIDTH = 75;
   private static final int INITIAL_PADDLE_SPEED = 175;
+  public static final int SCREEN_WIDTH = 400;
+  public static final int SCREEN_HEIGHT = 400;
+  private static final int POWER_UP_PADDLE_DELTA = 10;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
+  private Player myPlayer;
   private Ball myBall;
   private Block block1, block5;
 
@@ -35,6 +40,7 @@ class GameTest extends DukeApplicationTest {
     stage.show();
 
     myPaddle = lookup("#paddle").query();
+    myPlayer = lookup("#player").query();
     myBall = lookup("#ball").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
@@ -144,5 +150,29 @@ class GameTest extends DukeApplicationTest {
     myBall.setCenterY(405);
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
     assertEquals(1, myBall.livesLost());
+  }
+
+  @Test
+  public void testAddLivesPowerUp() {
+    Group root = new Group();
+    double xPos = myPaddle.getX();
+    double yPos = myPaddle.getY();
+    int expectedLives = myPlayer.getLives() + 1;
+    PowerUp p = new PowerUp(xPos, yPos, root, SCREEN_HEIGHT, myPlayer, myPaddle);
+    p.manuallySetType(1);
+    p.activatePowerUp();
+    assertEquals(expectedLives, myPlayer.getLives());
+  }
+
+  @Test
+  public void testIncreasePaddleSizePowerUp() {
+    Group root = new Group();
+    double xPos = myPaddle.getX();
+    double yPos = myPaddle.getY();
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    PowerUp p = new PowerUp(xPos, yPos, root, SCREEN_HEIGHT, myPlayer, myPaddle);
+    p.manuallySetType(0);
+    p.activatePowerUp();
+    assertEquals(expectedWidth, myPaddle.getWidth());
   }
 }
