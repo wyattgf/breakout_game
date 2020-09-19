@@ -44,8 +44,9 @@ public class Paddle extends Rectangle {
    * @param newWidth double representing the new desired width of a Paddle object
    */
   public void changeWidth(double newWidth) {
-    if (myWidth < MAX_WIDTH)
-    myWidth = newWidth;
+    if (myWidth < MAX_WIDTH) {
+      myWidth = newWidth;
+    }
     this.setWidth(newWidth);
   }
 

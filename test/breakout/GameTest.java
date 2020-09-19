@@ -178,7 +178,7 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testPowerUpCheatKey() {
-    int expectedPowerUpCount = myGame.getCurrentPowerUps().size()+1;
+    int expectedPowerUpCount = myGame.getCurrentPowerUps().size() + 1;
     press(myScene, KeyCode.P);
     assertEquals(expectedPowerUpCount, myGame.getCurrentPowerUps().size());
 

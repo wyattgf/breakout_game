@@ -30,7 +30,8 @@ public class PowerUp extends Circle {
   private Player myPlayer;
   private Paddle myPaddle;
 
-  public PowerUp(double initialX, double initialY, Group myRoot, int screenHeight, Player myPlayer, Paddle myPaddle) {
+  public PowerUp(double initialX, double initialY, Group myRoot, int screenHeight, Player myPlayer,
+      Paddle myPaddle) {
     super(initialX, initialY, POWER_UP_RADIUS);
     assignPowerUpType();
     this.screenHeight = screenHeight;
@@ -67,7 +68,7 @@ public class PowerUp extends Circle {
     this.setFill(COLORS.get(myType));
   }
 
-  public void activatePowerUp(){
+  public void activatePowerUp() {
     switch (myType) {
       case 0:
         increasePaddleSize();
@@ -78,15 +79,16 @@ public class PowerUp extends Circle {
     }
     removePowerUpFromRoot();
   }
-  public void increasePaddleSize(){
-    myPaddle.changeWidth(myPaddle.getWidth()+PADDLE_DELTA);
+
+  public void increasePaddleSize() {
+    myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
   }
 
-  public void addExtraLife(){
-    myPlayer.setPlayerLives(myPlayer.getLives()+LIFE_BONUS);
+  public void addExtraLife() {
+    myPlayer.setPlayerLives(myPlayer.getLives() + LIFE_BONUS);
   }
 
-  public void manuallySetType(int type){
+  public void manuallySetType(int type) {
     myType = type;
   }
 

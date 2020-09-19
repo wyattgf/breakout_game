@@ -130,7 +130,7 @@ public class Game extends Application {
         myPlayer.setPlayerLives(myPlayer.getLives() + 1);
         break;
       case P:
-        createPowerUp(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,1);
+        createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
     }
   }
 
@@ -202,7 +202,7 @@ public class Game extends Application {
   private void pauseGame() {
     myPaddle.controlPause();
     myBall.controlPause();
-    for (PowerUp p : currentPowerUps){
+    for (PowerUp p : currentPowerUps) {
       p.controlPause();
     }
   }
@@ -210,7 +210,7 @@ public class Game extends Application {
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
-    for (PowerUp p : currentPowerUps){
+    for (PowerUp p : currentPowerUps) {
       p.removePowerUpFromRoot();
     }
     currentPowerUps.clear();
