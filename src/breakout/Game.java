@@ -202,11 +202,18 @@ public class Game extends Application {
   private void pauseGame() {
     myPaddle.controlPause();
     myBall.controlPause();
+    for (PowerUp p : currentPowerUps){
+      p.controlPause();
+    }
   }
 
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
+    for (PowerUp p : currentPowerUps){
+      p.removePowerUpFromRoot();
+    }
+    currentPowerUps.clear();
   }
 
   private void endGame() {

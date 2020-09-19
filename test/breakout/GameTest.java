@@ -183,4 +183,15 @@ class GameTest extends DukeApplicationTest {
     assertEquals(expectedPowerUpCount, myGame.getCurrentPowerUps().size());
 
   }
+
+  @Test
+  public void testPowerUpPause() {
+    press(myScene, KeyCode.P);
+    double expectedPos = myGame.getCurrentPowerUps().get(0).getCenterY();
+    press(myScene, KeyCode.SPACE);
+    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    double actualPos = myGame.getCurrentPowerUps().get(0).getCenterY();
+    assertEquals(expectedPos, actualPos);
+
+  }
 }

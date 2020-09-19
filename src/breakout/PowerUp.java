@@ -89,4 +89,9 @@ public class PowerUp extends Circle {
   public void manuallySetType(int type){
     myType = type;
   }
+
+  public void controlPause() {
+    paused = !paused;
+  }
+
 }
