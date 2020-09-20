@@ -33,8 +33,8 @@ public class Game extends Application {
   private Player myPlayer = new Player();
   private Group root;
   private Text scoreBoard;
-  private BlockReader blockReader;
   private Ball myBall;
+  private Level myLevel;
   private List<Block> level1Blocks;
   private Timeline animation;
 
@@ -65,8 +65,8 @@ public class Game extends Application {
     myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall.setId("ball");
-    blockReader = new BlockReader();
-    level1Blocks = blockReader.getBlocks();
+    myLevel = new Level();
+    level1Blocks = myLevel.getBlocks("initialFile.txt");
     int i = 1;
     for (Block block : level1Blocks) {
       root.getChildren().add(block);
@@ -132,7 +132,7 @@ public class Game extends Application {
     }
   }
 
-  private void updateScoreBoard(){
+  private void updateScoreBoard() {
     root.getChildren().remove(scoreBoard);
     scoreBoard = new Text(10, 150, "Lives: " + (myPlayer.getLives() - myBall.livesLost())
         + "  Score: " + myPlayer.getScore());
@@ -144,17 +144,21 @@ public class Game extends Application {
     if (myBall.getCenterX() <= block.getX()
         || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
       myBall.bounceX();
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
 
     } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
-        || myBall.getCenterY()+ myBall.getRadius() >= block.getY()) {
+        || myBall.getCenterY() + myBall.getRadius() >= block.getY()) {
       myBall.bounceY();
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
     }
-    myPlayer.setPlayerScore(myPlayer.getScore()+ 200);
+    root.getChildren().remove(block);
+    block.updateBlockDurability();
+    if(block.getBlockDurability() == 0){
+      level1Blocks.remove(block);
+      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    }else{
+      root.getChildren().add(block);
+    }
   }
+
 
   private void handlePaddleCollision() {
     if (myBall.getCenterY() <= myPaddle.getY()) {
@@ -176,10 +180,10 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if(myPlayer.getLives() - myBall.livesLost() == 0 || level1Blocks.size() == 0){
+    if (myPlayer.getLives() - myBall.livesLost() == 0 || level1Blocks.size() == 0) {
       animation.stop();
       root.getChildren().clear();
-      Text t = new Text(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, GAME_OVER + myPlayer.getScore());
+      Text t = new Text(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, GAME_OVER + myPlayer.getScore());
       t.setFont(new Font(20));
       root.getChildren().add(t);
     }
