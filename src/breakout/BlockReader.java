@@ -40,7 +40,7 @@ public class BlockReader {
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
     Block b = new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
-        Integer.parseInt(blockData[2]));
+        Math.max(1,Math.min(4,Integer.parseInt(blockData[2]))));
     return b;
   }
 }

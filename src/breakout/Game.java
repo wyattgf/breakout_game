@@ -144,17 +144,21 @@ public class Game extends Application {
     if (myBall.getCenterX() <= block.getX()
         || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
       myBall.bounceX();
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
 
     } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
         || myBall.getCenterY() + myBall.getRadius() >= block.getY()) {
       myBall.bounceY();
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
     }
-    myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    root.getChildren().remove(block);
+    block.updateBlockDurability();
+    if(block.getBlockDurability() == 0){
+      level1Blocks.remove(block);
+      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    }else{
+      root.getChildren().add(block);
+    }
   }
+
 
   private void handlePaddleCollision() {
     if (myBall.getCenterY() <= myPaddle.getY()) {

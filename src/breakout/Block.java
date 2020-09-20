@@ -1,5 +1,6 @@
 package breakout;
 
+import java.util.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 
@@ -12,6 +13,7 @@ public class Block extends Rectangle {
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
+  private static final List<Color> BLOCK_COLORS = Arrays.asList(Color.WHITE,Color.LIGHTGREY, Color.GREY, Color.DARKGREY, Color.BLACK);
   //instance variables
   private int myDurability;
 
@@ -22,20 +24,15 @@ public class Block extends Rectangle {
   }
 
   private void setColor() {
-    switch (myDurability) {
-      case -1:
-        this.setFill(Color.BLACK);
-        break;
-      case 3:
-        this.setFill(Color.DARKGREY);
-        break;
-      case 2:
-        this.setFill(Color.BLUE);
-        break;
-      case 1:
-        this.setFill(Color.RED);
-        break;
-    }
+    this.setFill(BLOCK_COLORS.get(myDurability));
+  }
+  public int getBlockDurability(){
+    return this.myDurability;
+  }
+
+  public void updateBlockDurability(){
+    this.myDurability = this.myDurability - 1;
+    this.setColor();
   }
 
   public double getBlockWidth() {
