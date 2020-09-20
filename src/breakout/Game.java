@@ -28,6 +28,7 @@ public class Game extends Application {
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final Paint BACKGROUND = Color.AZURE;
   private static final double POWER_UP_FREQ = 0.9;
+  private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
   private Scene myScene;
@@ -131,6 +132,10 @@ public class Game extends Application {
         break;
       case P:
         createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
+        break;
+      case W:
+        myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
+        break;
     }
   }
 

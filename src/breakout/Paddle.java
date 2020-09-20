@@ -33,6 +33,8 @@ public class Paddle extends Rectangle {
    * This method moves a Paddle object to the center of the screen
    */
   public void moveToStartingPosition() {
+    myWidth = INITIAL_WIDTH;
+    changeWidth(myWidth);
     this.setX(screenWidth / 2.0 - myWidth / 2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
     mySpeed = PADDLE_SPEED_AT_REST;

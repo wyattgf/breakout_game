@@ -194,4 +194,20 @@ class GameTest extends DukeApplicationTest {
     assertEquals(expectedPos, actualPos);
 
   }
+
+  @Test
+  public void testIncreasePaddleSizeCheatKey() {
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    press(myScene, KeyCode.W);
+    assertEquals(expectedWidth, myPaddle.getWidth());
+  }
+
+  @Test
+  public void testPaddleSizeUponReset() {
+    double expectedWidth = myPaddle.getWidth();
+    press(myScene, KeyCode.W);
+    press(myScene, KeyCode.W);
+    press(myScene, KeyCode.R);
+    assertEquals(expectedWidth, myPaddle.getWidth());
+  }
 }
