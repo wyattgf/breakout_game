@@ -36,8 +36,8 @@ public class Game extends Application {
   private Player myPlayer;
   private Group root;
   private Text scoreBoard;
-  private BlockReader blockReader;
   private Ball myBall;
+  private Level myLevel;
   private List<Block> level1Blocks;
   private List<PowerUp> currentPowerUps;
   private int numberOfPowerUps;
@@ -72,9 +72,11 @@ public class Game extends Application {
     myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall.setId("ball");
-    blockReader = new BlockReader();
+
+    myLevel = new Level();
+    level1Blocks = myLevel.getBlocks("initialFile.txt");
     currentPowerUps = new ArrayList<>();
-    level1Blocks = blockReader.getBlocks();
+
     int i = 1;
     for (Block block : level1Blocks) {
       root.getChildren().add(block);
@@ -163,10 +165,12 @@ public class Game extends Application {
     }
   }
 
+
   private void handlePowerUpPaddleCollision(PowerUp p) {
     p.activatePowerUp();
     currentPowerUps.remove(p);
   }
+
 
   private void updateScoreBoard() {
     root.getChildren().remove(scoreBoard);
@@ -180,20 +184,24 @@ public class Game extends Application {
     if (myBall.getCenterX() <= block.getX()
         || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
       myBall.bounceX();
-      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
-
 
     } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
         || myBall.getCenterY() + myBall.getRadius() >= block.getY()) {
       myBall.bounceY();
-      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
-      root.getChildren().remove(block);
-      level1Blocks.remove(block);
+
     }
-    myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    root.getChildren().remove(block);
+    block.updateBlockDurability();
+    if(block.getBlockDurability() == 0){
+      level1Blocks.remove(block);
+      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
+      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    }else{
+      root.getChildren().add(block);
+    }
+
   }
+
 
   private void handlePaddleCollision() {
     if (myBall.getCenterY() <= myPaddle.getY()) {

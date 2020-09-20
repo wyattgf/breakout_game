@@ -72,7 +72,7 @@ public class Ball extends Circle {
     }
   }
 
-  public int livesLost(){
+  public int livesLost() {
     return numberOfLivesLost;
   }
 
