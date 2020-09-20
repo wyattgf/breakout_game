@@ -1,5 +1,6 @@
 package breakout;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,16 +27,20 @@ public class Game extends Application {
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final Paint BACKGROUND = Color.AZURE;
+  private static final double POWER_UP_FREQ = 0.9;
+  private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
   private Scene myScene;
   private Paddle myPaddle;
-  private Player myPlayer = new Player();
+  private Player myPlayer;
   private Group root;
   private Text scoreBoard;
   private Ball myBall;
   private Level myLevel;
   private List<Block> level1Blocks;
+  private List<PowerUp> currentPowerUps;
+  private int numberOfPowerUps;
   private Timeline animation;
 
 
@@ -61,12 +66,17 @@ public class Game extends Application {
   Scene setupScene(int width, int height, Paint background) {
     // create one top level collection to organize the things in the scene
     root = new Group();
+    myPlayer = new Player();
+    myPlayer.setId("player");
     myPaddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
     myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall.setId("ball");
+
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
+    currentPowerUps = new ArrayList<>();
+
     int i = 1;
     for (Block block : level1Blocks) {
       root.getChildren().add(block);
@@ -74,6 +84,7 @@ public class Game extends Application {
     }
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
+    root.getChildren().add(myPlayer);
     // create a place to see the shapes
     Scene scene = new Scene(root, width, height, background);
     // respond to input
@@ -90,8 +101,17 @@ public class Game extends Application {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
     checkCollisions();
+    updatePowerUps(elapsedTime);
     updateScoreBoard();
     endGame();
+  }
+
+  private void updatePowerUps(double elapsedTime) {
+    if (currentPowerUps != null) {
+      for (PowerUp p : currentPowerUps) {
+        p.movePowerUp(elapsedTime);
+      }
+    }
   }
 
 
@@ -111,6 +131,13 @@ public class Game extends Application {
         break;
       case L:
         myPlayer.setPlayerLives(myPlayer.getLives() + 1);
+        break;
+      case P:
+        createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
+        break;
+      case W:
+        myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
+        break;
     }
   }
 
@@ -130,7 +157,20 @@ public class Game extends Application {
         break;
       }
     }
+    for (PowerUp powerup : currentPowerUps) {
+      if (powerup.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
+        handlePowerUpPaddleCollision(powerup);
+        break;
+      }
+    }
   }
+
+
+  private void handlePowerUpPaddleCollision(PowerUp p) {
+    p.activatePowerUp();
+    currentPowerUps.remove(p);
+  }
+
 
   private void updateScoreBoard() {
     root.getChildren().remove(scoreBoard);
@@ -148,15 +188,18 @@ public class Game extends Application {
     } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
         || myBall.getCenterY() + myBall.getRadius() >= block.getY()) {
       myBall.bounceY();
+
     }
     root.getChildren().remove(block);
     block.updateBlockDurability();
     if(block.getBlockDurability() == 0){
       level1Blocks.remove(block);
+      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
       myPlayer.setPlayerScore(myPlayer.getScore() + 200);
     }else{
       root.getChildren().add(block);
     }
+
   }
 
 
@@ -172,11 +215,18 @@ public class Game extends Application {
   private void pauseGame() {
     myPaddle.controlPause();
     myBall.controlPause();
+    for (PowerUp p : currentPowerUps) {
+      p.controlPause();
+    }
   }
 
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
+    for (PowerUp p : currentPowerUps) {
+      p.removePowerUpFromRoot();
+    }
+    currentPowerUps.clear();
   }
 
   private void endGame() {
@@ -189,6 +239,19 @@ public class Game extends Application {
     }
   }
 
+  private void createPowerUp(double initialX, double initialY, double powerUpFreq) {
+    if (Math.random() <= powerUpFreq) {
+      PowerUp newPowerUp = new PowerUp(initialX, initialY, root, SCREEN_HEIGHT, myPlayer, myPaddle);
+      newPowerUp.setId("powerup" + numberOfPowerUps);
+      numberOfPowerUps++;
+      currentPowerUps.add(newPowerUp);
+
+    }
+  }
+
+  public List<PowerUp> getCurrentPowerUps() {
+    return currentPowerUps;
+  }
 
   /**
    * Start the program.

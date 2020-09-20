@@ -1,9 +1,11 @@
 package breakout;
 
+import javafx.scene.shape.Rectangle;
+
 /**
  * @author Hosam Tageldin, Wyatt Focht
  */
-public class Player {
+public class Player extends Rectangle {
 
   //instance variables
   private int playerScore;
