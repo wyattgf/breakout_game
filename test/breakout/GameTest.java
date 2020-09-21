@@ -17,6 +17,7 @@ class GameTest extends DukeApplicationTest {
   private final int INITIAL_BALL_SPEED = 100;
   private final int BALL_RADIUS = 5;
   private final int INITIAL_PADDLE_WIDTH = 75;
+  private final int SCORE_ADDITION_PER_BLOCK = 200;
   private static final int INITIAL_PADDLE_SPEED = 175;
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 400;
@@ -26,7 +27,7 @@ class GameTest extends DukeApplicationTest {
   private Paddle myPaddle;
   private Player myPlayer;
   private Ball myBall;
-  private Block block1, block5;
+  private Block block1, block5, blockDestroyed;
 
   /**
    * Start special test version of application that does not animate on its own before each test.
@@ -44,6 +45,7 @@ class GameTest extends DukeApplicationTest {
     myBall = lookup("#ball").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
+    blockDestroyed = lookup("#block22").query();
   }
 
   @Test
@@ -85,12 +87,52 @@ class GameTest extends DukeApplicationTest {
     assertEquals(200, myPaddle.getY());
   }
 
+
   @Test
   public void testBlockPositionsBasedOnFile() {
     assertEquals(0, block1.getX());
     assertEquals(0, block1.getY());
     assertEquals(0, block5.getX());
     assertEquals(15, block5.getY());
+  }
+
+  @Test
+  public void testBallBounceOffBlock() {
+    myBall.setMyXDirection(0);
+    for(int i = 0; i<20; i++){
+      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    }
+    assertTrue(myBall.getCenterY()>165);
+    assertEquals(SCREEN_HEIGHT/2, myBall.getCenterX());
+
+  }
+
+  @Test
+  public void testBlockIsDestroyed(){
+    myBall.setMyXDirection(0);
+    for(int i = 0; i<20; i++){
+      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    }
+    assertTrue(!myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
+  }
+
+  @Test
+  public void testScoreIsUpdatedWhenBlockDestroyed() {
+    myBall.setMyXDirection(0);
+    for(int i = 0; i<20; i++){
+      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    }
+    assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
+  }
+
+  @Test
+  public void testBounceOffWall(){
+    myBall.setMyYDirection(0);
+    myBall.setCenterX(394);
+    for(int i = 0 ; i <4; i++){
+      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    }
+    assertTrue(myBall.getCenterX() < SCREEN_WIDTH);
   }
 
   @Test
@@ -128,13 +170,15 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testBallBouncesOffPaddle() {
-    myBall.setCenterY(Game.SCREEN_HEIGHT - 36);
+    myBall.setCenterY(Game.SCREEN_HEIGHT - 16);
     myBall.setMyXDirection(0);
     myBall.setMyYDirection(1);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    for(int i = 0; i<4; i++){
+      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    }
     assertEquals(Game.SCREEN_WIDTH / 2, myBall.getCenterX());
-    assertEquals(Game.SCREEN_HEIGHT - 36 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY),
-        myBall.getCenterY());
+    assertEquals((int) (Game.SCREEN_HEIGHT - 16 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY) -
+            (INITIAL_BALL_SPEED * 3 * Game.SECOND_DELAY)), (int) myBall.getCenterY());
   }
 
   @Test
@@ -151,6 +195,7 @@ class GameTest extends DukeApplicationTest {
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
     assertEquals(1, myBall.livesLost());
   }
+
 
   @Test
   public void testAddLivesPowerUp() {

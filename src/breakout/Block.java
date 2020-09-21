@@ -13,7 +13,7 @@ public class Block extends Rectangle {
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
-  private static final List<Color> BLOCK_COLORS = Arrays.asList(Color.WHITE,Color.LIGHTGREY, Color.GREY, Color.DARKGREY, Color.BLACK);
+  private static final List<Color> BLOCK_COLORS = Arrays.asList(Color.WHITE,Color.LIGHTGREY, Color.DARKGREY,Color.GREY, Color.BLACK);
   //instance variables
   private int myDurability;
 

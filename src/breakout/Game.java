@@ -181,13 +181,13 @@ public class Game extends Application {
   }
 
   private void handleBlockCollisions(Block block) {
-    if (myBall.getCenterX() <= block.getX()
+    if (myBall.getCenterY() - myBall.getRadius() >= block.getY() + block.getHeight()
+        || myBall.getCenterY() + myBall.getRadius() <= block.getY()) {
+      myBall.bounceY();
+
+    } else if (myBall.getCenterX() <= block.getX()
         || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
       myBall.bounceX();
-
-    } else if (myBall.getCenterY() + myBall.getRadius() <= block.getY()
-        || myBall.getCenterY() + myBall.getRadius() >= block.getY()) {
-      myBall.bounceY();
 
     }
     root.getChildren().remove(block);
