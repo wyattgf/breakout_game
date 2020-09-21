@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public class Paddle extends Rectangle {
 
   //constants
-  private static final double PADDLE_HEIGHT = 15;
+  private static final double PADDLE_HEIGHT = 5;
   private static final double INITIAL_WIDTH = 75;
   private static final double MAX_WIDTH = 150;
   private static final double INITIAL_X = 0;
