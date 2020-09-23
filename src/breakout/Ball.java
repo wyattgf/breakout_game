@@ -19,7 +19,6 @@ public class Ball extends Circle {
   private int screenHeight;
   private int myXDirection;
   private int myYDirection;
-  private int numberOfLivesLost;
   private boolean paused;
 
   public Ball(int screenWidth, int screenHeight) {
@@ -29,7 +28,6 @@ public class Ball extends Circle {
     this.screenHeight = screenHeight;
     this.myXDirection = 1;
     this.myYDirection = -1;
-    this.numberOfLivesLost = 0;
     this.paused = false;
     moveToCenter();
     this.setFill(Color.BLACK);
@@ -51,10 +49,6 @@ public class Ball extends Circle {
       if (this.getCenterY() - this.getRadius() <= 0) {
         myYDirection *= -1;
       }
-      if (this.getCenterY() - this.getRadius() >= screenHeight) {
-        numberOfLivesLost++;
-        moveToCenter();
-      }
       if (this.getCenterX() - this.getRadius() <= 0 ||
           this.getCenterX() + this.getRadius() >= screenWidth) {
         myXDirection *= -1;
@@ -70,10 +64,6 @@ public class Ball extends Circle {
     } else {
       myXDirection *= -1;
     }
-  }
-
-  public int livesLost() {
-    return numberOfLivesLost;
   }
 
   public void bounceX() {

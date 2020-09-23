@@ -18,7 +18,6 @@ public class PowerUp extends Circle {
   private static final double POWER_UP_RADIUS = 5;
   private static final int POWER_UP_SPEED = 50;
   private static final int MY_Y_DIRECTION = 1;
-  private static final int LIFE_BONUS = 1;
   private static final int PADDLE_DELTA = 10;
   private static final List<Color> COLORS = new ArrayList<>(
       Arrays.asList(Color.YELLOW, Color.CYAN));
@@ -85,7 +84,7 @@ public class PowerUp extends Circle {
   }
 
   public void addExtraLife() {
-    myPlayer.setPlayerLives(myPlayer.getLives() + LIFE_BONUS);
+    myPlayer.addLife();
   }
 
   public void manuallySetType(int type) {

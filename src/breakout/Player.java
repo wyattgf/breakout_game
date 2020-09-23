@@ -26,8 +26,19 @@ public class Player extends Rectangle {
   /**
    * @return player's current number of lives
    */
-  public int getLives() {
+  public int livesLeft() {
+
     return this.playerLives;
+  }
+  public void addLife(){
+    this.updateLives(1);
+  }
+
+  public void lostLife(){
+    this.updateLives(-1);
+  }
+  private void updateLives(int lives){
+    this.playerLives += lives;
   }
 
   /**
@@ -37,10 +48,8 @@ public class Player extends Rectangle {
     this.playerScore = score;
   }
 
-  /**
-   * @param lives the new number of lives for the player
-   */
-  public void setPlayerLives(int lives) {
+
+  private void setPlayerLives(int lives) {
     this.playerLives = lives;
   }
 

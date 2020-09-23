@@ -35,8 +35,8 @@ public class Game extends Application {
   private Paddle myPaddle;
   private Player myPlayer;
   private Group root;
-  private Text scoreBoard;
   private Ball myBall;
+  private ScoreBoard myScoreBoard;
   private Level myLevel;
   private List<Block> level1Blocks;
   private List<PowerUp> currentPowerUps;
@@ -74,7 +74,7 @@ public class Game extends Application {
     myPaddle.setId("paddle");
     myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall.setId("ball");
-
+    myScoreBoard = new ScoreBoard();
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
     currentPowerUps = new ArrayList<>();
@@ -104,7 +104,7 @@ public class Game extends Application {
     myPaddle.movePaddle(elapsedTime);
     checkCollisions();
     updatePowerUps(elapsedTime);
-    updateScoreBoard();
+    myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }
 
@@ -132,7 +132,7 @@ public class Game extends Application {
         pauseGame();
         break;
       case L:
-        myPlayer.setPlayerLives(myPlayer.getLives() + 1);
+        myPlayer.addLife();
         break;
       case P:
         createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
@@ -172,21 +172,16 @@ public class Game extends Application {
         break;
       }
     }
+    if (myBall.getCenterY() - myBall.getRadius() >= SCREEN_HEIGHT) {
+      myPlayer.lostLife();
+      myBall.moveToCenter();
+    }
   }
 
 
   private void handlePowerUpPaddleCollision(PowerUp p) {
     p.activatePowerUp();
     currentPowerUps.remove(p);
-  }
-
-
-  private void updateScoreBoard() {
-    root.getChildren().remove(scoreBoard);
-    scoreBoard = new Text(10, 150, "Lives: " + (myPlayer.getLives() - myBall.livesLost())
-        + "  Score: " + myPlayer.getScore());
-    scoreBoard.setFont(new Font(20));
-    root.getChildren().add(scoreBoard);
   }
 
   private void handleBlockCollisions(Block block) {
@@ -245,7 +240,7 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.getLives() - myBall.livesLost() == 0 || level1Blocks.size() == 0) {
+    if (myPlayer.livesLeft() == 0 || level1Blocks.size() == 0) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, GAME_OVER + myPlayer.getScore());
