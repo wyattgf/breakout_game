@@ -42,6 +42,7 @@ public class Game extends Application {
   private List<PowerUp> currentPowerUps;
   private int numberOfPowerUps;
   private Timeline animation;
+  private boolean paused;
 
 
   /**
@@ -56,6 +57,7 @@ public class Game extends Application {
     stage.show();
     // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
+    paused = false;
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -138,6 +140,13 @@ public class Game extends Application {
       case W:
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
         break;
+      case D:
+        root.getChildren().remove(level1Blocks.get(0));
+        level1Blocks.remove(0);
+        break;
+      case F:
+        freezeGame();
+        break;
     }
   }
 
@@ -211,12 +220,18 @@ public class Game extends Application {
       myBall.bounceX();
     }
   }
-
   private void pauseGame() {
-    myPaddle.controlPause();
-    myBall.controlPause();
+    if(!paused){
+      animation.pause();
+    }else{
+      animation.play();
+    }
+    paused = !paused;
+  }
+  private void freezeGame() {
+    myBall.controlFreeze();
     for (PowerUp p : currentPowerUps) {
-      p.controlPause();
+      p.controlFreeze();
     }
   }
 

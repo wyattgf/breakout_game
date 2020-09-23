@@ -92,7 +92,7 @@ public class PowerUp extends Circle {
     myType = type;
   }
 
-  public void controlPause() {
+  public void controlFreeze() {
     paused = !paused;
   }
 

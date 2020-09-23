@@ -158,9 +158,9 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testPauseCheatKey() {
+  public void testFreezeCheatKey() {
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
-    press(myScene, KeyCode.SPACE);
+    press(myScene, KeyCode.F);
     assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
     assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
@@ -230,10 +230,10 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testPowerUpPause() {
+  public void testPowerUpFreeze() {
     press(myScene, KeyCode.P);
     double expectedPos = myGame.getCurrentPowerUps().get(0).getCenterY();
-    press(myScene, KeyCode.SPACE);
+    press(myScene, KeyCode.F);
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
     double actualPos = myGame.getCurrentPowerUps().get(0).getCenterY();
     assertEquals(expectedPos, actualPos);

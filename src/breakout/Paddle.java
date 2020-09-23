@@ -75,10 +75,6 @@ public class Paddle extends Rectangle {
     mySpeed = 175;
   }
 
-  public void controlPause() {
-    paused = !paused;
-  }
-
   /**
    * This method returns the mySpeed instance variable of a Paddle
    *

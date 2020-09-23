@@ -110,7 +110,7 @@ public class Ball extends Circle {
     myYDirection = direction;
   }
 
-  public void controlPause() {
+  public void controlFreeze() {
     paused = !paused;
   }
 
