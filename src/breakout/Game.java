@@ -41,8 +41,6 @@ public class Game extends Application {
   private List<Ball> myBalls;
   private Level myLevel;
   private List<Block> level1Blocks;
-  private List<PowerUp> currentPowerUps;
-  private int numberOfPowerUps;
   private Timeline animation;
   private boolean paused;
   private PowerUpManager powerUpManager;
@@ -79,7 +77,7 @@ public class Game extends Application {
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
-    currentPowerUps = new ArrayList<>();
+
 
     int i = 1;
     for (Block block : level1Blocks) {
@@ -127,18 +125,10 @@ public class Game extends Application {
   void step(double elapsedTime) {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
+    powerUpManager.updatePowerUps(elapsedTime);
     checkCollisions();
-    updatePowerUps(elapsedTime);
     updateScoreBoard();
     endGame();
-  }
-
-  private void updatePowerUps(double elapsedTime) {
-    if (currentPowerUps != null) {
-      for (PowerUp p : currentPowerUps) {
-        p.movePowerUp(elapsedTime);
-      }
-    }
   }
 
 
@@ -160,7 +150,7 @@ public class Game extends Application {
         myPlayer.setPlayerLives(myPlayer.getLives() + 1);
         break;
       case P:
-        createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
+        PowerUp powerup = powerUpManager.createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         break;
       case W:
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
@@ -191,19 +181,11 @@ public class Game extends Application {
         break;
       }
     }
-    for (PowerUp powerup : currentPowerUps) {
-      if (powerup.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-        handlePowerUpPaddleCollision(powerup);
-        break;
-      }
-    }
+    powerUpManager.handlePowerUpPaddleCollision();
   }
 
 
-  private void handlePowerUpPaddleCollision(PowerUp p) {
-    p.activatePowerUp();
-    currentPowerUps.remove(p);
-  }
+
 
 
   private void updateScoreBoard() {
@@ -228,7 +210,7 @@ public class Game extends Application {
     block.updateBlockDurability();
     if(block.getBlockDurability() == 0){
       level1Blocks.remove(block);
-      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
+      powerUpManager.createPowerUp(block.getX(), block.getY());
       myPlayer.setPlayerScore(myPlayer.getScore() + 200);
     }else{
       root.getChildren().add(block);
@@ -255,18 +237,13 @@ public class Game extends Application {
   }
   private void freezeGame() {
     myBall.controlFreeze();
-    for (PowerUp p : currentPowerUps) {
-      p.controlFreeze();
-    }
+    powerUpManager.controlFreeze();
   }
 
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
-    for (PowerUp p : currentPowerUps) {
-      p.removePowerUpFromRoot();
-    }
-    currentPowerUps.clear();
+    powerUpManager.resetPositions();
   }
 
   private void endGame() {
@@ -279,18 +256,9 @@ public class Game extends Application {
     }
   }
 
-  private void createPowerUp(double initialX, double initialY, double powerUpFreq) {
-    if (Math.random() <= powerUpFreq) {
-      PowerUp newPowerUp = new PowerUp(initialX, initialY, root, SCREEN_HEIGHT, myPlayer, myPaddle);
-      newPowerUp.setId("powerup" + numberOfPowerUps);
-      numberOfPowerUps++;
-      currentPowerUps.add(newPowerUp);
 
-    }
-  }
-
-  public List<PowerUp> getCurrentPowerUps() {
-    return currentPowerUps;
+  public PowerUpManager getPowerUpManager() {
+    return powerUpManager;
   }
 
   /**

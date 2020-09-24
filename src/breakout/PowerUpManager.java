@@ -7,7 +7,8 @@ import java.util.Random;
 
 public class PowerUpManager {
 
-  private static final List<PowerUp> POSSIBLE_POWER_UPS = List.of(new PowerUpPaddleSize());
+  private final List<PowerUp> POSSIBLE_POWER_UPS = List
+      .of(new PowerUpPaddleSize(0, 0, this), new PowerUpLife(0, 0, this));
 
   private Group myRoot;
   private List<Paddle> myPaddles;
@@ -16,6 +17,7 @@ public class PowerUpManager {
   private Player myPlayer;
   private List<PowerUp> currentPowerUps;
   private int powerUpCount;
+  private boolean paused;
 
 
   public PowerUpManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
@@ -25,19 +27,23 @@ public class PowerUpManager {
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
     this.screenHeight = screenHeight;
-    currentPowerUps = new ArrayList<PowerUp>();
+    currentPowerUps = new ArrayList<>();
     powerUpCount = 0;
+    paused = false;
 
   }
 
-  public List<PowerUp> createPowerUps() {
-    PowerUp newPowerUp = POSSIBLE_POWER_UPS.get(new Random().nextInt(POSSIBLE_POWER_UPS.size()));
+  public PowerUp createPowerUp(double xPosition, double yPosition) {
+    PowerUp placeHolder = POSSIBLE_POWER_UPS.get(new Random().nextInt(POSSIBLE_POWER_UPS.size()));
+    PowerUp newPowerUp = placeHolder.newCopy();
+    newPowerUp.setCenterX(xPosition);
+    newPowerUp.setCenterY(yPosition);
     newPowerUp.setId("powerup" + powerUpCount);
     powerUpCount++;
     currentPowerUps.add(newPowerUp);
     addPowerUpToRoot(newPowerUp);
 
-    return currentPowerUps;
+    return newPowerUp;
   }
 
   public void removePowerUpFromRoot(PowerUp p) {
@@ -48,19 +54,62 @@ public class PowerUpManager {
     myRoot.getChildren().add(p);
   }
 
-  private boolean determinePowerUpCollision(){
+  private PowerUp determinePowerUpCollision() {
     for (PowerUp powerup : currentPowerUps) {
       if (powerup.getBoundsInParent().intersects(myPaddles.get(0).getBoundsInParent())) {
-        return true;
+        return powerup;
       }
     }
-    return false;
+    return null;
   }
 
-  public void handlePowerUpPaddleCollision(PowerUp p) {
-    if (determinePowerUpCollision()){
-      p.activatePowerUp();
-      currentPowerUps.remove(p);
+  public void handlePowerUpPaddleCollision() {
+    PowerUp p = determinePowerUpCollision();
+    if (p != null) {
+      powerUpActivation(p);
     }
+  }
+
+  public void powerUpActivation(PowerUp p) {
+    p.activatePowerUp();
+    removePowerUpFromRoot(p);
+    currentPowerUps.remove(p);
+  }
+
+  public void updatePowerUps(double elapsedTime) {
+    for (PowerUp p : currentPowerUps) {
+      if (!paused) {
+        if (p.getCenterY() - p.getRadius() >= screenHeight) {
+          removePowerUpFromRoot(p);
+        }
+        p.setCenterY(p.getCenterY() + p.getYDirection() * p.getPowerUpSpeed() * elapsedTime);
+      }
+    }
+  }
+
+  public void controlFreeze() {
+    paused = !paused;
+  }
+
+  public void resetPositions() {
+    for (PowerUp p : currentPowerUps) {
+      removePowerUpFromRoot(p);
+    }
+    currentPowerUps.clear();
+  }
+
+  public Paddle getPaddle() {
+    if (myPaddles!=null) {
+      return myPaddles.get(0);
+    }
+    return null;
+  }
+
+  public Player getPlayer() {
+    return myPlayer;
+  }
+
+  public List<PowerUp> getCurrentPowerUps() {
+    return currentPowerUps;
   }
 }

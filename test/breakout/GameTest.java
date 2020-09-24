@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,9 +41,9 @@ class GameTest extends DukeApplicationTest {
     stage.setScene(myScene);
     stage.show();
 
-    myPaddle = lookup("#paddle").query();
+    myPaddle = lookup("#paddle0").query();
     myPlayer = lookup("#player").query();
-    myBall = lookup("#ball").query();
+    myBall = lookup("#ball0").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
     blockDestroyed = lookup("#block22").query();
@@ -199,43 +200,41 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testAddLivesPowerUp() {
-    Group root = new Group();
     double xPos = myPaddle.getX();
     double yPos = myPaddle.getY();
     int expectedLives = myPlayer.getLives() + 1;
-    PowerUp p = new PowerUp(xPos, yPos, root, SCREEN_HEIGHT, myPlayer, myPaddle);
-    p.manuallySetType(1);
+    PowerUp p = new PowerUpLife(xPos, yPos, myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(expectedLives, myPlayer.getLives());
   }
 
   @Test
   public void testIncreasePaddleSizePowerUp() {
-    Group root = new Group();
     double xPos = myPaddle.getX();
     double yPos = myPaddle.getY();
     double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
-    PowerUp p = new PowerUp(xPos, yPos, root, SCREEN_HEIGHT, myPlayer, myPaddle);
-    p.manuallySetType(0);
+    PowerUp p = new PowerUpPaddleSize(xPos, yPos, myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(expectedWidth, myPaddle.getWidth());
   }
 
   @Test
   public void testPowerUpCheatKey() {
-    int expectedPowerUpCount = myGame.getCurrentPowerUps().size() + 1;
+    List<PowerUp> currentPowerUps = myGame.getPowerUpManager().getCurrentPowerUps();
+    int expectedPowerUpCount = currentPowerUps.size() + 1;
     press(myScene, KeyCode.P);
-    assertEquals(expectedPowerUpCount, myGame.getCurrentPowerUps().size());
+    assertEquals(expectedPowerUpCount, currentPowerUps.size());
 
   }
 
   @Test
   public void testPowerUpFreeze() {
+    List<PowerUp> currentPowerUps = myGame.getPowerUpManager().getCurrentPowerUps();
     press(myScene, KeyCode.P);
-    double expectedPos = myGame.getCurrentPowerUps().get(0).getCenterY();
+    double expectedPos = currentPowerUps.get(0).getCenterY();
     press(myScene, KeyCode.F);
     javafxRun(() -> myGame.step(Game.SECOND_DELAY));
-    double actualPos = myGame.getCurrentPowerUps().get(0).getCenterY();
+    double actualPos = currentPowerUps.get(0).getCenterY();
     assertEquals(expectedPos, actualPos);
 
   }
