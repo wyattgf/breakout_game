@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -20,6 +22,9 @@ class GameTest extends DukeApplicationTest {
   private final int INITIAL_PADDLE_WIDTH = 75;
   private final int SCORE_ADDITION_PER_BLOCK = 200;
   private static final int INITIAL_PADDLE_SPEED = 175;
+  private static final Paint BACKGROUND = Color.AZURE;
+  private static final int FRAMES_PER_SECOND = 60;
+  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 400;
   private static final int POWER_UP_PADDLE_DELTA = 10;
@@ -37,7 +42,7 @@ class GameTest extends DukeApplicationTest {
    */
   @Override
   public void start(Stage stage) {
-    myScene = myGame.setupScene(Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT, Game.BACKGROUND);
+    myScene = myGame.setupScene(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.show();
 
@@ -51,16 +56,16 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testInitialBallProperties() {
-    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterX());
-    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterY());
+    assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterX());
+    assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterY());
     assertEquals(BALL_RADIUS, myBall.getRadius());
     assertEquals(INITIAL_BALL_SPEED, myBall.getSpeed());
   }
 
   @Test
   public void testInitialPaddlePositionAndSize() {
-    assertEquals(Game.SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
-    assertEquals(Game.SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
+    assertEquals(SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
+    assertEquals(SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
     assertEquals(INITIAL_PADDLE_WIDTH, myPaddle.getWidth());
   }
 
@@ -70,9 +75,9 @@ class GameTest extends DukeApplicationTest {
     myPaddle.setY(200);
 
     press(myScene, KeyCode.RIGHT);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
 
-    assertEquals(200 + (INITIAL_PADDLE_SPEED * Game.SECOND_DELAY), myPaddle.getX());
+    assertEquals(200 + (INITIAL_PADDLE_SPEED * SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
@@ -82,9 +87,9 @@ class GameTest extends DukeApplicationTest {
     myPaddle.setY(200);
 
     press(myScene, KeyCode.LEFT);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
 
-    assertEquals(200 - (INITIAL_PADDLE_SPEED * Game.SECOND_DELAY), myPaddle.getX());
+    assertEquals(200 - (INITIAL_PADDLE_SPEED * SECOND_DELAY), myPaddle.getX());
     assertEquals(200, myPaddle.getY());
   }
 
@@ -101,7 +106,7 @@ class GameTest extends DukeApplicationTest {
   public void testBallBounceOffBlock() {
     myBall.setMyXDirection(0);
     for(int i = 0; i<20; i++){
-      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+      javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertTrue(myBall.getCenterY()>165);
     assertEquals(SCREEN_HEIGHT/2, myBall.getCenterX());
@@ -112,7 +117,7 @@ class GameTest extends DukeApplicationTest {
   public void testBlockIsDestroyed(){
     myBall.setMyXDirection(0);
     for(int i = 0; i<20; i++){
-      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+      javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertTrue(!myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
   }
@@ -121,7 +126,7 @@ class GameTest extends DukeApplicationTest {
   public void testScoreIsUpdatedWhenBlockDestroyed() {
     myBall.setMyXDirection(0);
     for(int i = 0; i<20; i++){
-      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+      javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
   }
@@ -131,7 +136,7 @@ class GameTest extends DukeApplicationTest {
     myBall.setMyYDirection(0);
     myBall.setCenterX(394);
     for(int i = 0 ; i <4; i++){
-      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+      javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertTrue(myBall.getCenterX() < SCREEN_WIDTH);
   }
@@ -140,9 +145,9 @@ class GameTest extends DukeApplicationTest {
   public void testBallBounceOffCorner() {
     myBall.setCenterX(395);
     myBall.setCenterY(5);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
-    assertEquals(395 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(5 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(395 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
+    assertEquals(5 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
@@ -152,48 +157,48 @@ class GameTest extends DukeApplicationTest {
     myPaddle.setX(0);
     myPaddle.setY(0);
     press(myScene, KeyCode.R);
-    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterX());
-    assertEquals(Game.SCREEN_WIDTH / 2.0, myBall.getCenterY());
-    assertEquals(Game.SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
-    assertEquals(Game.SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
+    assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterX());
+    assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterY());
+    assertEquals(SCREEN_WIDTH / 2.0 - myPaddle.getWidth() / 2.0, myPaddle.getX());
+    assertEquals(SCREEN_HEIGHT - (2 * myPaddle.getHeight()), myPaddle.getY());
   }
 
   @Test
   public void testFreezeCheatKey() {
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
     press(myScene, KeyCode.F);
-    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
-    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
+    assertEquals(200 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(200 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
   public void testBallBouncesOffPaddle() {
-    myBall.setCenterY(Game.SCREEN_HEIGHT - 16);
+    myBall.setCenterY(SCREEN_HEIGHT - 16);
     myBall.setMyXDirection(0);
     myBall.setMyYDirection(1);
     for(int i = 0; i<4; i++){
-      javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+      javafxRun(() -> myGame.step(SECOND_DELAY));
     }
-    assertEquals(Game.SCREEN_WIDTH / 2, myBall.getCenterX());
-    assertEquals((int) (Game.SCREEN_HEIGHT - 16 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY) -
-            (INITIAL_BALL_SPEED * 3 * Game.SECOND_DELAY)), (int) myBall.getCenterY());
+    assertEquals(SCREEN_WIDTH / 2, myBall.getCenterX());
+    assertEquals((int) (SCREEN_HEIGHT - 16 + (INITIAL_BALL_SPEED * SECOND_DELAY) -
+            (INITIAL_BALL_SPEED * 3 * SECOND_DELAY)), (int) myBall.getCenterY());
   }
 
   @Test
   public void testBallGoesToCenterAfterLeavingScreen() {
     myBall.setCenterY(500);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
-    assertEquals(200 + (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200 - (INITIAL_BALL_SPEED * Game.SECOND_DELAY), myBall.getCenterY());
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(200 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
   public void testPlayerLosesLifeAfterMissingBall() {
     myBall.setCenterY(405);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
     assertEquals(1, myBall.livesLost());
   }
 
@@ -233,7 +238,7 @@ class GameTest extends DukeApplicationTest {
     press(myScene, KeyCode.P);
     double expectedPos = currentPowerUps.get(0).getCenterY();
     press(myScene, KeyCode.F);
-    javafxRun(() -> myGame.step(Game.SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
     double actualPos = currentPowerUps.get(0).getCenterY();
     assertEquals(expectedPos, actualPos);
 

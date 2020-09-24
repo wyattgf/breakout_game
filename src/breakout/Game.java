@@ -22,12 +22,11 @@ public class Game extends Application {
 
   private static final String TITLE = "Breakout JavaFX";
   private static final String GAME_OVER = "Game is over!\nFinal Score: ";
-  public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
-  public static final int FRAMES_PER_SECOND = 60;
-  public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static final Paint BACKGROUND = Color.AZURE;
-  private static final double POWER_UP_FREQ = 0.9;
+  private static final int SCREEN_WIDTH = 400;
+  private static final int SCREEN_HEIGHT = 400;
+  private static final int FRAMES_PER_SECOND = 60;
+  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private static final Paint BACKGROUND = Color.AZURE;
   private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
