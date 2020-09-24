@@ -41,8 +41,8 @@ public class Game extends Application {
   private Level myLevel;
   private List<Block> level1Blocks;
   private Timeline animation;
-  private boolean paused;
   private PowerUpManager powerUpManager;
+  private boolean paused;
 
 
   /**
@@ -72,9 +72,9 @@ public class Game extends Application {
     createPlayer();
     createPaddle();
     myPaddle = myPaddles.get(0);
+    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     createBall();
     myBall = myBalls.get(0);
-    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
 
@@ -104,7 +104,7 @@ public class Game extends Application {
     if (myBalls == null){
       myBalls = new ArrayList<>();
     }
-    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,root,myPaddles,myPlayer, powerUpManager);
     b.setId("ball" + myBalls.size());
     myBalls.add(b);
   }
@@ -123,10 +123,10 @@ public class Game extends Application {
   // - collisions, did things intersect and, if so, what should happen
   // - goals, did the game or level end?
   void step(double elapsedTime) {
-    myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
-    checkCollisions();
+    powerUpManager.handlePowerUpPaddleCollision();
+    myBall.moveBall(elapsedTime, level1Blocks);
     myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }
@@ -150,7 +150,7 @@ public class Game extends Application {
         myPlayer.addLife();
         break;
       case P:
-        PowerUp powerup = powerUpManager.createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        PowerUp powerup = powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
         break;
       case W:
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
@@ -171,57 +171,6 @@ public class Game extends Application {
     }
   }
 
-  private void checkCollisions() {
-    if (myBall.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-      handlePaddleCollision();
-    }
-    for (Block block : level1Blocks) {
-      if (myBall.getBoundsInParent().intersects(block.getBoundsInParent())) {
-        handleBlockCollisions(block);
-        break;
-      }
-    }
-    if (myBall.getCenterY() - myBall.getRadius() >= SCREEN_HEIGHT) {
-      myPlayer.lostLife();
-      myBall.moveToCenter();
-    }
-    powerUpManager.handlePowerUpPaddleCollision();
-  }
-
-
-
-
-  private void handleBlockCollisions(Block block) {
-    if (myBall.getCenterY() - myBall.getRadius() >= block.getY() + block.getHeight()
-        || myBall.getCenterY() + myBall.getRadius() <= block.getY()) {
-      myBall.bounceY();
-
-    } else if (myBall.getCenterX() <= block.getX()
-        || myBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
-      myBall.bounceX();
-
-    }
-    root.getChildren().remove(block);
-    block.updateBlockDurability();
-    if(block.getBlockDurability() == 0){
-      level1Blocks.remove(block);
-      powerUpManager.createPowerUp(block.getX(), block.getY());
-      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
-    }else{
-      root.getChildren().add(block);
-    }
-
-  }
-
-
-  private void handlePaddleCollision() {
-    if (myBall.getCenterY() <= myPaddle.getY()) {
-      myBall.bounceY();
-    } else if (myBall.getCenterX() + myBall.getRadius() <= myPaddle.getX()
-        || myBall.getCenterX() >= myPaddle.getX()) {
-      myBall.bounceX();
-    }
-  }
   private void pauseGame() {
     if(!paused){
       animation.pause();
@@ -245,7 +194,7 @@ public class Game extends Application {
     if (myPlayer.livesLeft() == 0 || level1Blocks.size() == 0) {
       animation.stop();
       root.getChildren().clear();
-      Text t = new Text(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, GAME_OVER + myPlayer.getScore());
+      Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
       t.setFont(new Font(20));
       root.getChildren().add(t);
     }

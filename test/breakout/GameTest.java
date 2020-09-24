@@ -192,8 +192,8 @@ class GameTest extends DukeApplicationTest {
   public void testBallGoesToCenterAfterLeavingScreen() {
     myBall.setCenterY(500);
     javafxRun(() -> myGame.step(SECOND_DELAY));
-    assertEquals(200, myBall.getCenterX());
-    assertEquals(200, myBall.getCenterY());
+    assertEquals(200 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
+    assertEquals(200 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
   }
 
   @Test
