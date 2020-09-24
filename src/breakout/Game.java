@@ -22,27 +22,27 @@ public class Game extends Application {
 
   private static final String TITLE = "Breakout JavaFX";
   private static final String GAME_OVER = "Game is over!\nFinal Score: ";
-  public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
-  public static final int FRAMES_PER_SECOND = 60;
-  public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static final Paint BACKGROUND = Color.AZURE;
-  private static final double POWER_UP_FREQ = 0.9;
+  private static final int SCREEN_WIDTH = 400;
+  private static final int SCREEN_HEIGHT = 400;
+  private static final int FRAMES_PER_SECOND = 60;
+  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private static final Paint BACKGROUND = Color.AZURE;
   private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
   private Scene myScene;
-  private Paddle myPaddle;
+  private List<Paddle> myPaddles;
+  private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
+  private Ball myBall;
   private Player myPlayer;
   private Group root;
   private Text scoreBoard;
-  private Ball myBall;
+  private List<Ball> myBalls;
   private Level myLevel;
   private List<Block> level1Blocks;
-  private List<PowerUp> currentPowerUps;
-  private int numberOfPowerUps;
   private Timeline animation;
   private boolean paused;
+  private PowerUpManager powerUpManager;
 
 
   /**
@@ -68,16 +68,15 @@ public class Game extends Application {
   Scene setupScene(int width, int height, Paint background) {
     // create one top level collection to organize the things in the scene
     root = new Group();
-    myPlayer = new Player();
-    myPlayer.setId("player");
-    myPaddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
-    myPaddle.setId("paddle");
-    myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
-    myBall.setId("ball");
-
+    createPlayer();
+    createPaddle();
+    myPaddle = myPaddles.get(0);
+    createBall();
+    myBall = myBalls.get(0);
+    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
-    currentPowerUps = new ArrayList<>();
+
 
     int i = 1;
     for (Block block : level1Blocks) {
@@ -95,6 +94,29 @@ public class Game extends Application {
     return scene;
   }
 
+  private void createPlayer() {
+    myPlayer = new Player();
+    myPlayer.setId("player");
+  }
+
+  private void createBall() {
+    if (myBalls == null){
+      myBalls = new ArrayList<>();
+    }
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
+    b.setId("ball" + myBalls.size());
+    myBalls.add(b);
+  }
+
+  private void createPaddle() {
+    if (myPaddles == null){
+      myPaddles = new ArrayList<>();
+    }
+    Paddle p = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
+    p.setId("paddle" + myPaddles.size());
+    myPaddles.add(p);
+  }
+
   // Handle the game's "rules" for every "moment":
   // - movement, how do things change over time
   // - collisions, did things intersect and, if so, what should happen
@@ -102,18 +124,10 @@ public class Game extends Application {
   void step(double elapsedTime) {
     myBall.moveBall(elapsedTime);
     myPaddle.movePaddle(elapsedTime);
+    powerUpManager.updatePowerUps(elapsedTime);
     checkCollisions();
-    updatePowerUps(elapsedTime);
     updateScoreBoard();
     endGame();
-  }
-
-  private void updatePowerUps(double elapsedTime) {
-    if (currentPowerUps != null) {
-      for (PowerUp p : currentPowerUps) {
-        p.movePowerUp(elapsedTime);
-      }
-    }
   }
 
 
@@ -135,7 +149,7 @@ public class Game extends Application {
         myPlayer.setPlayerLives(myPlayer.getLives() + 1);
         break;
       case P:
-        createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1);
+        PowerUp powerup = powerUpManager.createPowerUp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         break;
       case W:
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
@@ -166,19 +180,11 @@ public class Game extends Application {
         break;
       }
     }
-    for (PowerUp powerup : currentPowerUps) {
-      if (powerup.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-        handlePowerUpPaddleCollision(powerup);
-        break;
-      }
-    }
+    powerUpManager.handlePowerUpPaddleCollision();
   }
 
 
-  private void handlePowerUpPaddleCollision(PowerUp p) {
-    p.activatePowerUp();
-    currentPowerUps.remove(p);
-  }
+
 
 
   private void updateScoreBoard() {
@@ -203,7 +209,7 @@ public class Game extends Application {
     block.updateBlockDurability();
     if(block.getBlockDurability() == 0){
       level1Blocks.remove(block);
-      createPowerUp(block.getX(), block.getY(), POWER_UP_FREQ);
+      powerUpManager.createPowerUp(block.getX(), block.getY());
       myPlayer.setPlayerScore(myPlayer.getScore() + 200);
     }else{
       root.getChildren().add(block);
@@ -230,18 +236,13 @@ public class Game extends Application {
   }
   private void freezeGame() {
     myBall.controlFreeze();
-    for (PowerUp p : currentPowerUps) {
-      p.controlFreeze();
-    }
+    powerUpManager.controlFreeze();
   }
 
   private void resetPositions() {
     myPaddle.moveToStartingPosition();
     myBall.moveToCenter();
-    for (PowerUp p : currentPowerUps) {
-      p.removePowerUpFromRoot();
-    }
-    currentPowerUps.clear();
+    powerUpManager.resetPositions();
   }
 
   private void endGame() {
@@ -254,18 +255,9 @@ public class Game extends Application {
     }
   }
 
-  private void createPowerUp(double initialX, double initialY, double powerUpFreq) {
-    if (Math.random() <= powerUpFreq) {
-      PowerUp newPowerUp = new PowerUp(initialX, initialY, root, SCREEN_HEIGHT, myPlayer, myPaddle);
-      newPowerUp.setId("powerup" + numberOfPowerUps);
-      numberOfPowerUps++;
-      currentPowerUps.add(newPowerUp);
 
-    }
-  }
-
-  public List<PowerUp> getCurrentPowerUps() {
-    return currentPowerUps;
+  public PowerUpManager getPowerUpManager() {
+    return powerUpManager;
   }
 
   /**
