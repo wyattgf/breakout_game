@@ -1,5 +1,6 @@
 package breakout;
 
+import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -191,15 +192,18 @@ class GameTest extends DukeApplicationTest {
   public void testBallGoesToCenterAfterLeavingScreen() {
     myBall.setCenterY(500);
     javafxRun(() -> myGame.step(SECOND_DELAY));
-    assertEquals(200 + (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterX());
-    assertEquals(200 - (INITIAL_BALL_SPEED * SECOND_DELAY), myBall.getCenterY());
+    assertEquals(200, myBall.getCenterX());
+    assertEquals(200, myBall.getCenterY());
   }
 
   @Test
   public void testPlayerLosesLifeAfterMissingBall() {
-    myBall.setCenterY(405);
-    javafxRun(() -> myGame.step(SECOND_DELAY));
-    assertEquals(1, myBall.livesLost());
+    int expected = myPlayer.livesLeft() -1;
+    myBall.setCenterY(395);
+    for(int i = 0; i< 20; i++){
+      javafxRun(() -> myGame.step(SECOND_DELAY));
+    }
+    assertEquals(expected, myPlayer.livesLeft());
   }
 
 
@@ -207,10 +211,10 @@ class GameTest extends DukeApplicationTest {
   public void testAddLivesPowerUp() {
     double xPos = myPaddle.getX();
     double yPos = myPaddle.getY();
-    int expectedLives = myPlayer.getLives() + 1;
+    int expectedLives = myPlayer.livesLeft() + 1;
     PowerUp p = new PowerUpLife(xPos, yPos, myGame.getPowerUpManager());
     p.activatePowerUp();
-    assertEquals(expectedLives, myPlayer.getLives());
+    assertEquals(expectedLives, myPlayer.livesLeft());
   }
 
   @Test

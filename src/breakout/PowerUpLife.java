@@ -4,7 +4,6 @@ import javafx.scene.paint.Color;
 
 public class PowerUpLife extends PowerUp {
 
-  private static final int LIFE_DELTA = 1;
   private static final Color POWER_UP_COLOR = Color.MEDIUMAQUAMARINE;
   private Player myPlayer;
 
@@ -21,7 +20,7 @@ public class PowerUpLife extends PowerUp {
 
   @Override
   public void activatePowerUp() {
-    myPlayer.setPlayerLives(LIFE_DELTA + myPlayer.getLives());
+    myPlayer.addLife();
   }
 
 }
