@@ -32,17 +32,20 @@ public class Game extends Application {
 
   // some things needed to remember during game
   private Scene myScene;
-  private Paddle myPaddle;
+  private List<Paddle> myPaddles;
+  private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
+  private Ball myBall;
   private Player myPlayer;
   private Group root;
   private Text scoreBoard;
-  private Ball myBall;
+  private List<Ball> myBalls;
   private Level myLevel;
   private List<Block> level1Blocks;
   private List<PowerUp> currentPowerUps;
   private int numberOfPowerUps;
   private Timeline animation;
   private boolean paused;
+  private PowerUpManager powerUpManager;
 
 
   /**
@@ -68,13 +71,12 @@ public class Game extends Application {
   Scene setupScene(int width, int height, Paint background) {
     // create one top level collection to organize the things in the scene
     root = new Group();
-    myPlayer = new Player();
-    myPlayer.setId("player");
-    myPaddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
-    myPaddle.setId("paddle");
-    myBall = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
-    myBall.setId("ball");
-
+    createPlayer();
+    createPaddle();
+    myPaddle = myPaddles.get(0);
+    createBall();
+    myBall = myBalls.get(0);
+    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
     currentPowerUps = new ArrayList<>();
@@ -93,6 +95,29 @@ public class Game extends Application {
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
     return scene;
+  }
+
+  private void createPlayer() {
+    myPlayer = new Player();
+    myPlayer.setId("player");
+  }
+
+  private void createBall() {
+    if (myBalls == null){
+      myBalls = new ArrayList<>();
+    }
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT);
+    b.setId("ball" + myBalls.size());
+    myBalls.add(b);
+  }
+
+  private void createPaddle() {
+    if (myPaddles == null){
+      myPaddles = new ArrayList<>();
+    }
+    Paddle p = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
+    p.setId("paddle" + myPaddles.size());
+    myPaddles.add(p);
   }
 
   // Handle the game's "rules" for every "moment":
