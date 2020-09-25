@@ -1,6 +1,7 @@
-package breakout;
+package breakout.Display;
 
 
+import breakout.Player;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 

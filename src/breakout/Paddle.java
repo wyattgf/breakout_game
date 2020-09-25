@@ -12,6 +12,7 @@ public class Paddle extends Rectangle {
   private static final double INITIAL_X = 0;
   private static final double INITIAL_Y = 0;
   private static final int PADDLE_SPEED_AT_REST = 0;
+  private static final int PADDLE_SPEED_AT_KEY_PRESS = 175;
   //instance variables
   private int mySpeed;
   private double myWidth;
@@ -65,14 +66,14 @@ public class Paddle extends Rectangle {
    * This method causes a Paddle object to move left
    */
   public void moveLeft() {
-    mySpeed = -175;
+    mySpeed = -PADDLE_SPEED_AT_KEY_PRESS;
   }
 
   /**
    * This method causes a Paddle object to move right
    */
   public void moveRight() {
-    mySpeed = 175;
+    mySpeed = PADDLE_SPEED_AT_KEY_PRESS;
   }
 
   /**

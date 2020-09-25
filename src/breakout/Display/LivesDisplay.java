@@ -1,10 +1,8 @@
-package breakout;
+package breakout.Display;
 
+import breakout.Player;
 import javafx.scene.Group;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-
 
 
 public class LivesDisplay extends StatusDisplay{

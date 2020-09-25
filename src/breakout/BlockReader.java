@@ -1,8 +1,10 @@
 package breakout;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class BlockReader {
 
   //constants
   private static final String DIRECTORY = "data";
+  private static final int BLOCK_MIN_VALUE = 1;
+  private static final int BLOCK_MAX_VALUE = 4;
   //instance variables
   private List<Block> listOfBlocks;
 
@@ -26,7 +30,10 @@ public class BlockReader {
         Block b = createBlock(line);
         listOfBlocks.add(b);
       }
-    } catch (Exception e) {
+    } catch (FileNotFoundException e) {
+
+    }catch (IOException e){
+
     }
 
   }
@@ -39,8 +46,7 @@ public class BlockReader {
 
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    Block b = new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
-        Math.max(1,Math.min(4,Integer.parseInt(blockData[2]))));
-    return b;
+    return new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
+        Math.max(BLOCK_MIN_VALUE,Math.min(BLOCK_MAX_VALUE,Integer.parseInt(blockData[2]))));
   }
 }
