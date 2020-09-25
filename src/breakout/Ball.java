@@ -1,5 +1,7 @@
 package breakout;
 
+import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 
@@ -17,20 +19,76 @@ public class Ball extends Circle {
   private int mySpeed;
   private int screenWidth;
   private int screenHeight;
+  private Group myRoot;
+  private List<Paddle> myPaddles;
+  private Player myPlayer;
+  private PowerUpManager myPowerUpManager;
   private int myXDirection;
   private int myYDirection;
   private boolean paused;
 
-  public Ball(int screenWidth, int screenHeight) {
+  public Ball(int screenWidth, int screenHeight, Group myRoot, List<Paddle> myPaddles,
+      Player myPlayer, PowerUpManager myPowerUpManager) {
     super(INITIAL_X, INITIAL_Y, BALL_RADIUS);
     mySpeed = INITIAL_BALL_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.myRoot = myRoot;
+    this.myPaddles = myPaddles;
+    this.myPlayer = myPlayer;
+    this.myPowerUpManager = myPowerUpManager;
     this.myXDirection = 1;
     this.myYDirection = -1;
     this.paused = false;
     moveToCenter();
     this.setFill(Color.BLACK);
+  }
+  public void checkCollisions(List<Block> currentLevelBlocks) {
+    if (this.getBoundsInParent().intersects(myPaddles.get(0).getBoundsInParent())) {
+      handlePaddleCollision();
+    }
+    for (Block block : currentLevelBlocks) {
+      if (this.getBoundsInParent().intersects(block.getBoundsInParent())) {
+        handleBlockCollisions(block, currentLevelBlocks);
+        break;
+      }
+    }
+    if (this.getCenterY() - BALL_RADIUS >= screenHeight) {
+      myPlayer.lostLife();
+      moveToCenter();
+    }
+  }
+
+
+  private void handleBlockCollisions(Block block, List<Block> currentLevelBlocks) {
+    if (getCenterY() - BALL_RADIUS >= block.getY() + block.getHeight()
+        || getCenterY() + BALL_RADIUS <= block.getY()) {
+      bounceY();
+
+    } else if (getCenterX() <= block.getX()
+        || getCenterX() >= block.getX() + block.getBlockWidth()) {
+      bounceX();
+
+    }
+    myRoot.getChildren().remove(block);
+    block.updateBlockDurability();
+    if(block.getBlockDurability() == 0){
+      currentLevelBlocks.remove(block);
+      myPowerUpManager.createPowerUp(block.getX(), block.getY());
+      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+    }else{
+      myRoot.getChildren().add(block);
+    }
+
+  }
+
+  private void handlePaddleCollision() {
+    if (getCenterY() <= myPaddles.get(0).getY()) {
+      bounceY();
+    } else if (getCenterX() + BALL_RADIUS <= myPaddles.get(0).getX()
+        || getCenterX() >= myPaddles.get(0).getX()) {
+      bounceX();
+    }
   }
 
   /**
@@ -44,7 +102,8 @@ public class Ball extends Circle {
   /**
    * @param elapsedTime
    */
-  public void moveBall(double elapsedTime) {
+  public void moveBall(double elapsedTime, List<Block> currentLevelBlocks) {
+    checkCollisions(currentLevelBlocks);
     if (!paused) {
       if (this.getCenterY() - this.getRadius() <= 0) {
         myYDirection *= -1;
