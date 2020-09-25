@@ -1,5 +1,8 @@
-package breakout;
+package breakout.PowerUp;
 
+import breakout.Ball;
+import breakout.Paddle;
+import breakout.Player;
 import javafx.scene.Group;
 import java.util.ArrayList;
 import java.util.List;

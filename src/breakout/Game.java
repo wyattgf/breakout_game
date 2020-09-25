@@ -1,5 +1,7 @@
 package breakout;
 
+import breakout.PowerUp.PowerUp;
+import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;

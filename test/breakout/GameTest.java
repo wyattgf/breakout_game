@@ -1,8 +1,8 @@
 package breakout;
 
-import java.sql.Time;
-import java.util.concurrent.TimeUnit;
-import javafx.scene.Group;
+import breakout.PowerUp.PowerUp;
+import breakout.PowerUp.PowerUpLife;
+import breakout.PowerUp.PowerUpPaddleSize;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;

@@ -1,5 +1,6 @@
-package breakout;
+package breakout.PowerUp;
 
+import breakout.Player;
 import javafx.scene.paint.Color;
 
 public class PowerUpLife extends PowerUp {

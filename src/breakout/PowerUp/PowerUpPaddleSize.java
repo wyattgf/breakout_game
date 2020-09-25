@@ -1,5 +1,6 @@
-package breakout;
+package breakout.PowerUp;
 
+import breakout.Paddle;
 import javafx.scene.paint.Color;
 
 public class PowerUpPaddleSize extends PowerUp {

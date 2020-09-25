@@ -1,5 +1,6 @@
 package breakout;
 
+import breakout.PowerUp.PowerUpManager;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
