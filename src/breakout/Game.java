@@ -23,6 +23,7 @@ public class Game extends Application {
   private static final String TITLE = "Breakout JavaFX";
   private static final String GAME_OVER = "Game is over!\nFinal Score: ";
   private static final int SCREEN_WIDTH = 400;
+  private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -51,7 +52,7 @@ public class Game extends Application {
   @Override
   public void start(Stage stage) {
     // attach scene to the stage and display it
-    myScene = setupScene(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+    myScene = setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.setTitle(TITLE);
     stage.show();
@@ -65,7 +66,7 @@ public class Game extends Application {
   }
 
   // Create the game's "scene": what shapes will be in the game and their starting properties
-  Scene setupScene(int width, int height, Paint background) {
+  Scene setupScene(int width, int height,Paint background) {
     // create one top level collection to organize the things in the scene
     root = new Group();
     myScoreBoard = new ScoreBoard();
@@ -87,8 +88,10 @@ public class Game extends Application {
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
     root.getChildren().add(myPlayer);
+    root.getChildren().add(myScoreBoard);
+    myScoreBoard.addDisplaysToRoot(root);
     // create a place to see the shapes
-    Scene scene = new Scene(root, width, height, background);
+    Scene scene = new Scene(root, width, height,background);
     // respond to input
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));

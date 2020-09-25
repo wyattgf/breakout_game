@@ -26,8 +26,9 @@ class GameTest extends DukeApplicationTest {
   private static final Paint BACKGROUND = Color.AZURE;
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
+  private static final int SCREEN_WIDTH = 400;
+  private static final int SCORE_BOARD_WIDTH = 200;
+  private static final int SCREEN_HEIGHT = 400;
   private static final int POWER_UP_PADDLE_DELTA = 10;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
@@ -43,7 +44,7 @@ class GameTest extends DukeApplicationTest {
    */
   @Override
   public void start(Stage stage) {
-    myScene = myGame.setupScene(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+    myScene = myGame.setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.show();
 
