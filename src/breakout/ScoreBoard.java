@@ -1,5 +1,11 @@
 package breakout;
 
+import breakout.Display.HighScoreDisplay;
+import breakout.Display.LevelDisplay;
+import breakout.Display.LivesDisplay;
+import breakout.Display.ScoreDisplay;
+import breakout.Display.StatusDisplay;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +38,8 @@ public class ScoreBoard extends Rectangle{
     try{
       InputStream stream = new FileInputStream(SCOREBOARD_BACKGROUND);
       image = new Image(stream);
-    }catch(Exception e){
+    }catch(FileNotFoundException e){
+
     }
     this.statusDisplayOrderedList = new ArrayList<>();
     statusDisplayOrderedList.add(new LevelDisplay());
