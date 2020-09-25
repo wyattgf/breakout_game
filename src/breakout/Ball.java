@@ -76,7 +76,7 @@ public class Ball extends Circle {
     if(block.getBlockDurability() == 0){
       currentLevelBlocks.remove(block);
       myPowerUpManager.createPowerUp(block.getX(), block.getY());
-      myPlayer.setPlayerScore(myPlayer.getScore() + 200);
+      myPlayer.blockDestroyed();
     }else{
       myRoot.getChildren().add(block);
     }

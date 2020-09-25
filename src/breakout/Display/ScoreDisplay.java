@@ -1,8 +1,7 @@
-package breakout;
+package breakout.Display;
 
+import breakout.Player;
 import javafx.scene.text.Text;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Font;
 
 import javafx.scene.Group;
 

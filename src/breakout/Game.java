@@ -34,7 +34,6 @@ public class Game extends Application {
   private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
-  private Scene myScene;
   private List<Paddle> myPaddles;
   private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
   private Ball myBall;
@@ -42,7 +41,6 @@ public class Game extends Application {
   private Group root;
   private ScoreBoard myScoreBoard;
   private List<Ball> myBalls;
-  private Level myLevel;
   private List<Block> level1Blocks;
   private Timeline animation;
   private PowerUpManager powerUpManager;
@@ -55,7 +53,7 @@ public class Game extends Application {
   @Override
   public void start(Stage stage) {
     // attach scene to the stage and display it
-    myScene = setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
+    Scene myScene = setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.setTitle(TITLE);
     stage.show();
@@ -79,7 +77,7 @@ public class Game extends Application {
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     createBall();
     myBall = myBalls.get(0);
-    myLevel = new Level();
+    Level myLevel = new Level();
     level1Blocks = myLevel.getBlocks("initialFile.txt");
 
 
@@ -156,7 +154,7 @@ public class Game extends Application {
         myPlayer.addLife();
         break;
       case P:
-        PowerUp powerup = powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
+        powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
         break;
       case W:
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
@@ -201,7 +199,6 @@ public class Game extends Application {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
-      t.setFont(new Font(20));
       root.getChildren().add(t);
     }
   }
