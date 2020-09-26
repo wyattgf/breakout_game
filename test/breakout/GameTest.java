@@ -264,4 +264,13 @@ class GameTest extends DukeApplicationTest {
     press(myScene, KeyCode.R);
     assertEquals(expectedWidth, myPaddle.getWidth());
   }
+
+  @Test
+  public void testPaddleTeleportation(){
+    myPaddle.setX(0);
+    double expectedX = SCREEN_WIDTH - myPaddle.getWidth();
+    press(myScene, KeyCode.T);
+    assertEquals(expectedX, myPaddle.getX());
+
+  }
 }

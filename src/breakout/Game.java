@@ -166,6 +166,15 @@ public class Game extends Application {
       case F:
         freezeGame();
         break;
+      case T:
+        myPaddle.teleportPaddle();
+        break;
+      case UP:
+        myPaddle.incrementPaddleSpeed(10);
+        break;
+      case DOWN:
+        myPaddle.incrementPaddleSpeed(-10);
+        break;
     }
   }
 
