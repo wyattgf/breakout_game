@@ -3,6 +3,7 @@ package breakout;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpLife;
 import breakout.PowerUp.PowerUpPaddleSize;
+import breakout.PowerUp.PowerUpPaddleSpeed;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -29,7 +30,8 @@ class GameTest extends DukeApplicationTest {
   private static final int SCREEN_WIDTH = 400;
   private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
-  private static final int POWER_UP_PADDLE_DELTA = 10;
+  private static final int POWER_UP_WIDTH_DELTA = 10;
+  private static final int POWER_UP_SPEED_DELTA = 10;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
@@ -222,10 +224,20 @@ class GameTest extends DukeApplicationTest {
   public void testIncreasePaddleSizePowerUp() {
     double xPos = myPaddle.getX();
     double yPos = myPaddle.getY();
-    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_WIDTH_DELTA;
     PowerUp p = new PowerUpPaddleSize(xPos, yPos, myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(expectedWidth, myPaddle.getWidth());
+  }
+
+  @Test
+  public void testIncreasePaddleSpeedPowerUp() {
+    double xPos = myPaddle.getX();
+    double yPos = myPaddle.getY();
+    double expectedSpeed = myPaddle.getKeyPressSpeed() + POWER_UP_SPEED_DELTA;
+    PowerUp p = new PowerUpPaddleSpeed(xPos, yPos, myGame.getPowerUpManager());
+    p.activatePowerUp();
+    assertEquals(expectedSpeed, myPaddle.getKeyPressSpeed());
   }
 
   @Test
@@ -251,7 +263,7 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testIncreasePaddleSizeCheatKey() {
-    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_WIDTH_DELTA;
     press(myScene, KeyCode.W);
     assertEquals(expectedWidth, myPaddle.getWidth());
   }

@@ -20,7 +20,6 @@ public class PowerUpLife extends PowerUp {
     super(initialX, initialY, myPowerUpManager);
     myPlayer = getPowerUpManager().getPlayer();
     setPowerUpImage(POWER_UP_IMAGE);
-    //assignPowerUpColor(POWER_UP_COLOR);
   }
 
   /**

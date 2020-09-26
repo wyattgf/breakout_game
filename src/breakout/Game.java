@@ -31,7 +31,6 @@ public class Game extends Application {
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final Paint BACKGROUND = Color.AZURE;
-  private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
   private List<Paddle> myPaddles;
@@ -41,7 +40,6 @@ public class Game extends Application {
   private Group root;
   private ScoreBoard myScoreBoard;
   private List<Ball> myBalls;
-  private List<Block> level1Blocks;
   private Timeline animation;
   private PowerUpManager powerUpManager;
   private LevelManager levelManager;
@@ -156,7 +154,7 @@ public class Game extends Application {
         powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
         break;
       case W:
-        myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
+        myPaddle.setWidthFromDelta();
         break;
       case D:
         levelManager.removeFirst();
