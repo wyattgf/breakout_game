@@ -1,6 +1,7 @@
 package breakout;
 
 import breakout.Level.Level;
+import breakout.Level.LevelManager;
 import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class Game extends Application {
   private List<Block> level1Blocks;
   private Timeline animation;
   private PowerUpManager powerUpManager;
+  private LevelManager levelManager;
   private boolean paused;
 
 
@@ -74,10 +76,11 @@ public class Game extends Application {
     createPaddle();
     myPaddle = myPaddles.get(0);
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer);
     createBall();
     myBall = myBalls.get(0);
     Level myLevel = new Level();
-    level1Blocks = myLevel.getBlocks("initialFile.txt");
+    level1Blocks = myLevel.getBlocks();
 
 
     int i = 1;
