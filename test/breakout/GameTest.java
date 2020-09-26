@@ -53,7 +53,7 @@ class GameTest extends DukeApplicationTest {
     myBall = lookup("#ball0").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
-    blockDestroyed = lookup("#block22").query();
+    //blockDestroyed = lookup("#block22").query();
   }
 
   @Test

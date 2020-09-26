@@ -6,21 +6,19 @@ import java.util.List;
 
 public class Level {
 
-  private static final String BLOCK_FILE = "initialFile.txt";
-
   private BlockReader myBlockReader;
   private List<Block> currentBlocks;
 
-  public Level() {
+  public Level(String blockFile) {
     myBlockReader = new BlockReader();
-    currentBlocks = initializeBlocks();
+    currentBlocks = initializeBlocks(blockFile);
   }
 
   public List<Block> getBlocks() {
     return currentBlocks;
   }
 
-  private List<Block> initializeBlocks() {
-    return myBlockReader.getBlocks(BLOCK_FILE);
+  private List<Block> initializeBlocks(String blockFile) {
+    return myBlockReader.getBlocks(blockFile);
   }
 }

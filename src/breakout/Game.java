@@ -74,20 +74,16 @@ public class Game extends Application {
     myScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
+    createBall();
     myPaddle = myPaddles.get(0);
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer);
-    createBall();
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager);
     myBall = myBalls.get(0);
-    Level myLevel = new Level();
-    level1Blocks = myLevel.getBlocks();
+    //Level myLevel = new Level();
+    //level1Blocks = myLevel.getBlocks();
 
 
-    int i = 1;
-    for (Block block : level1Blocks) {
-      root.getChildren().add(block);
-      block.setId("block" + i++);
-    }
+
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
     root.getChildren().add(myPlayer);
@@ -132,7 +128,8 @@ public class Game extends Application {
     myPaddle.movePaddle(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
-    myBall.moveBall(elapsedTime, level1Blocks);
+    levelManager.determineBallCollision();
+    myBall.moveBall(elapsedTime);
     myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }
@@ -162,8 +159,7 @@ public class Game extends Application {
         myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
         break;
       case D:
-        root.getChildren().remove(level1Blocks.get(0));
-        level1Blocks.remove(0);
+        levelManager.removeFirst();
         break;
       case F:
         freezeGame();
@@ -197,7 +193,7 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() == 0 || level1Blocks.size() == 0) {
+    if (myPlayer.livesLeft() == 0 || levelManager.getCurrentBlocks().size() == 0) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
