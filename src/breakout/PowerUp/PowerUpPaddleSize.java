@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public class PowerUpPaddleSize extends PowerUp {
 
   private static final int PADDLE_DELTA = 10;
-  private static final Color POWER_UP_COLOR = Color.CHARTREUSE;
+  private static final String POWER_UP_IMAGE = "data/plus.png";
 
   private Paddle myPaddle;
 
@@ -21,7 +21,8 @@ public class PowerUpPaddleSize extends PowerUp {
   public PowerUpPaddleSize(double initialX, double initialY, PowerUpManager myPowerUpManager) {
     super(initialX, initialY, myPowerUpManager);
     myPaddle = getPowerUpManager().getPaddle();
-    assignPowerUpColor(POWER_UP_COLOR);
+    setPowerUpImage(POWER_UP_IMAGE);
+    //assignPowerUpColor(POWER_UP_COLOR);
   }
 
   /**
