@@ -1,6 +1,6 @@
 package breakout;
 
-import breakout.PowerUp.PowerUp;
+import breakout.Level.Level;
 import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
