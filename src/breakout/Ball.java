@@ -21,21 +21,21 @@ public class Ball extends Circle {
   private int screenWidth;
   private int screenHeight;
   private Group myRoot;
-  private List<Paddle> myPaddles;
+  private Paddle myPaddle;
   private Player myPlayer;
   private PowerUpManager myPowerUpManager;
   private int myXDirection;
   private int myYDirection;
   private boolean paused;
 
-  public Ball(int screenWidth, int screenHeight, Group myRoot, List<Paddle> myPaddles,
+  public Ball(int screenWidth, int screenHeight, Group myRoot, Paddle myPaddle,
       Player myPlayer, PowerUpManager myPowerUpManager) {
     super(INITIAL_X, INITIAL_Y, BALL_RADIUS);
     mySpeed = INITIAL_BALL_SPEED;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.myRoot = myRoot;
-    this.myPaddles = myPaddles;
+    this.myPaddle = myPaddle;
     this.myPlayer = myPlayer;
     this.myPowerUpManager = myPowerUpManager;
     this.myXDirection = 1;
@@ -45,7 +45,7 @@ public class Ball extends Circle {
     this.setFill(Color.BLACK);
   }
   public void checkCollisions(List<Block> currentLevelBlocks) {
-    if (this.getBoundsInParent().intersects(myPaddles.get(0).getBoundsInParent())) {
+    if (this.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
       handlePaddleCollision();
     }
     for (Block block : currentLevelBlocks) {
@@ -65,11 +65,9 @@ public class Ball extends Circle {
     if (getCenterY() - BALL_RADIUS >= block.getY() + block.getHeight()
         || getCenterY() + BALL_RADIUS <= block.getY()) {
       bounceY();
-
     } else if (getCenterX() <= block.getX()
         || getCenterX() >= block.getX() + block.getBlockWidth()) {
       bounceX();
-
     }
     myRoot.getChildren().remove(block);
     block.updateBlockDurability();
@@ -84,12 +82,21 @@ public class Ball extends Circle {
   }
 
   private void handlePaddleCollision() {
-    if (getCenterY() <= myPaddles.get(0).getY()) {
+    if (getCenterY() <= myPaddle.getY()) {
+      if(sameSideBounce()){
+        bounceX();
+      }
       bounceY();
-    } else if (getCenterX() + BALL_RADIUS <= myPaddles.get(0).getX()
-        || getCenterX() >= myPaddles.get(0).getX()) {
-      bounceX();
     }
+  }
+
+  private boolean sameSideBounce(){
+    boolean xDirectionIsRight = myXDirection>0;
+    boolean leftSideOfPaddle = getCenterX()< (myPaddle.getX() + (myPaddle.getWidth()/2.0));
+    if(xDirectionIsRight == leftSideOfPaddle){
+      return true;
+    }
+    return false;
   }
 
   /**

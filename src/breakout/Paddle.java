@@ -15,6 +15,7 @@ public class Paddle extends Rectangle {
   private static final int PADDLE_SPEED_AT_KEY_PRESS = 175;
   //instance variables
   private int mySpeed;
+  private int paddleSpeedAtPress;
   private double myWidth;
   private int screenWidth;
   private int screenHeight;
@@ -39,6 +40,7 @@ public class Paddle extends Rectangle {
     this.setX(screenWidth / 2.0 - myWidth / 2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
     mySpeed = PADDLE_SPEED_AT_REST;
+    paddleSpeedAtPress = PADDLE_SPEED_AT_KEY_PRESS;
   }
 
   /**
@@ -66,23 +68,14 @@ public class Paddle extends Rectangle {
    * This method causes a Paddle object to move left
    */
   public void moveLeft() {
-    mySpeed = -PADDLE_SPEED_AT_KEY_PRESS;
+    mySpeed = -paddleSpeedAtPress;
   }
 
   /**
    * This method causes a Paddle object to move right
    */
   public void moveRight() {
-    mySpeed = PADDLE_SPEED_AT_KEY_PRESS;
-  }
-
-  /**
-   * This method returns the mySpeed instance variable of a Paddle
-   *
-   * @return int representing the mySpeed of a Paddle object
-   */
-  public int getSpeed() {
-    return mySpeed;
+    mySpeed = paddleSpeedAtPress;
   }
 
   /**
@@ -93,5 +86,23 @@ public class Paddle extends Rectangle {
   public void setSpeed(int speed) {
     mySpeed = speed;
   }
+
+  /**
+   *
+   * @param paddleSpeedChange the amount for the paddle speed to change
+   */
+  public void incrementPaddleSpeed(int paddleSpeedChange) {
+    paddleSpeedAtPress += paddleSpeedChange;
+  }
+
+  /**
+   * This method teleports the paddle's location to the other half of the screen
+   */
+  public void teleportPaddle(){
+    double reflectAxis = screenHeight/2.0;
+    double distanceFromOrigin = (this.getX() + myWidth - reflectAxis);
+    this.setX(reflectAxis - distanceFromOrigin);
+  }
+
 
 }
