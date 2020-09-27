@@ -48,7 +48,6 @@ public class BlockReader {
 
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    return new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
-        Math.max(BLOCK_MIN_VALUE,Math.min(BLOCK_MAX_VALUE,Integer.parseInt(blockData[2]))));
+    return new DurableBlock(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]));
   }
 }
