@@ -82,6 +82,9 @@ public class LevelManager {
         currentBall.bounceX();
 
       }
+      else {
+        currentBall.bounceY();
+      }
     }
     block.updateBlockDurability();
     updateLevelBlocks();
