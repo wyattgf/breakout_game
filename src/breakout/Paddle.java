@@ -89,7 +89,7 @@ public class Paddle extends Rectangle {
 
   /**
    *
-   * @param paddleSpeedChange
+   * @param paddleSpeedChange the amount for the paddle speed to change
    */
   public void incrementPaddleSpeed(int paddleSpeedChange) {
     paddleSpeedAtPress += paddleSpeedChange;
