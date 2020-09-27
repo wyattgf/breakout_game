@@ -76,9 +76,9 @@ public class Game extends Application {
     myPaddle = myPaddles.get(0);
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager);
+    levelManager.incrementLevel();
     myBall = myBalls.get(0);
-    //Level myLevel = new Level();
-    //level1Blocks = myLevel.getBlocks();
+
 
 
 

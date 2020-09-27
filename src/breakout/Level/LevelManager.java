@@ -13,6 +13,8 @@ public class LevelManager {
 
   private final List<Level> POSSIBLE_LEVELS = List
       .of(new LevelTest(), new LevelOne(), new LevelTwo(), new LevelThree());
+  private final int SET_FOR_TESTING_LEVEL = -1;
+  private final int SET_FOR_STARTING_LEVEL = 0;
 
   private Group myRoot;
   private List<Paddle> myPaddles;
@@ -30,17 +32,14 @@ public class LevelManager {
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
     this.myPowerUpManager = myPowerUpManager;
-    currentLevel = -1;
+    currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
     incrementLevel();
   }
 
   public void setForTesting(){
-    for (int i = 0; i < POSSIBLE_LEVELS.size(); i++){
-      if (i!=0){
-        POSSIBLE_LEVELS.get(i).getBlocks().clear();
-      }
-    }
+    currentLevel = SET_FOR_TESTING_LEVEL;
+    incrementLevel();
   }
 
   public List<Block> getLevelBlocks() {
