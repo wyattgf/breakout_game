@@ -8,8 +8,10 @@ public class Level {
 
   private BlockReader myBlockReader;
   private List<Block> currentBlocks;
+  private LevelManager myLevelManager;
 
-  public Level(String blockFile) {
+  public Level(String blockFile, LevelManager myLevelManager) {
+    this.myLevelManager = myLevelManager;
     myBlockReader = new BlockReader();
     currentBlocks = initializeBlocks(blockFile);
   }
@@ -20,5 +22,9 @@ public class Level {
 
   private List<Block> initializeBlocks(String blockFile) {
     return myBlockReader.getBlocks(blockFile);
+  }
+
+  public LevelManager getLevelManager(){
+    return myLevelManager;
   }
 }
