@@ -21,36 +21,48 @@ public class LevelManager {
   private List<Ball> myBalls;
   private Player myPlayer;
   private List<Block> currentBlocks;
+  private int screenHeight;
   private int currentLevel;
   private int blockCount;
   private PowerUpManager myPowerUpManager;
 
   public LevelManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
-      PowerUpManager myPowerUpManager) {
+      PowerUpManager myPowerUpManager, int screenHeight) {
     this.myRoot = myRoot;
     this.myPaddles = myPaddles;
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
+    this.screenHeight = screenHeight;
     this.myPowerUpManager = myPowerUpManager;
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
     incrementLevel();
   }
 
-  public void setForTesting(){
+  public void setForTesting() {
+    List<Block> copy = new ArrayList<>(currentBlocks);
+    for (Block block : copy) {
+      removeSingularBlockFromRoot(block);
+    }
+    currentBlocks.clear();
     currentLevel = SET_FOR_TESTING_LEVEL;
     incrementLevel();
   }
 
   public List<Block> getLevelBlocks() {
-    return POSSIBLE_LEVELS.get(currentLevel).getBlocks();
+    if (currentLevel < POSSIBLE_LEVELS.size()) {
+      return POSSIBLE_LEVELS.get(currentLevel).getBlocks();
+    }
+    return new ArrayList<>();
   }
 
-  public List<Block> getCurrentBlocks(){
+  public List<Block> getCurrentBlocks() {
     return currentBlocks;
   }
 
   public void incrementLevel() {
+    myPowerUpManager.resetPositions();
+    myBalls.get(0).moveToCenter();
     currentLevel++;
     blockCount = 1;
     currentBlocks = getLevelBlocks();
@@ -76,17 +88,15 @@ public class LevelManager {
   }
 
   public void updateLevelBlocks() {
-    List<Block> blocksToRemove = new ArrayList<>();
-    for (Block b : currentBlocks) {
+    List<Block> copyOfBlocks = new ArrayList<>(currentBlocks);
+    for (Block b : copyOfBlocks) {
       if (b.getBlockDurability() == 0) {
-        blocksToRemove.add(b);
+        removeSingularBlockFromRoot(b);
         myPowerUpManager.createPowerUp(b.getX(), b.getY());
         myPlayer.blockDestroyed();
       }
     }
-    for (Block b : blocksToRemove){
-      removeBlockFromRoot(b);
-    }
+
     if (currentBlocks.size() == 0) {
       incrementLevel();
     }
@@ -97,7 +107,7 @@ public class LevelManager {
    *
    * @param b Block to be removed from the current root
    */
-  public void removeBlockFromRoot(Block b) {
+  public void removeSingularBlockFromRoot(Block b) {
     currentBlocks.remove(b);
     myRoot.getChildren().remove(b);
   }
@@ -128,7 +138,9 @@ public class LevelManager {
   }
 
   public void removeFirst() {
-    currentBlocks.remove(0);
+    Block block = currentBlocks.get(0);
+    removeSingularBlockFromRoot(block);
+    updateLevelBlocks();
   }
 
   public int currentLevel() {
@@ -137,5 +149,11 @@ public class LevelManager {
 
   public int getNumberOfLevels() {
     return POSSIBLE_LEVELS.size();
+  }
+
+  public void moveBlocks(double elapsedTime) {
+    for (Block block: currentBlocks){
+      block.moveBlock(elapsedTime);
+    }
   }
 }

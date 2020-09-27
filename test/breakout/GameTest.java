@@ -37,7 +37,7 @@ class GameTest extends DukeApplicationTest {
   private Paddle myPaddle;
   private Player myPlayer;
   private Ball myBall;
-  private Block block1, block5, blockDestroyed;
+  private Block block1, block5, blockDestroyed, movingBlock;
 
   /**
    * Start special test version of application that does not animate on its own before each test.
@@ -55,7 +55,8 @@ class GameTest extends DukeApplicationTest {
     myBall = lookup("#ball0").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
-    //blockDestroyed = lookup("#block22").query();
+    blockDestroyed = lookup("#block22").query();
+    movingBlock = lookup("#block23").query();
   }
 
   @Test
@@ -275,5 +276,15 @@ class GameTest extends DukeApplicationTest {
     press(myScene, KeyCode.W);
     press(myScene, KeyCode.R);
     assertEquals(expectedWidth, myPaddle.getWidth());
+  }
+
+  @Test
+  public void testFallingBlock() {
+    movingBlock.changeFallingSpeed(10000);
+    double originalPos = movingBlock.getY();
+     for (int i = 0; i < 50; i++) {
+       javafxRun(() -> myGame.step(SECOND_DELAY));
+     }
+    assertTrue(originalPos < movingBlock.getY());
   }
 }

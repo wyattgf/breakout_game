@@ -75,8 +75,7 @@ public class Game extends Application {
     createBall();
     myPaddle = myPaddles.get(0);
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager);
-    levelManager.incrementLevel();
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_HEIGHT);
     myBall = myBalls.get(0);
 
 
@@ -124,6 +123,7 @@ public class Game extends Application {
   // - goals, did the game or level end?
   void step(double elapsedTime) {
     myPaddle.movePaddle(elapsedTime);
+    levelManager.moveBlocks(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();
