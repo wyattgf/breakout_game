@@ -45,7 +45,7 @@ public class Ball extends Circle {
     this.setFill(Color.BLACK);
   }
   public void checkCollisions() {
-    if (this.getBoundsInParent().intersects(myPaddles.get(0).getBoundsInParent())) {
+    if (this.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
       handlePaddleCollision();
     }
 

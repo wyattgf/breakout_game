@@ -45,7 +45,7 @@ public class Paddle extends Rectangle {
     this.setX(screenWidth / 2.0 - myWidth / 2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
     mySpeed = PADDLE_SPEED_AT_REST;
-    paddleSpeedAtPress = PADDLE_SPEED_AT_KEY_PRESS;
+    paddleSpeedAtKeyPress = INITIAL_PADDLE_SPEED_AT_KEY_PRESS;
   }
 
   /**
@@ -97,7 +97,7 @@ public class Paddle extends Rectangle {
    * @param paddleSpeedChange the amount for the paddle speed to change
    */
   public void incrementPaddleSpeed(int paddleSpeedChange) {
-    paddleSpeedAtPress += paddleSpeedChange;
+    paddleSpeedAtKeyPress += paddleSpeedChange;
   }
 
   /**
