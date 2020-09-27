@@ -103,7 +103,7 @@ public class Game extends Application {
     if (myBalls == null){
       myBalls = new ArrayList<>();
     }
-    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,root,myPaddles,myPlayer, powerUpManager);
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,root,myPaddle,myPlayer, powerUpManager);
     b.setId("ball" + myBalls.size());
     myBalls.add(b);
   }
@@ -161,6 +161,15 @@ public class Game extends Application {
         break;
       case F:
         freezeGame();
+        break;
+      case T:
+        myPaddle.teleportPaddle();
+        break;
+      case UP:
+        myPaddle.incrementPaddleSpeed(10);
+        break;
+      case DOWN:
+        myPaddle.incrementPaddleSpeed(-10);
         break;
     }
   }

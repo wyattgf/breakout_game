@@ -45,6 +45,7 @@ public class Paddle extends Rectangle {
     this.setX(screenWidth / 2.0 - myWidth / 2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
     mySpeed = PADDLE_SPEED_AT_REST;
+    paddleSpeedAtPress = PADDLE_SPEED_AT_KEY_PRESS;
   }
 
   /**
@@ -83,21 +84,29 @@ public class Paddle extends Rectangle {
   }
 
   /**
-   * This method returns the mySpeed instance variable of a Paddle
-   *
-   * @return int representing the mySpeed of a Paddle object
-   */
-  public int getSpeed() {
-    return mySpeed;
-  }
-
-  /**
    * This method sets mySpeed of a Paddle to the given parameter
    *
    * @param speed int representing desired speed to set mySpeed to
    */
   public void setSpeed(int speed) {
     mySpeed = speed;
+  }
+
+  /**
+   *
+   * @param paddleSpeedChange the amount for the paddle speed to change
+   */
+  public void incrementPaddleSpeed(int paddleSpeedChange) {
+    paddleSpeedAtPress += paddleSpeedChange;
+  }
+
+  /**
+   * This method teleports the paddle's location to the other half of the screen
+   */
+  public void teleportPaddle(){
+    double reflectAxis = screenHeight/2.0;
+    double distanceFromOrigin = (this.getX() + myWidth - reflectAxis);
+    this.setX(reflectAxis - distanceFromOrigin);
   }
 
 

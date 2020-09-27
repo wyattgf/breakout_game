@@ -1,9 +1,13 @@
 package breakout;
 
+import breakout.Display.HighScoreDisplay;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpLife;
 import breakout.PowerUp.PowerUpPaddleSize;
 import breakout.PowerUp.PowerUpPaddleSpeed;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -27,6 +31,7 @@ class GameTest extends DukeApplicationTest {
   private static final Paint BACKGROUND = Color.AZURE;
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private static final String HIGH_SCORE_FILE_LOCATION = "data/highScore.txt";
   private static final int SCREEN_WIDTH = 400;
   private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
@@ -36,6 +41,7 @@ class GameTest extends DukeApplicationTest {
   private Scene myScene;
   private Paddle myPaddle;
   private Player myPlayer;
+  private HighScoreDisplay myHighScore;
   private Ball myBall;
   private Block block1, block5, blockDestroyed, movingBlock;
 
@@ -50,6 +56,8 @@ class GameTest extends DukeApplicationTest {
     stage.setScene(myScene);
     stage.show();
     myGame.getLevelManager().setForTesting();
+    myHighScore = new HighScoreDisplay();
+
     myPaddle = lookup("#paddle0").query();
     myPlayer = lookup("#player").query();
     myBall = lookup("#ball0").query();
@@ -114,7 +122,7 @@ class GameTest extends DukeApplicationTest {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertTrue(myBall.getCenterY()>165);
-    assertEquals(SCREEN_HEIGHT/2, myBall.getCenterX());
+    assertEquals(SCREEN_HEIGHT/2.0, myBall.getCenterX());
 
   }
 
@@ -124,7 +132,7 @@ class GameTest extends DukeApplicationTest {
     for(int i = 0; i<20; i++){
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
-    assertTrue(!myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
+    assertFalse(myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
   }
 
   @Test
@@ -187,7 +195,7 @@ class GameTest extends DukeApplicationTest {
     for(int i = 0; i<4; i++){
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
-    assertEquals(SCREEN_WIDTH / 2, myBall.getCenterX());
+    assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterX());
     assertEquals((int) (SCREEN_HEIGHT - 16 + (INITIAL_BALL_SPEED * SECOND_DELAY) -
             (INITIAL_BALL_SPEED * 3 * SECOND_DELAY)), (int) myBall.getCenterY());
   }
@@ -286,5 +294,20 @@ class GameTest extends DukeApplicationTest {
        javafxRun(() -> myGame.step(SECOND_DELAY));
      }
     assertTrue(originalPos < movingBlock.getY());
+  }
+  @Test
+  public void testPaddleTeleportation(){
+    myPaddle.setX(0);
+    double expectedX = SCREEN_WIDTH - myPaddle.getWidth();
+    press(myScene, KeyCode.T);
+    assertEquals(expectedX, myPaddle.getX());
+
+  }
+
+  @Test
+  public void testHighScoreDisplay() throws Exception{
+    File file = new File(HIGH_SCORE_FILE_LOCATION);
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    assertEquals(myHighScore.getCurrentHighScore(),Integer.parseInt(br.readLine()));
   }
 }
