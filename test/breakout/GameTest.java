@@ -1,6 +1,8 @@
 package breakout;
 
 import breakout.Display.HighScoreDisplay;
+import breakout.Level.Level;
+import breakout.Level.LevelThree;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpLife;
 import breakout.PowerUp.PowerUpPaddleSize;
@@ -37,6 +39,7 @@ class GameTest extends DukeApplicationTest {
   private static final int SCREEN_HEIGHT = 400;
   private static final int POWER_UP_WIDTH_DELTA = 10;
   private static final int POWER_UP_SPEED_DELTA = 10;
+  private static final int MOVE_THIS_OFTEN_FALLING_BLOCK = 10;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
@@ -64,7 +67,6 @@ class GameTest extends DukeApplicationTest {
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
     blockDestroyed = lookup("#block22").query();
-    movingBlock = lookup("#block23").query();
   }
 
   @Test
@@ -288,11 +290,13 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testFallingBlock() {
-    movingBlock.changeFallingSpeed(10000);
+    press(myScene,KeyCode.DIGIT2);
+    movingBlock = lookup("#block1").query();
     double originalPos = movingBlock.getY();
-     for (int i = 0; i < 50; i++) {
-       javafxRun(() -> myGame.step(SECOND_DELAY));
-     }
+    movingBlock.changeFallingSpeed(10000);
+    movingBlock.setWhenToMoveForTesting(MOVE_THIS_OFTEN_FALLING_BLOCK-1);
+      javafxRun(() -> myGame.step(SECOND_DELAY));
+
     assertTrue(originalPos < movingBlock.getY());
   }
   @Test
@@ -310,4 +314,38 @@ class GameTest extends DukeApplicationTest {
     BufferedReader br = new BufferedReader(new FileReader(file));
     assertEquals(myHighScore.getCurrentHighScore(),Integer.parseInt(br.readLine()));
   }
+
+  @Test
+  public void testLaserLifeLoss()  {
+    press(myScene, KeyCode.DIGIT3);
+    double expectedLives = myPlayer.livesLeft() - 1;
+    List<LaserBeam> currentLasers = myGame.getLevelManager().getLaserBeamsForTesting();
+    while (currentLasers.size() == 0) {
+      javafxRun(() -> myGame.step(SECOND_DELAY));
+    }
+    LaserBeam laser = currentLasers.get(0);
+    myPaddle.setX(laser.getX());
+    myPaddle.setY(laser.getY()+1);
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(expectedLives, myPlayer.livesLeft());
+    myPlayer.addLife();
+
+  }
+
+  @Test
+  public void testLevelSwitchCheatKey() {
+    press(myScene, KeyCode.DIGIT0);
+    assertEquals(0, myGame.getLevelManager().getCurrentLevelNumberForTesting());
+
+    press(myScene, KeyCode.DIGIT1);
+    assertEquals(1, myGame.getLevelManager().getCurrentLevelNumberForTesting());
+
+    press(myScene, KeyCode.DIGIT2);
+    assertEquals(2, myGame.getLevelManager().getCurrentLevelNumberForTesting());
+
+    press(myScene, KeyCode.DIGIT3);
+    assertEquals(3, myGame.getLevelManager().getCurrentLevelNumberForTesting());
+
+  }
+
 }
