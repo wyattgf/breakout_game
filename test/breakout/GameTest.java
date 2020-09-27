@@ -1,5 +1,6 @@
 package breakout;
 
+import breakout.Block.Block;
 import breakout.Display.HighScoreDisplay;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpLife;

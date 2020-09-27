@@ -1,4 +1,4 @@
-package breakout;
+package breakout.Block;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -48,6 +48,6 @@ public class BlockReader {
 
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    return new DurableBlock(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]));
+    return new PowerUpBlock(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]));
   }
 }

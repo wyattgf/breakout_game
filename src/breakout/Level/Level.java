@@ -1,7 +1,7 @@
 package breakout.Level;
 
-import breakout.Block;
-import breakout.BlockReader;
+import breakout.Block.Block;
+import breakout.Block.BlockReader;
 import java.util.List;
 
 public class Level {

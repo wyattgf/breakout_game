@@ -1,4 +1,4 @@
-package breakout;
+package breakout.Block;
 
 import breakout.PowerUp.PowerUp;
 import java.util.Arrays;
@@ -23,18 +23,25 @@ public abstract class Block extends Rectangle {
   //instance variables
   private int mySpeed;
   private int whenToMove;
+  private int myDurability;
 
-  public Block(double myXPos, double myYPos) {
+  public Block(double myXPos, double myYPos, int blockDurability) {
     super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
     this.mySpeed = INITIAL_BLOCK_SPEED;
+    this.myDurability = blockDurability;
     whenToMove = 0;
   }
 
-  public abstract void setColor();
+  public abstract void setColor(int myDurability);
 
-  public abstract void updateBlockDurability();
+  public void updateBlockDurability(){
+    this.myDurability = this.myDurability -1;
+    setColor(myDurability);
+  }
 
-  public abstract int getBlockDurability();
+  public int getBlockDurability(){
+    return this.myDurability;
+  }
 
   public double getBlockWidth() {
     return BLOCK_WIDTH;

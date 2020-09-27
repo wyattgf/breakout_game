@@ -1,10 +1,11 @@
 package breakout.Level;
 
 import breakout.Ball;
-import breakout.Block;
+import breakout.Block.Block;
 import breakout.Paddle;
 import breakout.Player;
 import breakout.PowerUp.PowerUpManager;
+import breakout.Block.PowerUpBlock;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
@@ -95,8 +96,10 @@ public class LevelManager {
     for (Block b : copyOfBlocks) {
       if (b.getBlockDurability() == 0) {
         removeSingularBlockFromRoot(b);
-        myPowerUpManager.createPowerUp(b.getX(), b.getY());
         myPlayer.blockDestroyed();
+        if(b instanceof PowerUpBlock){
+          myPowerUpManager.createPowerUp(b.getX(), b.getY());
+        }
       }
     }
 
