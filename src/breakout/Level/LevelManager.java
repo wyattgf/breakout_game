@@ -130,4 +130,12 @@ public class LevelManager {
   public void removeFirst() {
     currentBlocks.remove(0);
   }
+
+  public int currentLevel() {
+    return currentLevel;
+  }
+
+  public int getNumberOfLevels() {
+    return POSSIBLE_LEVELS.size();
+  }
 }
