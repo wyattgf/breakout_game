@@ -27,8 +27,10 @@ public class BlockReader {
       BufferedReader br = new BufferedReader(new FileReader(file));
       String line;
       while ((line = br.readLine()) != null) {
-        Block b = createBlock(line);
-        listOfBlocks.add(b);
+        if (!line.equals("")) {
+          Block b = createBlock(line);
+          listOfBlocks.add(b);
+        }
       }
     } catch (FileNotFoundException e) {
 

@@ -1,6 +1,7 @@
 package breakout;
 
-import breakout.PowerUp.PowerUp;
+import breakout.Level.Level;
+import breakout.Level.LevelManager;
 import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,7 +31,6 @@ public class Game extends Application {
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final Paint BACKGROUND = Color.AZURE;
-  private static final int PADDLE_DELTA = 10;
 
   // some things needed to remember during game
   private List<Paddle> myPaddles;
@@ -41,9 +40,9 @@ public class Game extends Application {
   private Group root;
   private ScoreBoard myScoreBoard;
   private List<Ball> myBalls;
-  private List<Block> level1Blocks;
   private Timeline animation;
   private PowerUpManager powerUpManager;
+  private LevelManager levelManager;
   private boolean paused;
 
 
@@ -73,19 +72,15 @@ public class Game extends Application {
     myScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
+    createBall();
     myPaddle = myPaddles.get(0);
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    createBall();
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_HEIGHT);
     myBall = myBalls.get(0);
-    Level myLevel = new Level();
-    level1Blocks = myLevel.getBlocks("initialFile.txt");
 
 
-    int i = 1;
-    for (Block block : level1Blocks) {
-      root.getChildren().add(block);
-      block.setId("block" + i++);
-    }
+
+
     root.getChildren().add(myPaddle);
     root.getChildren().add(myBall);
     root.getChildren().add(myPlayer);
@@ -128,9 +123,11 @@ public class Game extends Application {
   // - goals, did the game or level end?
   void step(double elapsedTime) {
     myPaddle.movePaddle(elapsedTime);
+    levelManager.moveBlocks(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
-    myBall.moveBall(elapsedTime, level1Blocks);
+    levelManager.determineBallCollision();
+    myBall.moveBall(elapsedTime);
     myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }
@@ -157,11 +154,10 @@ public class Game extends Application {
         powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
         break;
       case W:
-        myPaddle.changeWidth(myPaddle.getWidth() + PADDLE_DELTA);
+        myPaddle.setWidthFromDelta();
         break;
       case D:
-        root.getChildren().remove(level1Blocks.get(0));
-        level1Blocks.remove(0);
+        levelManager.removeFirst();
         break;
       case F:
         freezeGame();
@@ -204,7 +200,7 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() == 0 || level1Blocks.size() == 0) {
+    if (myPlayer.livesLeft() == 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() == levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
@@ -216,6 +212,7 @@ public class Game extends Application {
   public PowerUpManager getPowerUpManager() {
     return powerUpManager;
   }
+  public LevelManager getLevelManager(){ return levelManager;}
 
   /**
    * Start the program.

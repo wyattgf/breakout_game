@@ -9,13 +9,16 @@ public class Paddle extends Rectangle {
   private static final double PADDLE_HEIGHT = 5;
   private static final double INITIAL_WIDTH = 75;
   private static final double MAX_WIDTH = 100;
+  private static final double MAX_SPEED = 400;
   private static final double INITIAL_X = 0;
   private static final double INITIAL_Y = 0;
   private static final int PADDLE_SPEED_AT_REST = 0;
-  private static final int PADDLE_SPEED_AT_KEY_PRESS = 175;
+  private static final int INITIAL_PADDLE_SPEED_AT_KEY_PRESS = 175;
+  private static final int WIDTH_DELTA = 10;
+  private static final int SPEED_DELTA = 10;
   //instance variables
   private int mySpeed;
-  private int paddleSpeedAtPress;
+  private int paddleSpeedAtKeyPress;
   private double myWidth;
   private int screenWidth;
   private int screenHeight;
@@ -26,6 +29,7 @@ public class Paddle extends Rectangle {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.myWidth = INITIAL_WIDTH;
+    paddleSpeedAtKeyPress = INITIAL_PADDLE_SPEED_AT_KEY_PRESS;
     this.paused = false;
     moveToStartingPosition();
     this.setFill(Color.BLACK);
@@ -36,6 +40,7 @@ public class Paddle extends Rectangle {
    */
   public void moveToStartingPosition() {
     myWidth = INITIAL_WIDTH;
+    paddleSpeedAtKeyPress = INITIAL_PADDLE_SPEED_AT_KEY_PRESS;
     changeWidth(myWidth);
     this.setX(screenWidth / 2.0 - myWidth / 2.0);
     this.setY(screenHeight - (2 * PADDLE_HEIGHT));
@@ -68,14 +73,14 @@ public class Paddle extends Rectangle {
    * This method causes a Paddle object to move left
    */
   public void moveLeft() {
-    mySpeed = -paddleSpeedAtPress;
+    mySpeed = -paddleSpeedAtKeyPress;
   }
 
   /**
    * This method causes a Paddle object to move right
    */
   public void moveRight() {
-    mySpeed = paddleSpeedAtPress;
+    mySpeed = paddleSpeedAtKeyPress;
   }
 
   /**
@@ -104,5 +109,19 @@ public class Paddle extends Rectangle {
     this.setX(reflectAxis - distanceFromOrigin);
   }
 
+
+  public void setSpeedFromDelta() {
+    if (paddleSpeedAtKeyPress < MAX_SPEED) {
+      paddleSpeedAtKeyPress += SPEED_DELTA;
+    }
+  }
+
+  public void setWidthFromDelta() {
+    changeWidth(WIDTH_DELTA + getWidth());
+  }
+
+  public int getKeyPressSpeed() {
+    return paddleSpeedAtKeyPress;
+  }
 
 }

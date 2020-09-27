@@ -4,6 +4,7 @@ import breakout.Display.HighScoreDisplay;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpLife;
 import breakout.PowerUp.PowerUpPaddleSize;
+import breakout.PowerUp.PowerUpPaddleSpeed;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -34,14 +35,15 @@ class GameTest extends DukeApplicationTest {
   private static final int SCREEN_WIDTH = 400;
   private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
-  private static final int POWER_UP_PADDLE_DELTA = 10;
+  private static final int POWER_UP_WIDTH_DELTA = 10;
+  private static final int POWER_UP_SPEED_DELTA = 10;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private Paddle myPaddle;
   private Player myPlayer;
   private HighScoreDisplay myHighScore;
   private Ball myBall;
-  private Block block1, block5, blockDestroyed;
+  private Block block1, block5, blockDestroyed, movingBlock;
 
   /**
    * Start special test version of application that does not animate on its own before each test.
@@ -53,13 +55,16 @@ class GameTest extends DukeApplicationTest {
     myScene = myGame.setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.show();
+    myGame.getLevelManager().setForTesting();
     myHighScore = new HighScoreDisplay();
+
     myPaddle = lookup("#paddle0").query();
     myPlayer = lookup("#player").query();
     myBall = lookup("#ball0").query();
     block1 = lookup("#block1").query();
     block5 = lookup("#block5").query();
     blockDestroyed = lookup("#block22").query();
+    movingBlock = lookup("#block23").query();
   }
 
   @Test
@@ -228,10 +233,20 @@ class GameTest extends DukeApplicationTest {
   public void testIncreasePaddleSizePowerUp() {
     double xPos = myPaddle.getX();
     double yPos = myPaddle.getY();
-    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_WIDTH_DELTA;
     PowerUp p = new PowerUpPaddleSize(xPos, yPos, myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(expectedWidth, myPaddle.getWidth());
+  }
+
+  @Test
+  public void testIncreasePaddleSpeedPowerUp() {
+    double xPos = myPaddle.getX();
+    double yPos = myPaddle.getY();
+    double expectedSpeed = myPaddle.getKeyPressSpeed() + POWER_UP_SPEED_DELTA;
+    PowerUp p = new PowerUpPaddleSpeed(xPos, yPos, myGame.getPowerUpManager());
+    p.activatePowerUp();
+    assertEquals(expectedSpeed, myPaddle.getKeyPressSpeed());
   }
 
   @Test
@@ -257,7 +272,7 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testIncreasePaddleSizeCheatKey() {
-    double expectedWidth = myPaddle.getWidth() + POWER_UP_PADDLE_DELTA;
+    double expectedWidth = myPaddle.getWidth() + POWER_UP_WIDTH_DELTA;
     press(myScene, KeyCode.W);
     assertEquals(expectedWidth, myPaddle.getWidth());
   }
@@ -271,6 +286,15 @@ class GameTest extends DukeApplicationTest {
     assertEquals(expectedWidth, myPaddle.getWidth());
   }
 
+  @Test
+  public void testFallingBlock() {
+    movingBlock.changeFallingSpeed(10000);
+    double originalPos = movingBlock.getY();
+     for (int i = 0; i < 50; i++) {
+       javafxRun(() -> myGame.step(SECOND_DELAY));
+     }
+    assertTrue(originalPos < movingBlock.getY());
+  }
   @Test
   public void testPaddleTeleportation(){
     myPaddle.setX(0);

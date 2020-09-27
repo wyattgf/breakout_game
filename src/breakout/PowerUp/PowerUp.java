@@ -1,7 +1,12 @@
 package breakout.PowerUp;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -11,12 +16,13 @@ import javafx.scene.shape.Circle;
 public abstract class PowerUp extends Circle {
 
   //constants
-  private static final double POWER_UP_RADIUS = 5;
+  private static final double POWER_UP_RADIUS = 9;
   private static final int POWER_UP_SPEED = 50;
   private static final int MY_Y_DIRECTION = 1;
 
   //instance variables
   private PowerUpManager myPowerUpManager;
+  private Image image;
 
 
   /**
@@ -44,6 +50,15 @@ public abstract class PowerUp extends Circle {
     this.setFill(color);
   }
 
+  public void setPowerUpImage(String powerUpImage){
+    try{
+      InputStream stream = new FileInputStream(powerUpImage);
+      image = new Image(stream);
+    }catch(FileNotFoundException e){
+
+    }
+    this.setFill(new ImagePattern(image));
+  }
   /**
    * This method activates the power up corresponding to the type of power up object that it is
    * called off of

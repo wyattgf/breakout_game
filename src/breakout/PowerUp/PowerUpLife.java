@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class PowerUpLife extends PowerUp {
 
-  private static final Color POWER_UP_COLOR = Color.MEDIUMAQUAMARINE;
+  private static final String POWER_UP_IMAGE = "data/heart.png";
   private Player myPlayer;
 
   /**
@@ -19,7 +19,7 @@ public class PowerUpLife extends PowerUp {
   public PowerUpLife(double initialX, double initialY, PowerUpManager myPowerUpManager) {
     super(initialX, initialY, myPowerUpManager);
     myPlayer = getPowerUpManager().getPlayer();
-    assignPowerUpColor(POWER_UP_COLOR);
+    setPowerUpImage(POWER_UP_IMAGE);
   }
 
   /**

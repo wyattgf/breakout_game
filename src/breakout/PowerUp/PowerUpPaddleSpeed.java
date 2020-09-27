@@ -3,10 +3,9 @@ package breakout.PowerUp;
 import breakout.Paddle;
 import javafx.scene.paint.Color;
 
-public class PowerUpPaddleSize extends PowerUp {
+public class PowerUpPaddleSpeed extends PowerUp {
 
-  private static final int PADDLE_DELTA = 10;
-  private static final String POWER_UP_IMAGE = "data/plus.png";
+  private static final String POWER_UP_IMAGE = "data/wind.png";
 
   private Paddle myPaddle;
 
@@ -18,7 +17,7 @@ public class PowerUpPaddleSize extends PowerUp {
    * @param myPowerUpManager PowerUpManager object that is the power up manager associated with this
    *                         specific power up
    */
-  public PowerUpPaddleSize(double initialX, double initialY, PowerUpManager myPowerUpManager) {
+  public PowerUpPaddleSpeed(double initialX, double initialY, PowerUpManager myPowerUpManager) {
     super(initialX, initialY, myPowerUpManager);
     myPaddle = getPowerUpManager().getPaddle();
     setPowerUpImage(POWER_UP_IMAGE);
@@ -28,19 +27,19 @@ public class PowerUpPaddleSize extends PowerUp {
    * This method creates a new power up that is a copy (same instance variables) as the power up
    * that it is called off of
    *
-   * @return a new PowerUpPaddleSize object
+   * @return a new PowerUpPaddleSpeed object
    */
   @Override
   public PowerUp newCopy() {
-    return new PowerUpPaddleSize(this.getCenterX(), this.getCenterY(), getPowerUpManager());
+    return new PowerUpPaddleSpeed(this.getCenterX(), this.getCenterY(), getPowerUpManager());
   }
 
   /**
-   * This method activates the Paddle Size Power Up
+   * This method activates the Paddle Speed Power Up
    */
   @Override
   public void activatePowerUp() {
-    myPaddle.setWidthFromDelta();
+    myPaddle.setSpeedFromDelta();
   }
 
 }
