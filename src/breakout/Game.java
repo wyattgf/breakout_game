@@ -203,6 +203,7 @@ public class Game extends Application {
   public PowerUpManager getPowerUpManager() {
     return powerUpManager;
   }
+  public LevelManager getLevelManager(){ return levelManager;}
 
   /**
    * Start the program.

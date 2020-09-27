@@ -49,7 +49,7 @@ class GameTest extends DukeApplicationTest {
     myScene = myGame.setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.show();
-
+    myGame.getLevelManager().setForTesting();
     myPaddle = lookup("#paddle0").query();
     myPlayer = lookup("#player").query();
     myBall = lookup("#ball0").query();

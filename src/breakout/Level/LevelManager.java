@@ -19,8 +19,6 @@ public class LevelManager {
   private List<Ball> myBalls;
   private Player myPlayer;
   private List<Block> currentBlocks;
-  private boolean paused;
-  private boolean switchLevel;
   private int currentLevel;
   private int blockCount;
   private PowerUpManager myPowerUpManager;
@@ -35,7 +33,14 @@ public class LevelManager {
     currentLevel = -1;
     blockCount = 1;
     incrementLevel();
-    paused = false;
+  }
+
+  public void setForTesting(){
+    for (int i = 0; i < POSSIBLE_LEVELS.size(); i++){
+      if (i!=0){
+        POSSIBLE_LEVELS.get(i).getBlocks().clear();
+      }
+    }
   }
 
   public List<Block> getLevelBlocks() {
