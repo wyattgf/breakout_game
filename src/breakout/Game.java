@@ -72,8 +72,8 @@ public class Game extends Application {
     myScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
-    createBall();
     myPaddle = myPaddles.get(0);
+    createBall();
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_HEIGHT);
     myBall = myBalls.get(0);
