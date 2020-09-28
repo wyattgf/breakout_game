@@ -25,13 +25,20 @@ public class LevelThree extends Level {
     whenToShoot = 0;
   }
 
-  public void activateLevelFunctionality(double elapsedTime){
-    if (myPaddle==null) myPaddle = getLevelManager().getPaddles().get(0);
-    if (screenWidth == 0) screenWidth = getLevelManager().getScreenWidth();
+  @Override
+  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){
+    if (myPaddle==null){
+      myPaddle = getLevelManager().getPaddles().get(0);
+    }
+    if (screenWidth == 0){
+      screenWidth = getLevelManager().getScreenWidth();
+    }
     checkLaserPaddleCollisions();
-    activateLasers();
-    for (LaserBeam laser: currentLasers){
-      laser.moveLaser(elapsedTime);
+    if(!paused) {
+      activateLasers();
+      for (LaserBeam laser : currentLasers) {
+        laser.moveLaser(elapsedTime);
+      }
     }
   }
 

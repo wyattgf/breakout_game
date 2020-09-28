@@ -6,7 +6,7 @@ import breakout.Block.BlockReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level {
+public abstract class Level {
 
 
   private BlockReader myBlockReader;
@@ -21,7 +21,7 @@ public class Level {
     currentBlocks = new ArrayList<>();
   }
 
-  public void activateLevelFunctionality(double elapsedTime){};
+  public abstract void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight);
 
   public List<Block> getBlocks() {
     return currentBlocks;

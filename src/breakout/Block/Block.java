@@ -1,10 +1,7 @@
 package breakout.Block;
 
-import breakout.PowerUp.PowerUp;
-import java.util.Arrays;
-import java.util.List;
+import breakout.Level.LevelManager;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -15,6 +12,7 @@ public abstract class Block extends Rectangle {
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
+  private static final int BLOCK_ROUNDED_EDGES = 10;
 
   private static final int MOVING_BLOCK_SPEED = 100;
   private static final int MY_Y_DIRECTION = 1;
@@ -31,6 +29,8 @@ public abstract class Block extends Rectangle {
    */
   public Block(double myXPos, double myYPos, int blockDurability) {
     super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+    this.setArcHeight(BLOCK_ROUNDED_EDGES);
+    this.setArcWidth(BLOCK_ROUNDED_EDGES);
     this.mySpeed = MOVING_BLOCK_SPEED;
     this.myDurability = blockDurability;
   }
@@ -82,6 +82,10 @@ public abstract class Block extends Rectangle {
     mySpeed = MOVING_BLOCK_SPEED;
   }
 
+  public int getSpeed(){
+    return mySpeed;
+  }
+
   /**
    *
    * @return
@@ -97,6 +101,7 @@ public abstract class Block extends Rectangle {
   public void moveBlock(double elapsedTime) {
     this.setY(this.getY() + this.getYDirection() * mySpeed * elapsedTime);
   }
+
 
   /**
    *

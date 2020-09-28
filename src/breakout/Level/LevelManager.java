@@ -17,9 +17,9 @@ public class LevelManager {
 
   private final List<Level> POSSIBLE_LEVELS = List
       .of(new LevelTest(this), new LevelOne(this), new LevelTwo(this), new LevelThree(this));
-  private final int SET_FOR_TESTING_LEVEL = -1;
-  private final int SET_FOR_STARTING_LEVEL = 0;
-  private final int LEVEL_THREE_FOR_TESTING = 3;
+  private static final int SET_FOR_TESTING_LEVEL = -1;
+  private static final int SET_FOR_STARTING_LEVEL = 0;
+  private static final int LEVEL_THREE_FOR_TESTING = 3;
 
   private Group myRoot;
   private List<Paddle> myPaddles;
@@ -27,18 +27,22 @@ public class LevelManager {
   private Player myPlayer;
   private List<Block> currentBlocks;
   private int screenWidth;
+  private int screenHeight;
   private int currentLevel;
   private int blockCount;
+  private boolean paused;
   private PowerUpManager myPowerUpManager;
 
   public LevelManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
-      PowerUpManager myPowerUpManager, int screenWidth) {
+      PowerUpManager myPowerUpManager, int screenWidth, int screenHeight) {
     this.myRoot = myRoot;
     this.myPaddles = myPaddles;
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
     this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
     this.myPowerUpManager = myPowerUpManager;
+    this.paused = false;
     currentBlocks = new ArrayList();
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
@@ -88,7 +92,7 @@ public class LevelManager {
 
   public void handleBallBlockCollision(Block block) {
     Ball currentBall = myBalls.get(0);
-    if (block != null) {
+    if (block != null && !currentBall.isFiery()) {
       if (currentBall.getCenterY() - currentBall.getRadius() >= block.getY() + block.getHeight()
           || currentBall.getCenterY() + currentBall.getRadius() <= block.getY()) {
         currentBall.bounceY();
@@ -173,14 +177,20 @@ public class LevelManager {
 
   public void levelFunctionality(double elapsedTime) {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
-      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime);
+      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime,paused,screenHeight);
     }
   }
 
+  public void freezeBlocks(){
+    paused = !paused;
+  }
+
   public void controlMovingBlocks(double elapsedTime) {
-    for (Block block : currentBlocks) {
-      if (block instanceof MovingBlock) {
-        ((MovingBlock) block).moveBlockHorizontally(elapsedTime, screenWidth);
+    if(!paused) {
+      for (Block block : currentBlocks) {
+        if (block instanceof MovingBlock) {
+          ((MovingBlock) block).moveBlockHorizontally(elapsedTime, screenWidth);
+        }
       }
     }
   }
