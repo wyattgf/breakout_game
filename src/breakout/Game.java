@@ -31,6 +31,10 @@ public class Game extends Application {
   private static final int FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final Paint BACKGROUND = Color.AZURE;
+  private static final int PADDLE_SPEED_CHANGE = 10;
+  private static final int LEVEL_THREE  = 3;
+  private static final int LEVEL_TWO = 2;
+  private static final int LEVEL_ONE = 1;
 
   // some things needed to remember during game
   private List<Paddle> myPaddles;
@@ -167,19 +171,19 @@ public class Game extends Application {
         myPaddle.teleportPaddle();
         break;
       case UP:
-        myPaddle.incrementPaddleSpeed(10);
+        myPaddle.incrementPaddleSpeed(PADDLE_SPEED_CHANGE);
         break;
       case DOWN:
-        myPaddle.incrementPaddleSpeed(-10);
+        myPaddle.incrementPaddleSpeed(-PADDLE_SPEED_CHANGE);
         break;
       case DIGIT1:
-        levelManager.setLevel(1);
+        levelManager.setLevel(LEVEL_ONE);
         break;
       case DIGIT2:
-        levelManager.setLevel(2);
+        levelManager.setLevel(LEVEL_TWO);
         break;
       case DIGIT3:
-        levelManager.setLevel(3);
+        levelManager.setLevel(LEVEL_THREE);
         break;
       case DIGIT0:
         levelManager.setLevel(0);

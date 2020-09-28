@@ -26,8 +26,12 @@ public class LevelThree extends Level {
   }
 
   public void activateLevelFunctionality(double elapsedTime){
-    if (myPaddle==null) myPaddle = getLevelManager().getPaddles().get(0);
-    if (screenWidth == 0) screenWidth = getLevelManager().getScreenWidth();
+    if (myPaddle==null){
+      myPaddle = getLevelManager().getPaddles().get(0);
+    }
+    if (screenWidth == 0){
+      screenWidth = getLevelManager().getScreenWidth();
+    }
     checkLaserPaddleCollisions();
     activateLasers();
     for (LaserBeam laser: currentLasers){

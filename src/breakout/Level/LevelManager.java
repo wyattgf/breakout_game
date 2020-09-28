@@ -17,9 +17,9 @@ public class LevelManager {
 
   private final List<Level> POSSIBLE_LEVELS = List
       .of(new LevelTest(this), new LevelOne(this), new LevelTwo(this), new LevelThree(this));
-  private final int SET_FOR_TESTING_LEVEL = -1;
-  private final int SET_FOR_STARTING_LEVEL = 0;
-  private final int LEVEL_THREE_FOR_TESTING = 3;
+  private static final int SET_FOR_TESTING_LEVEL = -1;
+  private static final int SET_FOR_STARTING_LEVEL = 0;
+  private static final int LEVEL_THREE_FOR_TESTING = 3;
 
   private Group myRoot;
   private List<Paddle> myPaddles;

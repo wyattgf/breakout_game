@@ -81,10 +81,7 @@ public class Ball extends Circle {
   private boolean sameSideBounce(){
     boolean xDirectionIsRight = myXDirection>0;
     boolean leftSideOfPaddle = getCenterX()< (myPaddle.getX() + (myPaddle.getWidth()/2.0));
-    if(xDirectionIsRight == leftSideOfPaddle){
-      return true;
-    }
-    return false;
+    return (xDirectionIsRight == leftSideOfPaddle);
   }
 
   /**
