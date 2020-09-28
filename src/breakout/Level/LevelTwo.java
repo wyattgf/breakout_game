@@ -11,12 +11,19 @@ public class LevelTwo extends Level {
   private LevelManager myLevelManager;
   private Player myPlayer;
 
+  /**
+   * This is a constructor for a LevelTwo object
+   * @param myLevelManager LevelManager corresponding to the associated LevelManager with this level
+   */
   public LevelTwo(LevelManager myLevelManager) {
     super(BLOCK_FILE, myLevelManager);
     this.myLevelManager = myLevelManager;
     createMovingBlocks();
   }
 
+  /**
+   * This method sets all current blocks in the level to falling blocks
+   */
   public void createMovingBlocks() {
     for (Block block : getBlocks()) {
       block.setSpeed();
