@@ -1,7 +1,8 @@
 package breakout.Level;
 
-import breakout.Block;
-import breakout.BlockReader;
+
+import breakout.Block.Block;
+import breakout.Block.BlockReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Level {
     this.myLevelManager = myLevelManager;
     myBlockReader = new BlockReader();
     this.blockFile = blockFile;
-    currentBlocks = initializeBlocks(this.blockFile);
+    currentBlocks = new ArrayList<>();
   }
 
   public void activateLevelFunctionality(double elapsedTime){};

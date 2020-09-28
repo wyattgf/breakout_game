@@ -1,5 +1,9 @@
-package breakout;
+package breakout.Block;
 
+import breakout.PowerUp.PowerUp;
+import breakout.PowerUp.PowerUpLife;
+import breakout.PowerUp.PowerUpPaddleSize;
+import breakout.PowerUp.PowerUpPaddleSpeed;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,9 +15,15 @@ import java.util.List;
 public class BlockReader {
 
   //constants
+  private final List<Block> POSSIBLE_BLOCKS = List
+      .of(new DurableBlock(0, 0), new PowerUpBlock(0, 0),
+          new MovingBlock(0, 0));
+
   private static final String DIRECTORY = "data";
-  private static final int BLOCK_MIN_VALUE = 1;
-  private static final int BLOCK_MAX_VALUE = 4;
+  private static final int BLOCK_XPOS = 0;
+  private static final int BLOCK_YPOS = 1;
+  private static final int TYPE_OF_BLOCK = 2;
+
   //instance variables
   private List<Block> listOfBlocks;
 
@@ -48,7 +58,10 @@ public class BlockReader {
 
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    return new Block(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]),
-        Math.max(BLOCK_MIN_VALUE,Math.min(BLOCK_MAX_VALUE,Integer.parseInt(blockData[2]))));
+    Block readBlock = POSSIBLE_BLOCKS.get(Integer.parseInt(blockData[TYPE_OF_BLOCK]));
+    Block newBlock = readBlock.newBlock();
+    newBlock.setX(Double.parseDouble(blockData[BLOCK_XPOS]));
+    newBlock.setY(Double.parseDouble(blockData[BLOCK_YPOS]));
+    return newBlock;
   }
 }

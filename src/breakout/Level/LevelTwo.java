@@ -1,6 +1,6 @@
 package breakout.Level;
 
-import breakout.Block;
+import breakout.Block.Block;
 
 public class LevelTwo extends Level {
 

@@ -1,5 +1,6 @@
 package breakout;
 
+import breakout.Block.Block;
 import breakout.Display.HighScoreDisplay;
 import breakout.Level.Level;
 import breakout.Level.LevelThree;
@@ -294,7 +295,6 @@ class GameTest extends DukeApplicationTest {
     movingBlock = lookup("#block1").query();
     double originalPos = movingBlock.getY();
     movingBlock.changeFallingSpeed(10000);
-    movingBlock.setWhenToMoveForTesting(MOVE_THIS_OFTEN_FALLING_BLOCK-1);
       javafxRun(() -> myGame.step(SECOND_DELAY));
 
     assertTrue(originalPos < movingBlock.getY());

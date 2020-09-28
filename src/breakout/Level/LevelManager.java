@@ -1,11 +1,14 @@
 package breakout.Level;
 
 import breakout.Ball;
-import breakout.Block;
+
+import breakout.Block.Block;
+import breakout.Block.MovingBlock;
 import breakout.LaserBeam;
 import breakout.Paddle;
 import breakout.Player;
 import breakout.PowerUp.PowerUpManager;
+import breakout.Block.PowerUpBlock;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
@@ -107,8 +110,10 @@ public class LevelManager {
     for (Block b : copyOfBlocks) {
       if (b.getBlockDurability() == 0) {
         removeSingularBlockFromRoot(b);
-        myPowerUpManager.createPowerUp(b.getX(), b.getY());
         myPlayer.blockDestroyed();
+        if(b instanceof PowerUpBlock){
+          myPowerUpManager.createPowerUp(b.getX(), b.getY());
+        }
       }
     }
 
@@ -172,6 +177,14 @@ public class LevelManager {
     }
   }
 
+  public void controlMovingBlocks(double elapsedTime) {
+    for (Block block : currentBlocks) {
+      if (block instanceof MovingBlock) {
+        ((MovingBlock) block).moveBlockHorizontally(elapsedTime, screenWidth);
+      }
+    }
+  }
+
   public Group getRoot() {
     return myRoot;
   }
@@ -189,7 +202,7 @@ public class LevelManager {
   }
 
   public Level getLevelForTesting(int level) {
-    return POSSIBLE_LEVELS.get(currentLevel);
+    return POSSIBLE_LEVELS.get(level);
   }
 
   public void setLevel(int levelNumber) {

@@ -123,6 +123,7 @@ public class Game extends Application {
   void step(double elapsedTime) {
     myPaddle.movePaddle(elapsedTime);
     levelManager.levelFunctionality(elapsedTime);
+    levelManager.controlMovingBlocks(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();

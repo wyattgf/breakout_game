@@ -1,7 +1,7 @@
 package breakout.Level;
 
 
-import breakout.Block;
+import breakout.Block.Block;
 import breakout.LaserBeam;
 import breakout.Paddle;
 import java.util.ArrayList;
