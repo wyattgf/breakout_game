@@ -1,7 +1,9 @@
 package breakout;
 
 import breakout.Block.Block;
+import breakout.Block.PowerUpBlock;
 import breakout.Display.HighScoreDisplay;
+import breakout.Display.ScoreBoard;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpFireBall;
 import breakout.PowerUp.PowerUpLife;
@@ -356,7 +358,7 @@ class GameTest extends DukeApplicationTest {
   //for this test to pass, change the SUN_FILE_LOCATION constant in the Ball class to an invalid
   //file name
   /*@Test
-  public void testInvalidImageFileForFieryBall(){
+  public void testBallRemainsBlackWithInvalidFileImage(){
     PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(Color.BLACK,myBall.getFill());
@@ -367,7 +369,7 @@ class GameTest extends DukeApplicationTest {
   //for this test, change the POWER_UP_IMAGE file location in each PowerUp subclass to an invalid
   //file name for the power ups to become black
   @Test
-  public void testInvalidPowerUpImages(){
+  public void testPowerUpsTurnBlackWithInvalidFileImage(){
     PowerUp fireBall = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
     fireBall.activatePowerUp();
     assertEquals(Color.BLACK, fireBall.getFill());
@@ -382,6 +384,25 @@ class GameTest extends DukeApplicationTest {
     assertEquals(Color.BLACK, speedyPaddle.getFill());
   }
 
+   */
+
+  //for this test, change the POWER_UP_BACKGROUND file location in the PowerUpBlock class to
+  //an invalid file name
+  /*@Test
+  public void testPowerUpBlockIsRedWithInvalidImageFile(){
+    Block b = new PowerUpBlock(0,0);
+    assertEquals(Color.RED,b.getFill());
+  }
+   */
+
+  //for this test, change the file name in the ScoreBoard class to an invalid file
+  //and the error is handled by the scoreboard turning purple
+  /*
+  @Test
+  public void testScoreBoardIsPurpleWithInvalidImageFile(){
+    ScoreBoard board = new ScoreBoard();
+    assertEquals(Color.PURPLE,board.getFill());
+  }
    */
 
 

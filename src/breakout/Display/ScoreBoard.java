@@ -26,7 +26,7 @@ public class ScoreBoard extends Rectangle{
   private static final double SCOREBOARD_YPOS = 0;
   private static final int DISPLAY_LABEL_XPOS = 430;
   private static final int DISPLAY_LABEL_YPOS_DISPLACEMENT = 70;
-  private static final String SCOREBOARD_BACKGROUND = "data/galaxy.jpg";
+  private static final String SCOREBOARD_BACKGROUND = "data/galay.jpg";
   private static final String[] DISPLAY_LABELS = new String[] {"Level:", "Lives:",
   "Score:", "High Score:"};
 
@@ -39,15 +39,15 @@ public class ScoreBoard extends Rectangle{
     try{
       InputStream stream = new FileInputStream(SCOREBOARD_BACKGROUND);
       image = new Image(stream);
-    }catch(FileNotFoundException e){
-
+      this.setFill(new ImagePattern(image));
+    }catch(Exception e){
+      this.setFill(Color.PURPLE);
     }
     this.statusDisplayOrderedList = new ArrayList<>();
     statusDisplayOrderedList.add(new LevelDisplay());
     statusDisplayOrderedList.add(new LivesDisplay());
     statusDisplayOrderedList.add(new ScoreDisplay());
     statusDisplayOrderedList.add(new HighScoreDisplay());
-    this.setFill(new ImagePattern(image));
   }
   public void updateScoreBoard(Group root, Player myPlayer) {
     for(StatusDisplay display: statusDisplayOrderedList) {
