@@ -21,7 +21,7 @@ public abstract class Level {
     currentBlocks = new ArrayList<>();
   }
 
-  public abstract void activateLevelFunctionality(double elapsedTime, boolean paused);
+  public abstract void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight);
 
   public List<Block> getBlocks() {
     return currentBlocks;

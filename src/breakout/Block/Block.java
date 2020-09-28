@@ -1,5 +1,6 @@
 package breakout.Block;
 
+import breakout.Level.LevelManager;
 import javafx.scene.shape.Rectangle;
 
 
@@ -81,6 +82,10 @@ public abstract class Block extends Rectangle {
     mySpeed = MOVING_BLOCK_SPEED;
   }
 
+  public int getSpeed(){
+    return mySpeed;
+  }
+
   /**
    *
    * @return
@@ -96,6 +101,7 @@ public abstract class Block extends Rectangle {
   public void moveBlock(double elapsedTime) {
     this.setY(this.getY() + this.getYDirection() * mySpeed * elapsedTime);
   }
+
 
   /**
    *

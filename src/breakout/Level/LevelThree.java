@@ -25,7 +25,8 @@ public class LevelThree extends Level {
     whenToShoot = 0;
   }
 
-  public void activateLevelFunctionality(double elapsedTime, boolean paused){
+  @Override
+  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){
     if (myPaddle==null){
       myPaddle = getLevelManager().getPaddles().get(0);
     }

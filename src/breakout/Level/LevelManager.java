@@ -27,18 +27,20 @@ public class LevelManager {
   private Player myPlayer;
   private List<Block> currentBlocks;
   private int screenWidth;
+  private int screenHeight;
   private int currentLevel;
   private int blockCount;
   private boolean paused;
   private PowerUpManager myPowerUpManager;
 
   public LevelManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
-      PowerUpManager myPowerUpManager, int screenWidth) {
+      PowerUpManager myPowerUpManager, int screenWidth, int screenHeight) {
     this.myRoot = myRoot;
     this.myPaddles = myPaddles;
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
     this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
     this.myPowerUpManager = myPowerUpManager;
     this.paused = false;
     currentBlocks = new ArrayList();
@@ -175,7 +177,7 @@ public class LevelManager {
 
   public void levelFunctionality(double elapsedTime) {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
-      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime,paused);
+      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime,paused,screenHeight);
     }
   }
 

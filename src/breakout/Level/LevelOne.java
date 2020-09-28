@@ -8,6 +8,7 @@ public class LevelOne extends Level {
     super(BLOCK_FILE,myLevelManager);
   }
 
-  public void activateLevelFunctionality(double elapsedTime, boolean paused){};
+  @Override
+  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){};
 
 }
