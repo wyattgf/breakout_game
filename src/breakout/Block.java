@@ -16,9 +16,9 @@ public class Block extends Rectangle {
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
   private static final int INITIAL_BLOCK_SPEED = 0;
-  private static final int MOVING_BLOCK_SPEED = 2;
-  private static final int MY_Y_DIRECTION = 20;
-  private static final int MOVE_THIS_OFTEN = 50;
+  private static final int MOVING_BLOCK_SPEED = 100;
+  private static final int MY_Y_DIRECTION = 1;
+  private static final int MOVE_THIS_OFTEN = 10;
   private static final List<Color> BLOCK_COLORS = Arrays
       .asList(Color.WHITE, Color.LIGHTGREY, Color.DARKGREY, Color.GREY, Color.BLACK);
   //instance variables
@@ -73,5 +73,9 @@ public class Block extends Rectangle {
 
   public void changeFallingSpeed(int speed) {
     mySpeed = speed;
+  }
+
+  public void setWhenToMoveForTesting(int when){
+    whenToMove = when;
   }
 }

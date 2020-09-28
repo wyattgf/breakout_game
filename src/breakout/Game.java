@@ -1,6 +1,5 @@
 package breakout;
 
-import breakout.Level.Level;
 import breakout.Level.LevelManager;
 import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class Game extends Application {
     myPaddle = myPaddles.get(0);
     createBall();
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_HEIGHT);
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_WIDTH);
     myBall = myBalls.get(0);
 
 
@@ -123,7 +122,7 @@ public class Game extends Application {
   // - goals, did the game or level end?
   void step(double elapsedTime) {
     myPaddle.movePaddle(elapsedTime);
-    levelManager.moveBlocks(elapsedTime);
+    levelManager.levelFunctionality(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();
@@ -170,6 +169,18 @@ public class Game extends Application {
         break;
       case DOWN:
         myPaddle.incrementPaddleSpeed(-10);
+        break;
+      case DIGIT1:
+        levelManager.setLevel(1);
+        break;
+      case DIGIT2:
+        levelManager.setLevel(2);
+        break;
+      case DIGIT3:
+        levelManager.setLevel(3);
+        break;
+      case DIGIT0:
+        levelManager.setLevel(0);
         break;
     }
   }
