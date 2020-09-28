@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 
 public class PowerUpPaddleSize extends PowerUp {
 
-  private static final int PADDLE_DELTA = 10;
   private static final String POWER_UP_IMAGE = "data/plus.png";
 
   private Paddle myPaddle;
