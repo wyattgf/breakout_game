@@ -11,7 +11,7 @@ import java.util.Random;
 public class PowerUpManager {
 
   private final List<PowerUp> POSSIBLE_POWER_UPS = List
-      .of(new PowerUpPaddleSize(0, 0, this), new PowerUpLife(0, 0, this),
+      .of(new PowerUpPaddleSize(0, 0, this), new PowerUpFireBall(0, 0, this),
           new PowerUpPaddleSpeed(0, 0, this));
 
   private Group myRoot;
@@ -173,6 +173,10 @@ public class PowerUpManager {
    */
   public Player getPlayer() {
     return myPlayer;
+  }
+
+  public List<Ball> getMyBalls(){
+    return myBalls;
   }
 
   /**

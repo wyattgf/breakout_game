@@ -103,11 +103,11 @@ public class Game extends Application {
     myPlayer.setId("player");
   }
 
-  private void createBall() {
+  public void createBall() {
     if (myBalls == null){
       myBalls = new ArrayList<>();
     }
-    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,root,myPaddle,myPlayer, powerUpManager);
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,myPaddle,myPlayer);
     b.setId("ball" + myBalls.size());
     myBalls.add(b);
   }
@@ -132,7 +132,7 @@ public class Game extends Application {
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();
-    myBall.moveBall(elapsedTime);
+    myBall.controlBall(elapsedTime);
     myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }

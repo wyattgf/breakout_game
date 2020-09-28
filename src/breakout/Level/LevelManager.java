@@ -88,7 +88,7 @@ public class LevelManager {
 
   public void handleBallBlockCollision(Block block) {
     Ball currentBall = myBalls.get(0);
-    if (block != null) {
+    if (block != null && !currentBall.isFiery()) {
       if (currentBall.getCenterY() - currentBall.getRadius() >= block.getY() + block.getHeight()
           || currentBall.getCenterY() + currentBall.getRadius() <= block.getY()) {
         currentBall.bounceY();
