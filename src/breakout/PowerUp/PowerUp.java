@@ -54,7 +54,7 @@ public abstract class PowerUp extends Circle {
     try{
       InputStream stream = new FileInputStream(powerUpImage);
       image = new Image(stream);
-    }catch(FileNotFoundException e){
+    }catch(Exception e){
 
     }
     this.setFill(new ImagePattern(image));

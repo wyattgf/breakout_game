@@ -2,9 +2,8 @@ package breakout;
 
 import breakout.Block.Block;
 import breakout.Display.HighScoreDisplay;
-import breakout.Level.Level;
-import breakout.Level.LevelThree;
 import breakout.PowerUp.PowerUp;
+import breakout.PowerUp.PowerUpFireBall;
 import breakout.PowerUp.PowerUpLife;
 import breakout.PowerUp.PowerUpPaddleSize;
 import breakout.PowerUp.PowerUpPaddleSpeed;
@@ -24,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest extends DukeApplicationTest {
 
-  // create an instance of our game to be able to call in tests (like step())
   private final Game myGame = new Game();
   private final int INITIAL_BALL_SPEED = 100;
   private final int BALL_RADIUS = 5;
@@ -41,7 +39,7 @@ class GameTest extends DukeApplicationTest {
   private static final int POWER_UP_WIDTH_DELTA = 10;
   private static final int POWER_UP_SPEED_DELTA = 10;
   private static final int MOVE_THIS_OFTEN_FALLING_BLOCK = 10;
-  // keep created scene to allow mouse and keyboard events
+
   private Scene myScene;
   private Paddle myPaddle;
   private Player myPlayer;
@@ -347,5 +345,22 @@ class GameTest extends DukeApplicationTest {
     assertEquals(3, myGame.getLevelManager().getCurrentLevelNumberForTesting());
 
   }
+  @Test
+  public void testFieryBallPowerUpChangesBallDesign(){
+    PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
+    assertEquals(myBall.getFill(), Color.BLACK);
+    p.activatePowerUp();
+    assertNotEquals(myBall.getFill(), Color.BLACK);
+  }
+
+  //for this test to pass, change the SUN_FILE_LOCATION constant in the Ball class to an invalid
+  //file name
+  /**@Test
+  public void testInvalidImageFileForFieryBall(){
+    PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
+    p.activatePowerUp();
+    assertEquals(Color.BLACK,myBall.getFill());
+  }
+   */
 
 }
