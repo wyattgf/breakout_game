@@ -1,10 +1,6 @@
 package breakout.Block;
 
-import breakout.PowerUp.PowerUp;
-import java.util.Arrays;
-import java.util.List;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
 
 
 /**

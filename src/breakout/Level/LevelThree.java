@@ -33,9 +33,11 @@ public class LevelThree extends Level {
       screenWidth = getLevelManager().getScreenWidth();
     }
     checkLaserPaddleCollisions();
-    activateLasers();
-    for (LaserBeam laser: currentLasers){
-      laser.moveLaser(elapsedTime);
+    if(!paused) {
+      activateLasers();
+      for (LaserBeam laser : currentLasers) {
+        laser.moveLaser(elapsedTime);
+      }
     }
   }
 
