@@ -48,6 +48,6 @@ public class BlockReader {
 
   private Block createBlock(String fileLine) {
     String[] blockData = fileLine.split(" ");
-    return new PowerUpBlock(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]));
+    return new MovingBlock(Double.parseDouble(blockData[0]), Double.parseDouble(blockData[1]));
   }
 }

@@ -2,6 +2,7 @@ package breakout.Level;
 
 import breakout.Ball;
 import breakout.Block.Block;
+import breakout.Block.MovingBlock;
 import breakout.Paddle;
 import breakout.Player;
 import breakout.PowerUp.PowerUpManager;
@@ -22,18 +23,18 @@ public class LevelManager {
   private List<Ball> myBalls;
   private Player myPlayer;
   private List<Block> currentBlocks;
-  private int screenHeight;
+  private int screenWidth;
   private int currentLevel;
   private int blockCount;
   private PowerUpManager myPowerUpManager;
 
   public LevelManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
-      PowerUpManager myPowerUpManager, int screenHeight) {
+      PowerUpManager myPowerUpManager, int screenWidth) {
     this.myRoot = myRoot;
     this.myPaddles = myPaddles;
     this.myBalls = myBalls;
     this.myPlayer = myPlayer;
-    this.screenHeight = screenHeight;
+    this.screenWidth = screenWidth;
     this.myPowerUpManager = myPowerUpManager;
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
@@ -159,6 +160,9 @@ public class LevelManager {
 
   public void moveBlocks(double elapsedTime) {
     for (Block block: currentBlocks){
+      if(block instanceof MovingBlock){
+        ((MovingBlock) block).moveBlockHorizontally(elapsedTime,screenWidth);
+      }
       block.moveBlock(elapsedTime);
     }
   }
