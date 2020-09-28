@@ -355,12 +355,34 @@ class GameTest extends DukeApplicationTest {
 
   //for this test to pass, change the SUN_FILE_LOCATION constant in the Ball class to an invalid
   //file name
-  /**@Test
+  /*@Test
   public void testInvalidImageFileForFieryBall(){
     PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(Color.BLACK,myBall.getFill());
   }
    */
+
+  /*
+  //for this test, change the POWER_UP_IMAGE file location in each PowerUp subclass to an invalid
+  //file name for the power ups to become black
+  @Test
+  public void testInvalidPowerUpImages(){
+    PowerUp fireBall = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    fireBall.activatePowerUp();
+    assertEquals(Color.BLACK, fireBall.getFill());
+    PowerUp extraLife = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    extraLife.activatePowerUp();
+    assertEquals(Color.BLACK, extraLife.getFill());
+    PowerUp widerPaddle = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    widerPaddle.activatePowerUp();
+    assertEquals(Color.BLACK, widerPaddle.getFill());
+    PowerUp speedyPaddle = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    speedyPaddle.activatePowerUp();
+    assertEquals(Color.BLACK, speedyPaddle.getFill());
+  }
+
+   */
+
 
 }
