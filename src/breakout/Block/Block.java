@@ -25,6 +25,12 @@ public abstract class Block extends Rectangle {
   private int whenToMove;
   private int myDurability;
 
+  /**
+   *
+   * @param myXPos
+   * @param myYPos
+   * @param blockDurability
+   */
   public Block(double myXPos, double myYPos, int blockDurability) {
     super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
     this.mySpeed = INITIAL_BLOCK_SPEED;
@@ -32,33 +38,65 @@ public abstract class Block extends Rectangle {
     whenToMove = 0;
   }
 
+  public abstract Block newBlock();
+
+  /**
+   *
+   * @param myDurability
+   */
   public abstract void setColor(int myDurability);
 
+  /**
+   *
+   */
   public void updateBlockDurability(){
     this.myDurability = this.myDurability -1;
     setColor(myDurability);
   }
 
+  /**
+   *
+   * @return
+   */
   public int getBlockDurability(){
     return this.myDurability;
   }
 
+  /**
+   *
+   * @return
+   */
   public double getBlockWidth() {
     return BLOCK_WIDTH;
   }
 
+  /**
+   *
+   * @return
+   */
   public double getBlockHeight() {
     return BLOCK_HEIGHT;
   }
 
+  /**
+   *
+   */
   public void setSpeed() {
     mySpeed = MOVING_BLOCK_SPEED;
   }
 
+  /**
+   *
+   * @return
+   */
   public int getYDirection() {
     return MY_Y_DIRECTION;
   }
 
+  /**
+   *
+   * @param elapsedTime
+   */
   public void moveBlock(double elapsedTime) {
     whenToMove++;
     if (whenToMove%MOVE_THIS_OFTEN==0) {
@@ -66,7 +104,10 @@ public abstract class Block extends Rectangle {
     }
   }
 
-
+  /**
+   *
+   * @param speed
+   */
   public void changeFallingSpeed(int speed) {
     mySpeed = speed;
   }

@@ -17,6 +17,11 @@ public class DurableBlock extends Block {
   }
 
   @Override
+  public Block newBlock(){
+    return new DurableBlock(this.getX(), this.getY());
+  }
+
+  @Override
   public void setColor(int myDurability) {
     this.setFill(BLOCK_COLORS.get(myDurability));
   }

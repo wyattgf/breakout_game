@@ -1,6 +1,5 @@
 package breakout.Block;
 
-import breakout.Block.Block;
 import javafx.scene.paint.Color;
 
 public class MovingBlock extends Block {
@@ -15,6 +14,11 @@ public class MovingBlock extends Block {
     super(myXPos, myYPos, MOVING_BLOCK_DURABILITY);
     setColor(MOVING_BLOCK_DURABILITY);
     movingBlockXDirection = INITIAL_DIRECTION;
+  }
+
+  @Override
+  public Block newBlock(){
+    return new MovingBlock(this.getX(), this.getY());
   }
 
   public void moveBlockHorizontally(double elapsedTime,int screenWidth){

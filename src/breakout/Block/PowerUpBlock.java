@@ -13,6 +13,11 @@ public class PowerUpBlock extends Block {
   }
 
   @Override
+  public Block newBlock(){
+    return new PowerUpBlock(this.getX(), this.getY());
+  }
+
+  @Override
   public void setColor(int myDurability) {
     this.setFill(POWER_UP_BLOCK_COLOR);
   }
