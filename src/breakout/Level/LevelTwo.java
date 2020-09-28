@@ -1,6 +1,7 @@
 package breakout.Level;
 
 import breakout.Block.Block;
+import breakout.Player;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class LevelTwo extends Level {
 
   private static final String BLOCK_FILE = "levelTwo.txt";
   private LevelManager myLevelManager;
+  private Player myPlayer;
 
   public LevelTwo(LevelManager myLevelManager) {
     super(BLOCK_FILE, myLevelManager);
@@ -34,8 +36,10 @@ public class LevelTwo extends Level {
     blocksToRemove.clear();
   }
   private void checkBlockReachedBottom(Block block, int screenHeight, List<Block> blocksToRemove){
+    if (myPlayer==null) myPlayer = myLevelManager.getPlayer();
     if(block.getY() + block.getBlockHeight() >= screenHeight){
       blocksToRemove.add(block);
+      myPlayer.lostLife();
     }
   }
 

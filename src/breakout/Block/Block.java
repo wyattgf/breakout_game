@@ -13,13 +13,13 @@ public abstract class Block extends Rectangle {
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
   private static final int BLOCK_ROUNDED_EDGES = 10;
-
-  private static final int MOVING_BLOCK_SPEED = 100;
+  private static final int MOVING_BLOCK_SPEED = 5;
   private static final int MY_Y_DIRECTION = 1;
 
   //instance variables
   private int mySpeed;
   private int myDurability;
+
 
   /**
    *
@@ -82,6 +82,7 @@ public abstract class Block extends Rectangle {
     mySpeed = MOVING_BLOCK_SPEED;
   }
 
+
   public int getSpeed(){
     return mySpeed;
   }
@@ -101,6 +102,8 @@ public abstract class Block extends Rectangle {
   public void moveBlock(double elapsedTime) {
     this.setY(this.getY() + this.getYDirection() * mySpeed * elapsedTime);
   }
+
+
 
 
   /**
