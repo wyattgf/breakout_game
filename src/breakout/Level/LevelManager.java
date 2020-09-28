@@ -1,8 +1,10 @@
 package breakout.Level;
 
 import breakout.Ball;
+
 import breakout.Block.Block;
 import breakout.Block.MovingBlock;
+import breakout.LaserBeam;
 import breakout.Paddle;
 import breakout.Player;
 import breakout.PowerUp.PowerUpManager;
@@ -17,6 +19,7 @@ public class LevelManager {
       .of(new LevelTest(this), new LevelOne(this), new LevelTwo(this), new LevelThree(this));
   private final int SET_FOR_TESTING_LEVEL = -1;
   private final int SET_FOR_STARTING_LEVEL = 0;
+  private final int LEVEL_THREE_FOR_TESTING = 3;
 
   private Group myRoot;
   private List<Paddle> myPaddles;
@@ -36,6 +39,7 @@ public class LevelManager {
     this.myPlayer = myPlayer;
     this.screenWidth = screenWidth;
     this.myPowerUpManager = myPowerUpManager;
+    currentBlocks = new ArrayList();
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
     incrementLevel();
@@ -53,7 +57,9 @@ public class LevelManager {
 
   public List<Block> getLevelBlocks() {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
-      return POSSIBLE_LEVELS.get(currentLevel).getBlocks();
+      Level level = POSSIBLE_LEVELS.get(currentLevel);
+      level.resetBlocksToOriginal();
+      return level.getBlocks();
     }
     return new ArrayList<>();
   }
@@ -67,9 +73,17 @@ public class LevelManager {
     myBalls.get(0).moveToCenter();
     currentLevel++;
     blockCount = 1;
+    removeAllBlocksFromRoot();
     currentBlocks = getLevelBlocks();
     addBlocksToRoot();
 
+  }
+
+  private void removeAllBlocksFromRoot() {
+    for (Block block : currentBlocks) {
+      myRoot.getChildren().remove(block);
+    }
+    currentBlocks.clear();
   }
 
   public void handleBallBlockCollision(Block block) {
@@ -83,8 +97,7 @@ public class LevelManager {
           || currentBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
         currentBall.bounceX();
 
-      }
-      else {
+      } else {
         currentBall.bounceY();
       }
     }
@@ -158,12 +171,51 @@ public class LevelManager {
     return POSSIBLE_LEVELS.size();
   }
 
-  public void moveBlocks(double elapsedTime) {
-    for (Block block: currentBlocks){
-      if(block instanceof MovingBlock){
-        ((MovingBlock) block).moveBlockHorizontally(elapsedTime,screenWidth);
-      }
-      block.moveBlock(elapsedTime);
+  public void levelFunctionality(double elapsedTime) {
+    if (currentLevel < POSSIBLE_LEVELS.size()) {
+      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime);
     }
+  }
+
+  public void controlMovingBlocks(double elapsedTime) {
+    for (Block block : currentBlocks) {
+      if (block instanceof MovingBlock) {
+        ((MovingBlock) block).moveBlockHorizontally(elapsedTime, screenWidth);
+      }
+    }
+  }
+
+  public Group getRoot() {
+    return myRoot;
+  }
+
+  public int getScreenWidth() {
+    return screenWidth;
+  }
+
+  public List<Paddle> getPaddles() {
+    return myPaddles;
+  }
+
+  public Player getPlayer() {
+    return myPlayer;
+  }
+
+  public Level getLevelForTesting(int level) {
+    return POSSIBLE_LEVELS.get(level);
+  }
+
+  public void setLevel(int levelNumber) {
+    currentLevel = levelNumber - 1;
+    incrementLevel();
+  }
+
+  public int getCurrentLevelNumberForTesting() {
+    return currentLevel;
+  }
+
+  public List<LaserBeam> getLaserBeamsForTesting() {
+    LevelThree three = (LevelThree) getLevelForTesting(LEVEL_THREE_FOR_TESTING);
+    return three.getCurrentLasers();
   }
 }

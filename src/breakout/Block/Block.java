@@ -15,14 +15,12 @@ public abstract class Block extends Rectangle {
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
-  private static final int INITIAL_BLOCK_SPEED = 0;
-  private static final int MOVING_BLOCK_SPEED = 2;
-  private static final int MY_Y_DIRECTION = 20;
-  private static final int MOVE_THIS_OFTEN = 50;
+
+  private static final int MOVING_BLOCK_SPEED = 100;
+  private static final int MY_Y_DIRECTION = 1;
 
   //instance variables
   private int mySpeed;
-  private int whenToMove;
   private int myDurability;
 
   /**
@@ -33,9 +31,8 @@ public abstract class Block extends Rectangle {
    */
   public Block(double myXPos, double myYPos, int blockDurability) {
     super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
-    this.mySpeed = INITIAL_BLOCK_SPEED;
+    this.mySpeed = MOVING_BLOCK_SPEED;
     this.myDurability = blockDurability;
-    whenToMove = 0;
   }
 
   public abstract Block newBlock();
@@ -98,10 +95,7 @@ public abstract class Block extends Rectangle {
    * @param elapsedTime
    */
   public void moveBlock(double elapsedTime) {
-    whenToMove++;
-    if (whenToMove%MOVE_THIS_OFTEN==0) {
-      this.setY(this.getY() + this.getYDirection() * mySpeed * elapsedTime);
-    }
+    this.setY(this.getY() + this.getYDirection() * mySpeed * elapsedTime);
   }
 
   /**
@@ -111,4 +105,5 @@ public abstract class Block extends Rectangle {
   public void changeFallingSpeed(int speed) {
     mySpeed = speed;
   }
+
 }

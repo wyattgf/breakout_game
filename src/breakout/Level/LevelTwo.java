@@ -17,4 +17,10 @@ public class LevelTwo extends Level {
     }
   }
 
+  public void activateLevelFunctionality(double elapsedTime){
+    for (Block block : getBlocks()) {
+      block.moveBlock(elapsedTime);
+    }
+  }
+
 }
