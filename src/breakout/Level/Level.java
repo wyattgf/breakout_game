@@ -38,4 +38,6 @@ public abstract class Level {
   public LevelManager getLevelManager(){
     return myLevelManager;
   }
+
+  public abstract void emptyRootOfLevelSpecificObjects();
 }

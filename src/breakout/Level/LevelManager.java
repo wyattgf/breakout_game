@@ -216,6 +216,7 @@ public class LevelManager {
   }
 
   public void setLevel(int levelNumber) {
+    POSSIBLE_LEVELS.get(currentLevel).emptyRootOfLevelSpecificObjects();
     currentLevel = levelNumber - 1;
     incrementLevel();
   }

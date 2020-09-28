@@ -9,6 +9,12 @@ public class LevelOne extends Level {
   }
 
   @Override
-  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){};
+  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){}
+
+  @Override
+  public void emptyRootOfLevelSpecificObjects() {
+
+  }
+
 
 }

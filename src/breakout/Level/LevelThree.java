@@ -43,6 +43,14 @@ public class LevelThree extends Level {
     }
   }
 
+  @Override
+  public void emptyRootOfLevelSpecificObjects() {
+    ArrayList<LaserBeam> copy = new ArrayList<>(currentLasers);
+    for (LaserBeam laser : copy){
+      removeLaserFromRoot(laser);
+    }
+  }
+
   private void checkLaserPaddleCollisions() {
     for (LaserBeam laser : currentLasers) {
       if (myPaddle.getBoundsInParent().intersects(laser.getBoundsInParent())) {

@@ -35,6 +35,12 @@ public class LevelTwo extends Level {
     removeBlocks(blocksToRemove);
     blocksToRemove.clear();
   }
+
+  @Override
+  public void emptyRootOfLevelSpecificObjects() {
+
+  }
+
   private void checkBlockReachedBottom(Block block, int screenHeight, List<Block> blocksToRemove){
     if (myPlayer==null) myPlayer = myLevelManager.getPlayer();
     if(block.getY() + block.getBlockHeight() >= screenHeight){
