@@ -15,6 +15,7 @@ public abstract class Block extends Rectangle {
   //constants
   private static final double BLOCK_WIDTH = 35;
   private static final double BLOCK_HEIGHT = 15;
+  private static final int BLOCK_ROUNDED_EDGES = 10;
 
   private static final int MOVING_BLOCK_SPEED = 100;
   private static final int MY_Y_DIRECTION = 1;
@@ -31,6 +32,8 @@ public abstract class Block extends Rectangle {
    */
   public Block(double myXPos, double myYPos, int blockDurability) {
     super(myXPos, myYPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+    this.setArcHeight(BLOCK_ROUNDED_EDGES);
+    this.setArcWidth(BLOCK_ROUNDED_EDGES);
     this.mySpeed = MOVING_BLOCK_SPEED;
     this.myDurability = blockDurability;
   }

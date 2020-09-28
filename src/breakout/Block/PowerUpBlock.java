@@ -1,11 +1,15 @@
 package breakout.Block;
 
-import breakout.Block.Block;
-import javafx.scene.paint.Color;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 public class PowerUpBlock extends Block {
-  private static final Color POWER_UP_BLOCK_COLOR = Color.RED;
   private static final int POWER_UP_BLOCK_DURABILITY = 1;
+  private static final String POWER_UP_BACKGROUND = "data/question.jpg";
+
+  private Image image;
 
   public PowerUpBlock(double myXPos, double myYPos) {
     super(myXPos, myYPos, POWER_UP_BLOCK_DURABILITY);
@@ -19,7 +23,12 @@ public class PowerUpBlock extends Block {
 
   @Override
   public void setColor(int myDurability) {
-    this.setFill(POWER_UP_BLOCK_COLOR);
+    try {
+      InputStream stream = new FileInputStream(POWER_UP_BACKGROUND);
+      image = new Image(stream);
+    }catch(Exception e){}
+
+    this.setFill(new ImagePattern(image));
   }
 
 }

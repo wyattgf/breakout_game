@@ -1,10 +1,11 @@
-package breakout;
+package breakout.Display;
 
 import breakout.Display.HighScoreDisplay;
 import breakout.Display.LevelDisplay;
 import breakout.Display.LivesDisplay;
 import breakout.Display.ScoreDisplay;
 import breakout.Display.StatusDisplay;
+import breakout.Player;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;

@@ -16,6 +16,7 @@ public class Paddle extends Rectangle {
   private static final int INITIAL_PADDLE_SPEED_AT_KEY_PRESS = 175;
   private static final int WIDTH_DELTA = 10;
   private static final int SPEED_DELTA = 10;
+  private static final int ROUNDED_PADDLE_EDGES = 5;
   //instance variables
   private int mySpeed;
   private int paddleSpeedAtKeyPress;
@@ -29,6 +30,8 @@ public class Paddle extends Rectangle {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.myWidth = INITIAL_WIDTH;
+    this.setArcHeight(ROUNDED_PADDLE_EDGES);
+    this.setArcWidth(ROUNDED_PADDLE_EDGES);
     paddleSpeedAtKeyPress = INITIAL_PADDLE_SPEED_AT_KEY_PRESS;
     this.paused = false;
     moveToStartingPosition();

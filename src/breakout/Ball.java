@@ -1,10 +1,13 @@
 package breakout;
 
 import breakout.PowerUp.PowerUpManager;
+import javafx.scene.image.Image;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import javafx.scene.Group;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.paint.Color;
 
 /**
  * @author Hosam Tageldin, Wyatt Focht
@@ -16,6 +19,8 @@ public class Ball extends Circle {
   private static final double INITIAL_X = 200;
   private static final double INITIAL_Y = 200;
   private static final int INITIAL_BALL_SPEED = 100;
+  private static final String SUN = "data/sun.jpg";
+
   //instance variables
   private int mySpeed;
   private int screenWidth;
@@ -27,6 +32,7 @@ public class Ball extends Circle {
   private int myXDirection;
   private int myYDirection;
   private boolean paused;
+  private Image image;
 
   public Ball(int screenWidth, int screenHeight, Group myRoot, Paddle myPaddle,
       Player myPlayer, PowerUpManager myPowerUpManager) {
@@ -42,8 +48,13 @@ public class Ball extends Circle {
     this.myYDirection = -1;
     this.paused = false;
     moveToCenter();
-    this.setFill(Color.BLACK);
+    try {
+      InputStream stream = new FileInputStream(SUN);
+      image = new Image(stream);
+    }catch(Exception e){}
+    this.setFill(new ImagePattern(image));
   }
+
   public void checkCollisions() {
     if (this.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
       handlePaddleCollision();

@@ -1,5 +1,6 @@
 package breakout;
 
+import breakout.Display.ScoreBoard;
 import breakout.Level.LevelManager;
 import breakout.PowerUp.PowerUpManager;
 import java.util.ArrayList;
