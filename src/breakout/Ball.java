@@ -103,8 +103,10 @@ public class Ball extends Circle {
   public void controlBall(double elapsedTime) {
     checkCollisions();
     timeBallPowerUp();
-    this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
-    this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
+    if(!paused){
+      this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
+      this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
+    }
   }
 
   private void timeBallPowerUp(){

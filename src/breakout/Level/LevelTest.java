@@ -8,4 +8,6 @@ public class LevelTest extends Level {
     super(BLOCK_FILE,myLevelManager);
   }
 
+  public void activateLevelFunctionality(double elapsedTime, boolean paused){};
+
 }

@@ -205,9 +205,11 @@ public class Game extends Application {
     }
     paused = !paused;
   }
+
   private void freezeGame() {
     myBall.controlFreeze();
     powerUpManager.controlFreeze();
+    levelManager.freezeBlocks();
   }
 
   private void resetPositions() {
