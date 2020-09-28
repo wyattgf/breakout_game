@@ -405,5 +405,12 @@ class GameTest extends DukeApplicationTest {
   }
    */
 
-
+  //for this test to pass, change the filename in LaserBeam to an invalid file name
+  /*
+  @Test
+  public void testLaserBeamIsRedBlockWithInvalidImageFile(){
+    LaserBeam beam = new LaserBeam(0,0);
+    assertEquals(Color.RED,beam.getFill());
+  }
+   */
 }

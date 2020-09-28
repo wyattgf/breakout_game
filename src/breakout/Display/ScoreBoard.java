@@ -26,7 +26,7 @@ public class ScoreBoard extends Rectangle{
   private static final double SCOREBOARD_YPOS = 0;
   private static final int DISPLAY_LABEL_XPOS = 430;
   private static final int DISPLAY_LABEL_YPOS_DISPLACEMENT = 70;
-  private static final String SCOREBOARD_BACKGROUND = "data/galay.jpg";
+  private static final String SCOREBOARD_BACKGROUND = "data/galaxy.jpg";
   private static final String[] DISPLAY_LABELS = new String[] {"Level:", "Lives:",
   "Score:", "High Score:"};
 
