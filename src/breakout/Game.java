@@ -36,7 +36,6 @@ public class Game extends Application {
   private static final int LEVEL_TWO = 2;
   private static final int LEVEL_ONE = 1;
 
-  // some things needed to remember during game
   private List<Paddle> myPaddles;
   private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
   private Ball myBall;
@@ -55,12 +54,10 @@ public class Game extends Application {
    */
   @Override
   public void start(Stage stage) {
-    // attach scene to the stage and display it
     Scene myScene = setupScene(SCREEN_WIDTH + SCORE_BOARD_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     stage.setScene(myScene);
     stage.setTitle(TITLE);
     stage.show();
-    // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
     paused = false;
     animation = new Timeline();
@@ -69,10 +66,21 @@ public class Game extends Application {
     animation.play();
   }
 
-  // Create the game's "scene": what shapes will be in the game and their starting properties
   Scene setupScene(int width, int height,Paint background) {
-    // create one top level collection to organize the things in the scene
     root = new Group();
+    createGameComponents();
+    root.getChildren().add(myPaddle);
+    root.getChildren().add(myBall);
+    root.getChildren().add(myPlayer);
+    root.getChildren().add(myScoreBoard);
+    myScoreBoard.addDisplaysToRoot(root);
+    Scene scene = new Scene(root, width, height,background);
+    scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
+    return scene;
+  }
+
+  private void createGameComponents(){
     myScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
@@ -81,21 +89,6 @@ public class Game extends Application {
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
     levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall = myBalls.get(0);
-
-
-
-
-    root.getChildren().add(myPaddle);
-    root.getChildren().add(myBall);
-    root.getChildren().add(myPlayer);
-    root.getChildren().add(myScoreBoard);
-    myScoreBoard.addDisplaysToRoot(root);
-    // create a place to see the shapes
-    Scene scene = new Scene(root, width, height,background);
-    // respond to input
-    scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-    scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
-    return scene;
   }
 
   private void createPlayer() {
@@ -121,10 +114,7 @@ public class Game extends Application {
     myPaddles.add(p);
   }
 
-  // Handle the game's "rules" for every "moment":
-  // - movement, how do things change over time
-  // - collisions, did things intersect and, if so, what should happen
-  // - goals, did the game or level end?
+
   void step(double elapsedTime) {
     myPaddle.movePaddle(elapsedTime);
     levelManager.levelFunctionality(elapsedTime);
@@ -136,7 +126,6 @@ public class Game extends Application {
     myScoreBoard.updateScoreBoard(root,myPlayer);
     endGame();
   }
-
 
   private void handleKeyInput(KeyCode code) {
     switch (code) {
