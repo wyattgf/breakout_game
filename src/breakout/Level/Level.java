@@ -70,4 +70,12 @@ public abstract class Level {
    * This method empties the current root of all objects that are created specifically for a single levels functionality
    */
   public abstract void emptyRootOfLevelSpecificObjects();
+
+  /**
+   * This method is used exclusively for testing
+   * @return String corresponding to the text file of the current level
+   */
+  public String  getTextFileForTesting(){
+    return blockFile;
+  }
 }
