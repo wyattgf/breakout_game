@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,7 +26,11 @@ import javafx.util.Duration;
 public class Game extends Application {
 
   private static final String TITLE = "Breakout JavaFX";
-  private static final String GAME_OVER = "Game is over!\nFinal Score: ";
+  private static final String GAME_LOST = "You Lose!";
+  private static final String GAME_WON = "You Win!";
+  private static final String FINAL_SCORE = "\nFinal Score: ";
+  private static final String FONT_TYPE_VERDANA = "Verdana";
+  private static final int FONT_SIZE = 30;
   private static final int SCREEN_WIDTH = 400;
   private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
@@ -214,11 +220,21 @@ public class Game extends Application {
         && levelManager.getNumberOfLevels() <= levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
-      Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
+      Text t;
+      if (myPlayer.livesLeft() <= 0) {
+        t = endScreen(GAME_LOST);
+      } else {
+        t = endScreen(GAME_WON);
+      }
+      t.setFont(Font.font(FONT_TYPE_VERDANA, FontWeight.BOLD, FONT_SIZE));
       root.getChildren().add(t);
     }
   }
 
+  private Text endScreen(String gameResult) {
+    return new Text(SCREEN_WIDTH / 2.5, SCREEN_HEIGHT / 3.0,
+        gameResult + FINAL_SCORE + myPlayer.getScore());
+  }
 
   public PowerUpManager getPowerUpManager() {
     return powerUpManager;
