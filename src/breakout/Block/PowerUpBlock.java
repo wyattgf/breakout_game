@@ -11,8 +11,6 @@ public class PowerUpBlock extends Block {
   private static final int POWER_UP_BLOCK_DURABILITY = 1;
   private static final String POWER_UP_BLOCK_BACKGROUND = "data/question.jpg";
 
-  private Image image;
-
   public PowerUpBlock(double myXPos, double myYPos) {
     super(myXPos, myYPos, POWER_UP_BLOCK_DURABILITY);
     setColor(POWER_UP_BLOCK_DURABILITY);
@@ -27,7 +25,7 @@ public class PowerUpBlock extends Block {
   public void setColor(int myDurability) {
     try {
       InputStream stream = new FileInputStream(POWER_UP_BLOCK_BACKGROUND);
-      image = new Image(stream);
+      Image image = new Image(stream);
       this.setFill(new ImagePattern(image));
     } catch (Exception e) {
       this.setFill(Color.RED);

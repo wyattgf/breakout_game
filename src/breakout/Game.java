@@ -37,8 +37,8 @@ public class Game extends Application {
   private static final int LEVEL_ONE = 1;
   private static final int TESTING_LEVEL = 0;
 
-  private List<Paddle> myPaddles;
   private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
+  private List<Paddle> myPaddles;
   private Ball myBall;
   private Player myPlayer;
   private Group root;
