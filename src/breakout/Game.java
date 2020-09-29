@@ -209,7 +209,7 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() == levelManager.currentLevel())) {
+    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() <= levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
