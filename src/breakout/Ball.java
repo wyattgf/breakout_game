@@ -43,9 +43,6 @@ public class Ball extends Circle {
     this.myPlayer = myPlayer;
     this.myXDirection = 1;
     this.myYDirection = -1;
-    this.fieryBall = false;
-    this.fieryBallTimer = 0;
-    this.paused = false;
     moveToCenter();
     try {
       InputStream stream = new FileInputStream(SUN_FILE_LOCATION);
