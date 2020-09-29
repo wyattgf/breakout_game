@@ -10,7 +10,7 @@ import java.util.Random;
 public class LevelThree extends Level {
 
   private static final String BLOCK_FILE = "levelThree.txt";
-  private static final int LASER_INTIAL_Y = 0;
+  private static final int LASER_INITIAL_Y = 0;
   private static final int GENERATE_LASERS_THIS_OFTEN = 80;
 
   private int screenWidth;
@@ -58,7 +58,7 @@ public class LevelThree extends Level {
   public LaserBeam randomlyGenerateLasers() {
       Random r = new Random();
       double randomXPosition = screenWidth * r.nextDouble();
-      return new LaserBeam(randomXPosition, LASER_INTIAL_Y);
+      return new LaserBeam(randomXPosition, LASER_INITIAL_Y);
   }
 
   public void activateLasers() {

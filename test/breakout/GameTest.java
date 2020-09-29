@@ -139,15 +139,6 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testScoreIsUpdatedWhenBlockDestroyed() {
-    myBall.setMyXDirection(0);
-    for(int i = 0; i<20; i++){
-      javafxRun(() -> myGame.step(SECOND_DELAY));
-    }
-    assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
-  }
-
-  @Test
   public void testBounceOffWall(){
     myBall.setMyYDirection(0);
     myBall.setCenterX(394);
@@ -309,6 +300,30 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
+  public void testLevelDisplay(){
+    press(myScene, KeyCode.DIGIT3);
+    int expectedLevel = 3;
+    assertEquals(expectedLevel, myPlayer.getCurrentLevel());
+  }
+
+  @Test
+  public void testLivesDisplay(){
+    int expected = myPlayer.livesLeft() -1;
+    myBall.setCenterY(415);
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(expected, myPlayer.livesLeft());
+  }
+
+  @Test
+  public void testScoreDisplay(){
+    myBall.setMyXDirection(0);
+    for(int i = 0; i<20; i++) {
+      javafxRun(() -> myGame.step(SECOND_DELAY));
+    }
+    assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
+  }
+
+  @Test
   public void testHighScoreDisplay() throws Exception{
     File file = new File(HIGH_SCORE_FILE_LOCATION);
     BufferedReader br = new BufferedReader(new FileReader(file));
@@ -411,6 +426,19 @@ class GameTest extends DukeApplicationTest {
   public void testLaserBeamIsRedBlockWithInvalidImageFile(){
     LaserBeam beam = new LaserBeam(0,0);
     assertEquals(Color.RED,beam.getFill());
+  }
+   */
+
+  //for this test to pass, change the filename in the LevelOne class to an incorrect file and the
+  //error is handled by skipping that level
+  /*
+  @Test
+  public void testGameSkipsLevelsWithInvalidBlockFiles(){
+    //if level 1 has invalid file
+    int expectedLevel = 2;
+    press(myScene,KeyCode.DIGIT1);
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(expectedLevel,myPlayer.getCurrentLevel());
   }
    */
 }
