@@ -40,7 +40,6 @@ class GameTest extends DukeApplicationTest {
   private static final int SCREEN_HEIGHT = 400;
   private static final int POWER_UP_WIDTH_DELTA = 10;
   private static final int POWER_UP_SPEED_DELTA = 10;
-  private static final int MOVE_THIS_OFTEN_FALLING_BLOCK = 10;
 
   private Scene myScene;
   private Paddle myPaddle;

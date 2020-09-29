@@ -16,7 +16,7 @@ import javafx.scene.Group;
 public class LevelManager {
 
   private final List<Level> POSSIBLE_LEVELS = List
-      .of(new LevelTest(this), new LevelOne(this), new LevelTwo(this), new LevelThree(this));
+      .of(new LevelSecret(this), new LevelOne(this), new LevelTwo(this), new LevelThree(this));
   private static final int SET_FOR_TESTING_LEVEL = -1;
   private static final int SET_FOR_STARTING_LEVEL = 0;
   private static final int LEVEL_THREE_FOR_TESTING = 3;

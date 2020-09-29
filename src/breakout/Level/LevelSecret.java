@@ -1,17 +1,14 @@
 package breakout.Level;
 
-import breakout.Block.Block;
-import java.util.List;
+public class LevelSecret extends Level {
 
-public class LevelTest extends Level {
-
-  private static final String BLOCK_FILE = "initialFile.txt";
+  private static final String BLOCK_FILE = "secretLevel.txt";
 
   /**
-   * This is a constructor for a LevelTest object
+   * This is a constructor for a secretLevel object
    * @param myLevelManager LevelManager corresponding to the associated LevelManager with this level
    */
-  public LevelTest(LevelManager myLevelManager) {
+  public LevelSecret(LevelManager myLevelManager) {
     super(BLOCK_FILE,myLevelManager);
   }
 
@@ -22,7 +19,5 @@ public class LevelTest extends Level {
   public void emptyRootOfLevelSpecificObjects() {
 
   }
-
-  ;
 
 }
