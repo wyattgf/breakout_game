@@ -46,10 +46,19 @@ public abstract class PowerUp extends Circle {
    */
   public abstract PowerUp newCopy();
 
+  /**
+   * This method sets the color fill in a PowerUp
+   * @param color Color corresponding to the desired color of a PowerUp
+   */
   public void assignPowerUpColor(Color color) {
     this.setFill(color);
   }
 
+  /**
+   * This method sets the image fill in a PowerUp
+   * @param powerUpImage String corresponding to the file that contains the desired image for the
+   *                     PowerUp
+   */
   public void setPowerUpImage(String powerUpImage){
     try{
       InputStream stream = new FileInputStream(powerUpImage);

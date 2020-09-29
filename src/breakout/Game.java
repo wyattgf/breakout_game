@@ -35,6 +35,7 @@ public class Game extends Application {
   private static final int LEVEL_THREE  = 3;
   private static final int LEVEL_TWO = 2;
   private static final int LEVEL_ONE = 1;
+  private static final int TESTING_LEVEL = 0;
 
   private List<Paddle> myPaddles;
   private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
@@ -175,7 +176,7 @@ public class Game extends Application {
         levelManager.setLevel(LEVEL_THREE);
         break;
       case DIGIT0:
-        levelManager.setLevel(0);
+        levelManager.setLevel(TESTING_LEVEL);
         break;
     }
   }
@@ -208,7 +209,7 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() == 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() == levelManager.currentLevel())) {
+    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() == levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());

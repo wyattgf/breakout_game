@@ -11,7 +11,7 @@ public class PowerUpFireBall extends PowerUp {
   private List<Ball> myBalls;
 
   /**
-   * This method is a constructor for a PowerUpMultipleBalls object.
+   * This method is a constructor for a PowerUpFireBall object.
    *
    * @param initialX         double representing the initial X position of a power up
    * @param initialY         double representing the initial Y position of a power up

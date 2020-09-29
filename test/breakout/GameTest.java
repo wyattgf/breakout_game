@@ -348,19 +348,9 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testLevelSwitchCheatKey() {
+  public void testLevelSwitchCheatKeyForTestLevel() {
     press(myScene, KeyCode.DIGIT0);
     assertEquals(0, myGame.getLevelManager().getCurrentLevelNumberForTesting());
-
-    press(myScene, KeyCode.DIGIT1);
-    assertEquals(1, myGame.getLevelManager().getCurrentLevelNumberForTesting());
-
-    press(myScene, KeyCode.DIGIT2);
-    assertEquals(2, myGame.getLevelManager().getCurrentLevelNumberForTesting());
-
-    press(myScene, KeyCode.DIGIT3);
-    assertEquals(3, myGame.getLevelManager().getCurrentLevelNumberForTesting());
-
   }
   @Test
   public void testFieryBallPowerUpChangesBallDesign(){
