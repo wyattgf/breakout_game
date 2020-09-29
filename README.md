@@ -61,7 +61,11 @@ it in such a way that does abide with the open/closed principle
 4. Note: in order to provide tests that holistically evaluated the functionality of our program, there are several
 methods and constant variables that were added in several of the classes throughout the entirety of the codebase
 5. Note: Some import statements in GameTest appear to be unused because the tests utilizing them are commented out
-6. Note: 
+6. Note: Many tests are commented out on the bottom of GameTest, these tests are to be run when the file name 
+is invalid to show what will happen when the specific files can't be loaded. There are comments on top of each
+test with instructions regarding how to run the test.
+7. The LevelTest classes only test the positions of the blocks of each level, however there are more in
+depth tests for the functionality included in each three levels within GameTest.
  
 
 
