@@ -23,7 +23,6 @@ public class Paddle extends Rectangle {
   private double myWidth;
   private int screenWidth;
   private int screenHeight;
-  private boolean paused;
 
   public Paddle(int screenWidth, int screenHeight) {
     super(INITIAL_X, INITIAL_Y, INITIAL_WIDTH, PADDLE_HEIGHT);
@@ -33,7 +32,6 @@ public class Paddle extends Rectangle {
     this.setArcHeight(ROUNDED_PADDLE_EDGES);
     this.setArcWidth(ROUNDED_PADDLE_EDGES);
     paddleSpeedAtKeyPress = INITIAL_PADDLE_SPEED_AT_KEY_PRESS;
-    this.paused = false;
     moveToStartingPosition();
     this.setFill(Color.BLACK);
   }
@@ -64,10 +62,17 @@ public class Paddle extends Rectangle {
   }
 
   public void movePaddle(double elapsedTime) {
-    if (!paused && (this.getX() > 0 || mySpeed > 0) &&
-        (this.getX() + this.getWidth() < screenWidth || mySpeed < 0)) {
+    if (paddleNotOnExtremeLeft() && (paddleNotOnExtremeRight())) {
       this.setX(this.getX() + elapsedTime * mySpeed);
     }
+  }
+
+  private boolean paddleNotOnExtremeLeft() {
+    return (this.getX() > 0 || mySpeed > 0);
+  }
+
+  private boolean paddleNotOnExtremeRight() {
+    return (this.getX() + this.getWidth() < screenWidth || mySpeed < 0);
   }
 
   /**

@@ -125,20 +125,20 @@ public class LevelManager {
     }
     Ball currentBall = myBalls.get(0);
     if (!currentBall.isFiery()) {
-      if (currentBall.getCenterY() - currentBall.getRadius() >= block.getY() + block.getHeight()
-          || currentBall.getCenterY() + currentBall.getRadius() <= block.getY()) {
-        currentBall.bounceY();
-
-      } else if (currentBall.getCenterX() <= block.getX()
-          || currentBall.getCenterX() >= block.getX() + block.getBlockWidth()) {
-        currentBall.bounceX();
-
-      } else {
-        currentBall.bounceY();
-      }
+      handleBallBounceOffBlock(currentBall, block);
     }
     block.updateBlockDurability();
     updateLevelBlocks();
+  }
+
+  private void handleBallBounceOffBlock(Ball currentBall, Block block) {
+    if (currentBall.getCenterX() + currentBall.getRadius() <= block.getX()
+        || currentBall.getCenterX() - currentBall.getRadius() >= block.getX() + block
+        .getBlockWidth()) {
+      currentBall.bounceX();
+    } else {
+      currentBall.bounceY();
+    }
   }
 
   /**
@@ -148,17 +148,20 @@ public class LevelManager {
   public void updateLevelBlocks() {
     List<Block> copyOfBlocks = new ArrayList<>(currentBlocks);
     for (Block b : copyOfBlocks) {
-      if (b.getBlockDurability() == 0) {
-        removeSingularBlockFromRoot(b);
-        myPlayer.blockDestroyed();
-        if (b instanceof PowerUpBlock) {
-          myPowerUpManager.createPowerUp(b.getX(), b.getY());
-        }
-      }
+      checkBlockDurability(b);
     }
-
     if (currentBlocks.size() == 0) {
       incrementLevel();
+    }
+  }
+
+  private void checkBlockDurability(Block block) {
+    if (block.getBlockDurability() == 0) {
+      removeSingularBlockFromRoot(block);
+      myPlayer.blockDestroyed();
+      if (block instanceof PowerUpBlock) {
+        myPowerUpManager.createPowerUp(block.getX(), block.getY());
+      }
     }
   }
 

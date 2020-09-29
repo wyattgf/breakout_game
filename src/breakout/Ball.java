@@ -57,20 +57,28 @@ public class Ball extends Circle {
 
   public void checkCollisions() {
     if (!paused) {
-      if (this.getCenterY() - this.getRadius() <= 0) {
-        myYDirection *= -1;
-      }
-      if (this.getCenterX() - this.getRadius() <= 0 ||
-          this.getCenterX() + this.getRadius() >= screenWidth) {
-        myXDirection *= -1;
-      }
       if (this.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
         handlePaddleCollision();
       }
-      if (this.getCenterY() - BALL_RADIUS >= screenHeight) {
-        myPlayer.lostLife();
-        moveToCenter();
-      }
+      bounceBallOffWalls();
+      checkBallOutOfScreen();
+    }
+  }
+
+  private void bounceBallOffWalls() {
+    if (this.getCenterY() - this.getRadius() <= 0) {
+      myYDirection *= -1;
+    }
+    if (this.getCenterX() - this.getRadius() <= 0 ||
+        this.getCenterX() + this.getRadius() >= screenWidth) {
+      myXDirection *= -1;
+    }
+  }
+
+  private void checkBallOutOfScreen() {
+    if (this.getCenterY() - BALL_RADIUS >= screenHeight) {
+      myPlayer.lostLife();
+      moveToCenter();
     }
   }
 
