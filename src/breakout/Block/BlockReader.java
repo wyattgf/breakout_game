@@ -42,12 +42,9 @@ public class BlockReader {
           listOfBlocks.add(b);
         }
       }
-    } catch (FileNotFoundException e) {
-
-    }catch (IOException e){
-
+    } catch (Exception e) {
+      //do nothing empty arrayList won't cause program to crash
     }
-
   }
 
 

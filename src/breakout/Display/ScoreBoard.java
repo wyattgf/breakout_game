@@ -39,15 +39,15 @@ public class ScoreBoard extends Rectangle{
     try{
       InputStream stream = new FileInputStream(SCOREBOARD_BACKGROUND);
       image = new Image(stream);
-    }catch(FileNotFoundException e){
-
+      this.setFill(new ImagePattern(image));
+    }catch(Exception e){
+      this.setFill(Color.PURPLE);
     }
     this.statusDisplayOrderedList = new ArrayList<>();
     statusDisplayOrderedList.add(new LevelDisplay());
     statusDisplayOrderedList.add(new LivesDisplay());
     statusDisplayOrderedList.add(new ScoreDisplay());
     statusDisplayOrderedList.add(new HighScoreDisplay());
-    this.setFill(new ImagePattern(image));
   }
   public void updateScoreBoard(Group root, Player myPlayer) {
     for(StatusDisplay display: statusDisplayOrderedList) {

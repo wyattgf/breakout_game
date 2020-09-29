@@ -27,7 +27,7 @@ public class HighScoreDisplay extends StatusDisplay{
       highScoreFromFile = Integer.parseInt(br.readLine());
     }
     catch(Exception e){
-
+      highScoreFromFile = 0;
     }
 
   }

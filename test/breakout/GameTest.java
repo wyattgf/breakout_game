@@ -1,7 +1,9 @@
 package breakout;
 
 import breakout.Block.Block;
+import breakout.Block.PowerUpBlock;
 import breakout.Display.HighScoreDisplay;
+import breakout.Display.ScoreBoard;
 import breakout.PowerUp.PowerUp;
 import breakout.PowerUp.PowerUpFireBall;
 import breakout.PowerUp.PowerUpLife;
@@ -134,15 +136,6 @@ class GameTest extends DukeApplicationTest {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertFalse(myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
-  }
-
-  @Test
-  public void testScoreIsUpdatedWhenBlockDestroyed() {
-    myBall.setMyXDirection(0);
-    for(int i = 0; i<20; i++){
-      javafxRun(() -> myGame.step(SECOND_DELAY));
-    }
-    assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
   }
 
   @Test
@@ -307,6 +300,30 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
+  public void testLevelDisplay(){
+    press(myScene, KeyCode.DIGIT3);
+    int expectedLevel = 3;
+    assertEquals(expectedLevel, myPlayer.getCurrentLevel());
+  }
+
+  @Test
+  public void testLivesDisplay(){
+    int expected = myPlayer.livesLeft() -1;
+    myBall.setCenterY(415);
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(expected, myPlayer.livesLeft());
+  }
+
+  @Test
+  public void testScoreDisplay(){
+    myBall.setMyXDirection(0);
+    for(int i = 0; i<20; i++) {
+      javafxRun(() -> myGame.step(SECOND_DELAY));
+    }
+    assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
+  }
+
+  @Test
   public void testHighScoreDisplay() throws Exception{
     File file = new File(HIGH_SCORE_FILE_LOCATION);
     BufferedReader br = new BufferedReader(new FileReader(file));
@@ -355,12 +372,73 @@ class GameTest extends DukeApplicationTest {
 
   //for this test to pass, change the SUN_FILE_LOCATION constant in the Ball class to an invalid
   //file name
-  /**@Test
-  public void testInvalidImageFileForFieryBall(){
+  /*@Test
+  public void testBallRemainsBlackWithInvalidFileImage(){
     PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
     p.activatePowerUp();
     assertEquals(Color.BLACK,myBall.getFill());
   }
    */
 
+  /*
+  //for this test, change the POWER_UP_IMAGE file location in each PowerUp subclass to an invalid
+  //file name for the power ups to become black
+  @Test
+  public void testPowerUpsTurnBlackWithInvalidFileImage(){
+    PowerUp fireBall = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    fireBall.activatePowerUp();
+    assertEquals(Color.BLACK, fireBall.getFill());
+    PowerUp extraLife = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    extraLife.activatePowerUp();
+    assertEquals(Color.BLACK, extraLife.getFill());
+    PowerUp widerPaddle = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    widerPaddle.activatePowerUp();
+    assertEquals(Color.BLACK, widerPaddle.getFill());
+    PowerUp speedyPaddle = new PowerUpFireBall(0,0, myGame.getPowerUpManager());
+    speedyPaddle.activatePowerUp();
+    assertEquals(Color.BLACK, speedyPaddle.getFill());
+  }
+
+   */
+
+  //for this test, change the POWER_UP_BACKGROUND file location in the PowerUpBlock class to
+  //an invalid file name
+  /*@Test
+  public void testPowerUpBlockIsRedWithInvalidImageFile(){
+    Block b = new PowerUpBlock(0,0);
+    assertEquals(Color.RED,b.getFill());
+  }
+   */
+
+  //for this test, change the file name in the ScoreBoard class to an invalid file
+  //and the error is handled by the scoreboard turning purple
+  /*
+  @Test
+  public void testScoreBoardIsPurpleWithInvalidImageFile(){
+    ScoreBoard board = new ScoreBoard();
+    assertEquals(Color.PURPLE,board.getFill());
+  }
+   */
+
+  //for this test to pass, change the filename in LaserBeam to an invalid file name
+  /*
+  @Test
+  public void testLaserBeamIsRedBlockWithInvalidImageFile(){
+    LaserBeam beam = new LaserBeam(0,0);
+    assertEquals(Color.RED,beam.getFill());
+  }
+   */
+
+  //for this test to pass, change the filename in the LevelOne class to an incorrect file and the
+  //error is handled by skipping that level
+  /*
+  @Test
+  public void testGameSkipsLevelsWithInvalidBlockFiles(){
+    //if level 1 has invalid file
+    int expectedLevel = 2;
+    press(myScene,KeyCode.DIGIT1);
+    javafxRun(() -> myGame.step(SECOND_DELAY));
+    assertEquals(expectedLevel,myPlayer.getCurrentLevel());
+  }
+   */
 }

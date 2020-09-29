@@ -47,6 +47,7 @@ public class LevelManager {
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
     incrementLevel();
+    updateLevelBlocks();
   }
 
   public void setForTesting() {
@@ -79,10 +80,13 @@ public class LevelManager {
     blockCount = 1;
     removeAllBlocksFromRoot();
     currentBlocks = getLevelBlocks();
+    setPlayerLevel();
     addBlocksToRoot();
-
   }
 
+  private void setPlayerLevel(){
+    myPlayer.setLevel(currentLevel);
+  }
   private void removeAllBlocksFromRoot() {
     for (Block block : currentBlocks) {
       myRoot.getChildren().remove(block);
@@ -179,6 +183,7 @@ public class LevelManager {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
       POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime,paused,screenHeight);
     }
+    updateLevelBlocks();
   }
 
   public void freezeBlocks(){

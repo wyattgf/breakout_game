@@ -3,9 +3,6 @@ package breakout;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -13,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 
 public class LaserBeam extends Rectangle {
 
-  private static final String laserBeamImage = "data/laserBeam.png";
+  private static final String laserBeamImage = "data/laserBem.png";
   private static final double BLOCK_WIDTH = 10;
   private static final double BLOCK_HEIGHT = 75;
   private static final int LASER_SPEED = 500;
@@ -33,10 +30,10 @@ public class LaserBeam extends Rectangle {
     try{
       InputStream stream = new FileInputStream(laserBeamImage);
       image = new Image(stream);
+      this.setFill(new ImagePattern(image));
     }catch(FileNotFoundException e){
-
+      this.setFill(Color.RED);
     }
-    this.setFill(new ImagePattern(image));
   }
 
 }

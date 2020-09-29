@@ -19,7 +19,7 @@ public class LevelDisplay extends StatusDisplay{
   @Override
   public void update(Group root, Player myPlayer){
     root.getChildren().remove(currentLevel);
-    currentLevel = newText(LEVEL_LABEL_YPOS, 1);
+    currentLevel = newText(LEVEL_LABEL_YPOS, myPlayer.getCurrentLevel());
     root.getChildren().add(currentLevel);
   }
 

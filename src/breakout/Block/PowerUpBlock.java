@@ -3,11 +3,12 @@ package breakout.Block;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 public class PowerUpBlock extends Block {
   private static final int POWER_UP_BLOCK_DURABILITY = 1;
-  private static final String POWER_UP_BACKGROUND = "data/question.jpg";
+  private static final String POWER_UP_BLOCK_BACKGROUND = "data/question.jpg";
 
   private Image image;
 
@@ -24,11 +25,12 @@ public class PowerUpBlock extends Block {
   @Override
   public void setColor(int myDurability) {
     try {
-      InputStream stream = new FileInputStream(POWER_UP_BACKGROUND);
+      InputStream stream = new FileInputStream(POWER_UP_BLOCK_BACKGROUND);
       image = new Image(stream);
-    }catch(Exception e){}
-
-    this.setFill(new ImagePattern(image));
+      this.setFill(new ImagePattern(image));
+    }catch(Exception e){
+      this.setFill(Color.RED);
+    }
   }
 
 }
