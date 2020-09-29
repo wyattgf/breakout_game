@@ -64,11 +64,9 @@ public class Paddle extends Rectangle {
   }
 
   public void movePaddle(double elapsedTime) {
-    if (!paused) {
-      if ((this.getX() > 0 || mySpeed > 0) &&
-          (this.getX() + this.getWidth() < screenWidth || mySpeed < 0)) {
-        this.setX(this.getX() + elapsedTime * mySpeed);
-      }
+    if (!paused && (this.getX() > 0 || mySpeed > 0) &&
+        (this.getX() + this.getWidth() < screenWidth || mySpeed < 0)) {
+      this.setX(this.getX() + elapsedTime * mySpeed);
     }
   }
 

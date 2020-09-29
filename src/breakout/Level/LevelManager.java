@@ -29,7 +29,6 @@ public class LevelManager {
   private int screenWidth;
   private int screenHeight;
   private int currentLevel;
-  private int blockCount;
   private boolean paused;
   private PowerUpManager myPowerUpManager;
 
@@ -57,7 +56,6 @@ public class LevelManager {
     this.paused = false;
     currentBlocks = new ArrayList<>();
     currentLevel = SET_FOR_STARTING_LEVEL;
-    blockCount = 1;
     incrementLevel();
     updateLevelBlocks();
   }
@@ -104,7 +102,6 @@ public class LevelManager {
     myPowerUpManager.resetPositions();
     myBalls.get(0).moveToCenter();
     currentLevel++;
-    blockCount = 1;
     removeAllBlocksFromRoot();
     currentBlocks = getLevelBlocks();
     setPlayerLevel();
@@ -179,9 +176,11 @@ public class LevelManager {
    * This method adds the specified block up to the given root
    */
   public void addBlocksToRoot() {
+    int blockCount = 1;
     for (Block block : currentBlocks) {
       myRoot.getChildren().add(block);
-      block.setId("block" + blockCount++);
+      block.setId("block" + blockCount);
+      blockCount++;
     }
   }
 
