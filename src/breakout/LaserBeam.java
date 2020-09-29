@@ -29,10 +29,10 @@ public class LaserBeam extends Rectangle {
     try{
       InputStream stream = new FileInputStream(LASER_BEAM_IMAGE);
       image = new Image(stream);
+      this.setFill(new ImagePattern(image));
     }catch(FileNotFoundException e){
-
+      this.setFill(Color.RED);
     }
-    this.setFill(new ImagePattern(image));
   }
 
 

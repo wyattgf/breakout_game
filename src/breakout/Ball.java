@@ -1,10 +1,8 @@
 package breakout;
 
-import breakout.PowerUp.PowerUpManager;
 import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -21,7 +19,7 @@ public class Ball extends Circle {
   private static final double INITIAL_Y = 200;
   private static final int INITIAL_BALL_SPEED = 100;
   private static final int FIERY_BALL_END_TIME = 500;
-  private static final String SUN = "data/sun.jpg";
+  private static final String SUN_FILE_LOCATION = "data/sun.jpg";
 
   //instance variables
   private int mySpeed;
@@ -50,9 +48,11 @@ public class Ball extends Circle {
     this.paused = false;
     moveToCenter();
     try {
-      InputStream stream = new FileInputStream(SUN);
+      InputStream stream = new FileInputStream(SUN_FILE_LOCATION);
       powerUpImage = new Image(stream);
-    }catch(Exception e){}
+    }catch(Exception e) {
+      powerUpImage = null;
+    }
   }
 
   public void checkCollisions() {
@@ -118,8 +118,8 @@ public class Ball extends Circle {
 
   public void ballPowerUp(boolean isFiery){
     fieryBall = isFiery;
-    if(isFiery){
-      fieryBallTimer = 0;
+    fieryBallTimer = 0;
+    if(isFiery && powerUpImage != null){
       this.setRadius(POWER_UP_RADIUS);
       this.setFill(new ImagePattern(powerUpImage));
     }else{

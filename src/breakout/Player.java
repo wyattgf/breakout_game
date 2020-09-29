@@ -9,14 +9,17 @@ public class Player extends Rectangle {
   private static final int POINTS_FROM_BLOCK = 200;
   private static final int PLAYER_START_LIVES = 3;
   private static final int PLAYER_START_SCORE = 0;
+  private static final int PLAYER_START_LEVEL = 0;
 
   //instance variables
   private int playerScore;
   private int playerLives;
+  private int currentLevel;
 
   public Player() {
     playerScore = PLAYER_START_SCORE;
     playerLives = PLAYER_START_LIVES;
+    currentLevel = PLAYER_START_LEVEL;
   }
 
   /**
@@ -48,9 +51,12 @@ public class Player extends Rectangle {
     this.playerScore = playerScore + POINTS_FROM_BLOCK;
   }
 
+  public void setLevel(int level) {
+    currentLevel = level;
+  }
 
-  private void setPlayerLives(int lives) {
-    this.playerLives = lives;
+  public int getCurrentLevel() {
+    return currentLevel;
   }
 
 }
