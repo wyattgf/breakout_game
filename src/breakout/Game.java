@@ -30,7 +30,7 @@ public class Game extends Application {
   private static final String GAME_WON = "You Win!";
   private static final String FINAL_SCORE = "\nFinal Score: ";
   private static final String FONT_TYPE_VERDANA = "Verdana";
-  private static final int FONT_SIZE = 30;
+  private static final int FONT_SIZE = 50;
   private static final int SCREEN_WIDTH = 400;
   private static final int SCORE_BOARD_WIDTH = 200;
   private static final int SCREEN_HEIGHT = 400;
@@ -43,12 +43,12 @@ public class Game extends Application {
   private static final int LEVEL_ONE = 1;
   private static final int TESTING_LEVEL = 0;
 
-  private Paddle myPaddle; //refactor name later when with Hosam to currentPaddle, same as below
+  private Paddle currentPaddle;
   private List<Paddle> myPaddles;
-  private Ball myBall;
-  private Player myPlayer;
+  private Ball currentBall;
+  private Player currentPlayer;
   private Group root;
-  private ScoreBoard myScoreBoard;
+  private ScoreBoard currentScoreBoard;
   private List<Ball> myBalls;
   private Timeline animation;
   private PowerUpManager powerUpManager;
@@ -76,11 +76,11 @@ public class Game extends Application {
   Scene setupScene(int width, int height, Paint background) {
     root = new Group();
     createGameComponents();
-    root.getChildren().add(myPaddle);
-    root.getChildren().add(myBall);
-    root.getChildren().add(myPlayer);
-    root.getChildren().add(myScoreBoard);
-    myScoreBoard.addDisplaysToRoot(root);
+    root.getChildren().add(currentPaddle);
+    root.getChildren().add(currentBall);
+    root.getChildren().add(currentPlayer);
+    root.getChildren().add(currentScoreBoard);
+    currentScoreBoard.addDisplaysToRoot(root);
     Scene scene = new Scene(root, width, height, background);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
@@ -88,27 +88,27 @@ public class Game extends Application {
   }
 
   private void createGameComponents() {
-    myScoreBoard = new ScoreBoard();
+    currentScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
-    myPaddle = myPaddles.get(0);
+    currentPaddle = myPaddles.get(0);
     createBall();
-    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager,
+    powerUpManager = new PowerUpManager(root, myPaddles, myBalls, currentPlayer, SCREEN_HEIGHT);
+    levelManager = new LevelManager(root, myPaddles, myBalls, currentPlayer, powerUpManager,
         SCREEN_WIDTH, SCREEN_HEIGHT);
-    myBall = myBalls.get(0);
+    currentBall = myBalls.get(0);
   }
 
   private void createPlayer() {
-    myPlayer = new Player();
-    myPlayer.setId("player");
+    currentPlayer = new Player();
+    currentPlayer.setId("player");
   }
 
   public void createBall() {
     if (myBalls == null) {
       myBalls = new ArrayList<>();
     }
-    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT, myPaddle, myPlayer);
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT, currentPaddle, currentPlayer);
     b.setId("ball" + myBalls.size());
     myBalls.add(b);
   }
@@ -124,24 +124,24 @@ public class Game extends Application {
 
 
   void step(double elapsedTime) {
-    myPaddle.movePaddle(elapsedTime);
+    currentPaddle.movePaddle(elapsedTime);
     levelManager.levelFunctionality(elapsedTime);
     levelManager.controlMovingBlocks(elapsedTime);
     powerUpManager.updatePowerUps(elapsedTime);
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();
-    myBall.controlBall(elapsedTime);
-    myScoreBoard.updateScoreBoard(root, myPlayer);
+    currentBall.controlBall(elapsedTime);
+    currentScoreBoard.updateScoreBoard(root, currentPlayer);
     endGame();
   }
 
   private void handleKeyInput(KeyCode code) {
     switch (code) {
       case LEFT:
-        myPaddle.moveLeft();
+        currentPaddle.moveLeft();
         break;
       case RIGHT:
-        myPaddle.moveRight();
+        currentPaddle.moveRight();
         break;
       case R:
         resetPositions();
@@ -150,13 +150,13 @@ public class Game extends Application {
         pauseGame();
         break;
       case L:
-        myPlayer.addLife();
+        currentPlayer.addLife();
         break;
       case P:
         powerUpManager.createPowerUp(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
         break;
       case W:
-        myPaddle.setWidthFromDelta();
+        currentPaddle.setWidthFromDelta();
         break;
       case D:
         levelManager.removeFirst();
@@ -165,13 +165,13 @@ public class Game extends Application {
         freezeGame();
         break;
       case T:
-        myPaddle.teleportPaddle();
+        currentPaddle.teleportPaddle();
         break;
       case UP:
-        myPaddle.incrementPaddleSpeed(PADDLE_SPEED_CHANGE);
+        currentPaddle.incrementPaddleSpeed(PADDLE_SPEED_CHANGE);
         break;
       case DOWN:
-        myPaddle.incrementPaddleSpeed(-PADDLE_SPEED_CHANGE);
+        currentPaddle.incrementPaddleSpeed(-PADDLE_SPEED_CHANGE);
         break;
       case DIGIT1:
         levelManager.setLevel(LEVEL_ONE);
@@ -190,7 +190,7 @@ public class Game extends Application {
 
   private void handleKeyRelease(KeyCode code) {
     if (code == KeyCode.RIGHT || code == KeyCode.LEFT) {
-      myPaddle.setSpeed(0);
+      currentPaddle.setSpeed(0);
     }
   }
 
@@ -204,36 +204,36 @@ public class Game extends Application {
   }
 
   private void freezeGame() {
-    myBall.controlFreeze();
+    currentBall.controlFreeze();
     powerUpManager.controlFreeze();
     levelManager.freezeBlocks();
   }
 
   private void resetPositions() {
-    myPaddle.moveToStartingPosition();
-    myBall.moveToCenter();
+    currentPaddle.moveToStartingPosition();
+    currentBall.moveToCenter();
     powerUpManager.resetPositions();
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0
+    if (currentPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0
         && levelManager.getNumberOfLevels() <= levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
-      Text t;
-      if (myPlayer.livesLeft() <= 0) {
-        t = endScreen(GAME_LOST);
-      } else {
-        t = endScreen(GAME_WON);
-      }
-      t.setFont(Font.font(FONT_TYPE_VERDANA, FontWeight.BOLD, FONT_SIZE));
-      root.getChildren().add(t);
+      Text endGameMessage = endScreen();
+      endGameMessage.setFont(Font.font(FONT_TYPE_VERDANA, FontWeight.BOLD, FONT_SIZE));
+      root.getChildren().add(endGameMessage);
     }
   }
 
-  private Text endScreen(String gameResult) {
-    return new Text(SCREEN_WIDTH / 2.5, SCREEN_HEIGHT / 3.0,
-        gameResult + FINAL_SCORE + myPlayer.getScore());
+  private Text endScreen() {
+    String gameResult;
+    if (currentPlayer.livesLeft() <= 0) {
+      gameResult = GAME_LOST;
+    } else {
+      gameResult = GAME_WON;
+    }
+    return new Text(0, SCREEN_HEIGHT/2.0, gameResult + FINAL_SCORE + currentPlayer.getScore());
   }
 
   public PowerUpManager getPowerUpManager() {
