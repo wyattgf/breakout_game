@@ -1,11 +1,11 @@
 package breakout.Block;
 
-import breakout.Block.Block;
 import java.util.Arrays;
 import java.util.List;
 import javafx.scene.paint.Color;
 
 public class DurableBlock extends Block {
+
   private static final List<Color> BLOCK_COLORS = Arrays
       .asList(Color.WHITE, Color.LIGHTGREY, Color.DARKGREY, Color.GREY, Color.BLACK);
   private static final int DURABLE_BLOCK_STARTING_DURABILITY = 4;
@@ -17,7 +17,7 @@ public class DurableBlock extends Block {
   }
 
   @Override
-  public Block newBlock(){
+  public Block newBlock() {
     return new DurableBlock(this.getX(), this.getY());
   }
 

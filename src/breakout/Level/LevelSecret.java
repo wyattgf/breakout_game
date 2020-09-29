@@ -6,18 +6,22 @@ public class LevelSecret extends Level {
 
   /**
    * This is a constructor for a secretLevel object
-   * @param myLevelManager LevelManager corresponding to the associated LevelManager with this level
+   *
+   * @param myLevelManager LevelManager corresponding to the associated LevelManager with this
+   *                       level
    */
   public LevelSecret(LevelManager myLevelManager) {
-    super(BLOCK_FILE,myLevelManager);
+    super(BLOCK_FILE, myLevelManager);
   }
 
   @Override
-  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight){}
+  public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight) {
+    //not necessary for this level
+  }
 
   @Override
   public void emptyRootOfLevelSpecificObjects() {
-
+    //not necessary for this level
   }
 
 }

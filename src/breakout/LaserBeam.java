@@ -15,7 +15,6 @@ public class LaserBeam extends Rectangle {
   private static final double BLOCK_HEIGHT = 75;
   private static final int LASER_SPEED = 500;
   private static final int MY_Y_DIRECTION = 1;
-  private Image image;
 
   public LaserBeam(double xPos, double yPos) {
     super(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -27,11 +26,11 @@ public class LaserBeam extends Rectangle {
   }
 
   private void setImage() {
-    try{
+    try {
       InputStream stream = new FileInputStream(LASER_BEAM_IMAGE);
-      image = new Image(stream);
+      Image image = new Image(stream);
       this.setFill(new ImagePattern(image));
-    }catch(FileNotFoundException e){
+    } catch (FileNotFoundException e) {
       this.setFill(Color.RED);
     }
   }

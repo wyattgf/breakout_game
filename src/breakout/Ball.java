@@ -50,7 +50,7 @@ public class Ball extends Circle {
     try {
       InputStream stream = new FileInputStream(SUN_FILE_LOCATION);
       powerUpImage = new Image(stream);
-    }catch(Exception e) {
+    } catch (Exception e) {
       powerUpImage = null;
     }
   }
@@ -76,16 +76,16 @@ public class Ball extends Circle {
 
   private void handlePaddleCollision() {
     if (getCenterY() <= myPaddle.getY()) {
-      if(sameSideBounce()){
+      if (sameSideBounce()) {
         bounceX();
       }
       bounceY();
     }
   }
 
-  private boolean sameSideBounce(){
-    boolean xDirectionIsRight = myXDirection>0;
-    boolean leftSideOfPaddle = getCenterX()< (myPaddle.getX() + (myPaddle.getWidth()/2.0));
+  private boolean sameSideBounce() {
+    boolean xDirectionIsRight = myXDirection > 0;
+    boolean leftSideOfPaddle = getCenterX() < (myPaddle.getX() + (myPaddle.getWidth() / 2.0));
     return (xDirectionIsRight == leftSideOfPaddle);
   }
 
@@ -103,41 +103,41 @@ public class Ball extends Circle {
   public void controlBall(double elapsedTime) {
     checkCollisions();
     timeBallPowerUp();
-    if(!paused){
+    if (!paused) {
       this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
       this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
     }
   }
 
-  private void timeBallPowerUp(){
-    fieryBallTimer ++;
-    if(fieryBallTimer == FIERY_BALL_END_TIME){
+  private void timeBallPowerUp() {
+    fieryBallTimer++;
+    if (fieryBallTimer == FIERY_BALL_END_TIME) {
       ballPowerUp(false);
     }
   }
 
-  public void ballPowerUp(boolean isFiery){
+  public void ballPowerUp(boolean isFiery) {
     fieryBall = isFiery;
     fieryBallTimer = 0;
-    if(isFiery && powerUpImage != null){
+    if (isFiery && powerUpImage != null) {
       this.setRadius(POWER_UP_RADIUS);
       this.setFill(new ImagePattern(powerUpImage));
-    }else{
+    } else {
       this.setRadius(BALL_RADIUS);
       this.setFill(Color.BLACK);
     }
   }
 
-  public boolean isFiery(){
+  public boolean isFiery() {
     return fieryBall;
   }
 
   public void bounceX() {
-    myXDirection *=-1;
+    myXDirection *= -1;
   }
 
   public void bounceY() {
-    myYDirection *=-1;
+    myYDirection *= -1;
   }
 
   /**

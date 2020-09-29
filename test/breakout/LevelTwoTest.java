@@ -47,7 +47,7 @@ class LevelTwoTest extends DukeApplicationTest {
   @Test
   public void testProperLevelTwoTextFile() {
     String textFile = levelManager.getLevelForTesting(LEVEL_TWO).getTextFileForTesting();
-    assertTrue(textFile.equals(LEVEL_TWO_TEXT_FILE));
+    assertEquals(LEVEL_TWO_TEXT_FILE, textFile);
   }
 
   @Test

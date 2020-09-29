@@ -47,7 +47,7 @@ class LevelThreeTest extends DukeApplicationTest {
   @Test
   public void testProperLevelThreeTextFile() {
     String textFile = levelManager.getLevelForTesting(LEVEL_THREE).getTextFileForTesting();
-    assertTrue(textFile.equals(LEVEL_THREE_TEXT_FILE));
+    assertEquals(LEVEL_THREE_TEXT_FILE, textFile);
   }
 
   @Test

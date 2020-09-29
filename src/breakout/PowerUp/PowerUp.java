@@ -2,7 +2,6 @@ package breakout.PowerUp;
 
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -22,8 +21,6 @@ public abstract class PowerUp extends Circle {
 
   //instance variables
   private PowerUpManager myPowerUpManager;
-  private Image image;
-
 
   /**
    * This method is a constructor for a PowerUp object.
@@ -48,6 +45,7 @@ public abstract class PowerUp extends Circle {
 
   /**
    * This method sets the color fill in a PowerUp
+   *
    * @param color Color corresponding to the desired color of a PowerUp
    */
   public void assignPowerUpColor(Color color) {
@@ -56,20 +54,23 @@ public abstract class PowerUp extends Circle {
 
   /**
    * This method sets the image fill in a PowerUp
+   *
    * @param powerUpImage String corresponding to the file that contains the desired image for the
    *                     PowerUp
    */
-  public void setPowerUpImage(String powerUpImage){
-    try{
+  public void setPowerUpImage(String powerUpImage) {
+    Image image;
+    try {
       InputStream stream = new FileInputStream(powerUpImage);
       image = new Image(stream);
-    }catch(Exception e){
+    } catch (Exception e) {
       image = null;
     }
-    if(image != null){
+    if (image != null) {
       this.setFill(new ImagePattern(image));
     }
   }
+
   /**
    * This method activates the power up corresponding to the type of power up object that it is
    * called off of

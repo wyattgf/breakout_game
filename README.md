@@ -60,6 +60,8 @@ principle of software development, however, given our current level of knowledge
 it in such a way that does abide with the open/closed principle
 4. Note: in order to provide tests that holistically evaluated the functionality of our program, there are several
 methods and constant variables that were added in several of the classes throughout the entirety of the codebase
+5. Note: Some import statements in GameTest appear to be unused because the tests utilizing them are commented out
+6. Note: 
  
 
 

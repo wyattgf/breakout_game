@@ -35,13 +35,15 @@ public class LevelManager {
 
   /**
    * This is a constructor for a LevelManager object
-   * @param myRoot Group corresponding to the current root of the game
-   * @param myPaddles List of Paddles containing all current Paddles in the game
-   * @param myBalls List of Balls containing all current Balls in the game
-   * @param myPlayer Player corresponding to current player of the game
-   * @param myPowerUpManager PowerUpManager corresponding to associated PowerUp Manager for current game
-   * @param screenWidth int representing width of the current screen
-   * @param screenHeight int representing height of the current screen
+   *
+   * @param myRoot           Group corresponding to the current root of the game
+   * @param myPaddles        List of Paddles containing all current Paddles in the game
+   * @param myBalls          List of Balls containing all current Balls in the game
+   * @param myPlayer         Player corresponding to current player of the game
+   * @param myPowerUpManager PowerUpManager corresponding to associated PowerUp Manager for current
+   *                         game
+   * @param screenWidth      int representing width of the current screen
+   * @param screenHeight     int representing height of the current screen
    */
   public LevelManager(Group myRoot, List<Paddle> myPaddles, List<Ball> myBalls, Player myPlayer,
       PowerUpManager myPowerUpManager, int screenWidth, int screenHeight) {
@@ -53,7 +55,7 @@ public class LevelManager {
     this.screenHeight = screenHeight;
     this.myPowerUpManager = myPowerUpManager;
     this.paused = false;
-    currentBlocks = new ArrayList();
+    currentBlocks = new ArrayList<>();
     currentLevel = SET_FOR_STARTING_LEVEL;
     blockCount = 1;
     incrementLevel();
@@ -74,9 +76,11 @@ public class LevelManager {
   }
 
   /**
-   * This method returns a List containing the original blocks created when reading blocks in from a level file
-   * @return List of Blocks corresponding to the original blocks generated when a new level is read in
-   * from a file
+   * This method returns a List containing the original blocks created when reading blocks in from a
+   * level file
+   *
+   * @return List of Blocks corresponding to the original blocks generated when a new level is read
+   * in from a file
    */
   public List<Block> getLevelBlocks() {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
@@ -89,6 +93,7 @@ public class LevelManager {
 
   /**
    * This method returns the current blocks in the current level
+   *
    * @return List of Blocks corresponding to the current blocks in the current level
    */
   public List<Block> getCurrentBlocks() {
@@ -106,9 +111,10 @@ public class LevelManager {
     addBlocksToRoot();
   }
 
-  private void setPlayerLevel(){
+  private void setPlayerLevel() {
     myPlayer.setLevel(currentLevel);
   }
+
   private void removeAllBlocksFromRoot() {
     for (Block block : currentBlocks) {
       myRoot.getChildren().remove(block);
@@ -117,8 +123,11 @@ public class LevelManager {
   }
 
   private void handleBallBlockCollision(Block block) {
+    if (block == null) {
+      return;
+    }
     Ball currentBall = myBalls.get(0);
-    if (block != null && !currentBall.isFiery()) {
+    if (!currentBall.isFiery()) {
       if (currentBall.getCenterY() - currentBall.getRadius() >= block.getY() + block.getHeight()
           || currentBall.getCenterY() + currentBall.getRadius() <= block.getY()) {
         currentBall.bounceY();
@@ -136,8 +145,8 @@ public class LevelManager {
   }
 
   /**
-   * This method updates the blocks in the current level.  Updating corresponding to removing, changing color,
-   * or incrementing the level if all blocks have been destroyed.
+   * This method updates the blocks in the current level.  Updating corresponding to removing,
+   * changing color, or incrementing the level if all blocks have been destroyed.
    */
   public void updateLevelBlocks() {
     List<Block> copyOfBlocks = new ArrayList<>(currentBlocks);
@@ -145,7 +154,7 @@ public class LevelManager {
       if (b.getBlockDurability() == 0) {
         removeSingularBlockFromRoot(b);
         myPlayer.blockDestroyed();
-        if(b instanceof PowerUpBlock){
+        if (b instanceof PowerUpBlock) {
           myPowerUpManager.createPowerUp(b.getX(), b.getY());
         }
       }
@@ -178,8 +187,6 @@ public class LevelManager {
 
   /**
    * This method determines which block (if any) has collided with the current ball
-   *
-   * @return Block object that has collided with the current ball
    */
   public void determineBallCollision() {
     for (Block block : currentBlocks) {
@@ -203,6 +210,7 @@ public class LevelManager {
 
   /**
    * This method returns an int corresponding to the number of the current level
+   *
    * @return int corresponding to the current level that is being played
    */
   public int currentLevel() {
@@ -211,6 +219,7 @@ public class LevelManager {
 
   /**
    * This method returns an into corresponding to the total possible number of levels in the game
+   *
    * @return int corresponding to the current number of levels that exists
    */
   public int getNumberOfLevels() {
@@ -219,11 +228,13 @@ public class LevelManager {
 
   /**
    * This method activates the functionality that is specific to each level
+   *
    * @param elapsedTime double representing how much time has passed in the game
    */
   public void levelFunctionality(double elapsedTime) {
     if (currentLevel < POSSIBLE_LEVELS.size()) {
-      POSSIBLE_LEVELS.get(currentLevel).activateLevelFunctionality(elapsedTime,paused,screenHeight);
+      POSSIBLE_LEVELS.get(currentLevel)
+          .activateLevelFunctionality(elapsedTime, paused, screenHeight);
     }
     updateLevelBlocks();
   }
@@ -231,16 +242,17 @@ public class LevelManager {
   /**
    * This method freezes all current blocks from moving
    */
-  public void freezeBlocks(){
+  public void freezeBlocks() {
     paused = !paused;
   }
 
   /**
    * This method controls the movement of all currently existing horizontally moving blocks
+   *
    * @param elapsedTime double representing how much time has passed in the game
    */
   public void controlMovingBlocks(double elapsedTime) {
-    if(!paused) {
+    if (!paused) {
       for (Block block : currentBlocks) {
         if (block instanceof MovingBlock) {
           ((MovingBlock) block).moveBlockHorizontally(elapsedTime, screenWidth);
@@ -279,6 +291,7 @@ public class LevelManager {
 
   /**
    * This method is specifically meant to facilitate testing in the GameTesting class
+   *
    * @param level int corresponding to the desired Level object
    * @return Level corresponding to the parameter level
    */
@@ -288,6 +301,7 @@ public class LevelManager {
 
   /**
    * This method sets the current level of the game based on levelNumber
+   *
    * @param levelNumber int corresponding to desired level
    */
   public void setLevel(int levelNumber) {
@@ -298,6 +312,7 @@ public class LevelManager {
 
   /**
    * This method is specifically meant to facilitate testing in the GameTesting class
+   *
    * @return int corresponding to the current level of the game
    */
   public int getCurrentLevelNumberForTesting() {
@@ -306,6 +321,7 @@ public class LevelManager {
 
   /**
    * This method is specifically meant to facilitate testing in the GameTesting class
+   *
    * @return List of current LaserBeams of LevelThree
    */
   public List<LaserBeam> getLaserBeamsForTesting() {

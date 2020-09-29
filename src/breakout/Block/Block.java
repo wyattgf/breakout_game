@@ -1,6 +1,5 @@
 package breakout.Block;
 
-import breakout.Level.LevelManager;
 import javafx.scene.shape.Rectangle;
 
 
@@ -22,7 +21,6 @@ public abstract class Block extends Rectangle {
 
 
   /**
-   *
    * @param myXPos
    * @param myYPos
    * @param blockDurability
@@ -38,7 +36,6 @@ public abstract class Block extends Rectangle {
   public abstract Block newBlock();
 
   /**
-   *
    * @param myDurability
    */
   public abstract void setColor(int myDurability);
@@ -46,21 +43,19 @@ public abstract class Block extends Rectangle {
   /**
    *
    */
-  public void updateBlockDurability(){
-    this.myDurability = this.myDurability -1;
+  public void updateBlockDurability() {
+    this.myDurability = this.myDurability - 1;
     setColor(myDurability);
   }
 
   /**
-   *
    * @return
    */
-  public int getBlockDurability(){
+  public int getBlockDurability() {
     return this.myDurability;
   }
 
   /**
-   *
    * @return
    */
   public double getBlockWidth() {
@@ -68,7 +63,6 @@ public abstract class Block extends Rectangle {
   }
 
   /**
-   *
    * @return
    */
   public double getBlockHeight() {
@@ -83,12 +77,11 @@ public abstract class Block extends Rectangle {
   }
 
 
-  public int getSpeed(){
+  public int getSpeed() {
     return mySpeed;
   }
 
   /**
-   *
    * @return
    */
   public int getYDirection() {
@@ -96,7 +89,6 @@ public abstract class Block extends Rectangle {
   }
 
   /**
-   *
    * @param elapsedTime
    */
   public void moveBlock(double elapsedTime) {
@@ -104,10 +96,7 @@ public abstract class Block extends Rectangle {
   }
 
 
-
-
   /**
-   *
    * @param speed
    */
   public void changeFallingSpeed(int speed) {

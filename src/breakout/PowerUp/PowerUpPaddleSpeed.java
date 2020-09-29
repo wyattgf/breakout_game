@@ -1,7 +1,6 @@
 package breakout.PowerUp;
 
 import breakout.Paddle;
-import javafx.scene.paint.Color;
 
 public class PowerUpPaddleSpeed extends PowerUp {
 

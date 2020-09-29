@@ -6,6 +6,7 @@ import javafx.scene.shape.Rectangle;
  * @author Hosam Tageldin, Wyatt Focht
  */
 public class Player extends Rectangle {
+
   private static final int POINTS_FROM_BLOCK = 200;
   private static final int PLAYER_START_LIVES = 3;
   private static final int PLAYER_START_SCORE = 0;
@@ -36,14 +37,16 @@ public class Player extends Rectangle {
 
     return this.playerLives;
   }
-  public void addLife(){
+
+  public void addLife() {
     this.updateLives(1);
   }
 
-  public void lostLife(){
+  public void lostLife() {
     this.updateLives(-1);
   }
-  private void updateLives(int lives){
+
+  private void updateLives(int lives) {
     this.playerLives += lives;
   }
 

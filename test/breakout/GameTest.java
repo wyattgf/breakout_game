@@ -120,28 +120,28 @@ class GameTest extends DukeApplicationTest {
   @Test
   public void testBallBounceOffBlock() {
     myBall.setMyXDirection(0);
-    for(int i = 0; i<20; i++){
+    for (int i = 0; i < 20; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
-    assertTrue(myBall.getCenterY()>165);
-    assertEquals(SCREEN_HEIGHT/2.0, myBall.getCenterX());
+    assertTrue(myBall.getCenterY() > 165);
+    assertEquals(SCREEN_HEIGHT / 2.0, myBall.getCenterX());
 
   }
 
   @Test
-  public void testBlockIsDestroyed(){
+  public void testBlockIsDestroyed() {
     myBall.setMyXDirection(0);
-    for(int i = 0; i<20; i++){
+    for (int i = 0; i < 20; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertFalse(myScene.getRoot().getChildrenUnmodifiable().contains(blockDestroyed));
   }
 
   @Test
-  public void testBounceOffWall(){
+  public void testBounceOffWall() {
     myBall.setMyYDirection(0);
     myBall.setCenterX(394);
-    for(int i = 0 ; i <4; i++){
+    for (int i = 0; i < 4; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertTrue(myBall.getCenterX() < SCREEN_WIDTH);
@@ -185,12 +185,12 @@ class GameTest extends DukeApplicationTest {
     myBall.setCenterY(SCREEN_HEIGHT - 16);
     myBall.setMyXDirection(0);
     myBall.setMyYDirection(1);
-    for(int i = 0; i<4; i++){
+    for (int i = 0; i < 4; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertEquals(SCREEN_WIDTH / 2.0, myBall.getCenterX());
     assertEquals((int) (SCREEN_HEIGHT - 16 + (INITIAL_BALL_SPEED * SECOND_DELAY) -
-            (INITIAL_BALL_SPEED * 3 * SECOND_DELAY)), (int) myBall.getCenterY());
+        (INITIAL_BALL_SPEED * 3 * SECOND_DELAY)), (int) myBall.getCenterY());
   }
 
   @Test
@@ -203,9 +203,9 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testPlayerLosesLifeAfterMissingBall() {
-    int expected = myPlayer.livesLeft() -1;
+    int expected = myPlayer.livesLeft() - 1;
     myBall.setCenterY(395);
-    for(int i = 0; i< 20; i++){
+    for (int i = 0; i < 20; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertEquals(expected, myPlayer.livesLeft());
@@ -281,16 +281,17 @@ class GameTest extends DukeApplicationTest {
 
   @Test
   public void testFallingBlock() {
-    press(myScene,KeyCode.DIGIT2);
+    press(myScene, KeyCode.DIGIT2);
     movingBlock = lookup("#block1").query();
     double originalPos = movingBlock.getY();
     movingBlock.changeFallingSpeed(10000);
-      javafxRun(() -> myGame.step(SECOND_DELAY));
+    javafxRun(() -> myGame.step(SECOND_DELAY));
 
     assertTrue(originalPos < movingBlock.getY());
   }
+
   @Test
-  public void testPaddleTeleportation(){
+  public void testPaddleTeleportation() {
     myPaddle.setX(0);
     double expectedX = SCREEN_WIDTH - myPaddle.getWidth();
     press(myScene, KeyCode.T);
@@ -299,38 +300,38 @@ class GameTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testLevelDisplay(){
+  public void testLevelDisplay() {
     press(myScene, KeyCode.DIGIT3);
     int expectedLevel = 3;
     assertEquals(expectedLevel, myPlayer.getCurrentLevel());
   }
 
   @Test
-  public void testLivesDisplay(){
-    int expected = myPlayer.livesLeft() -1;
+  public void testLivesDisplay() {
+    int expected = myPlayer.livesLeft() - 1;
     myBall.setCenterY(415);
     javafxRun(() -> myGame.step(SECOND_DELAY));
     assertEquals(expected, myPlayer.livesLeft());
   }
 
   @Test
-  public void testScoreDisplay(){
+  public void testScoreDisplay() {
     myBall.setMyXDirection(0);
-    for(int i = 0; i<20; i++) {
+    for (int i = 0; i < 20; i++) {
       javafxRun(() -> myGame.step(SECOND_DELAY));
     }
     assertEquals(SCORE_ADDITION_PER_BLOCK, myPlayer.getScore());
   }
 
   @Test
-  public void testHighScoreDisplay() throws Exception{
+  public void testHighScoreDisplay() throws Exception {
     File file = new File(HIGH_SCORE_FILE_LOCATION);
     BufferedReader br = new BufferedReader(new FileReader(file));
-    assertEquals(myHighScore.getCurrentHighScore(),Integer.parseInt(br.readLine()));
+    assertEquals(myHighScore.getCurrentHighScore(), Integer.parseInt(br.readLine()));
   }
 
   @Test
-  public void testLaserLifeLoss()  {
+  public void testLaserLifeLoss() {
     press(myScene, KeyCode.DIGIT3);
     double expectedLives = myPlayer.livesLeft() - 1;
     List<LaserBeam> currentLasers = myGame.getLevelManager().getLaserBeamsForTesting();
@@ -339,7 +340,7 @@ class GameTest extends DukeApplicationTest {
     }
     LaserBeam laser = currentLasers.get(0);
     myPaddle.setX(laser.getX());
-    myPaddle.setY(laser.getY()+1);
+    myPaddle.setY(laser.getY() + 1);
     javafxRun(() -> myGame.step(SECOND_DELAY));
     assertEquals(expectedLives, myPlayer.livesLeft());
     myPlayer.addLife();
@@ -351,9 +352,10 @@ class GameTest extends DukeApplicationTest {
     press(myScene, KeyCode.DIGIT0);
     assertEquals(0, myGame.getLevelManager().getCurrentLevelNumberForTesting());
   }
+
   @Test
-  public void testFieryBallPowerUpChangesBallDesign(){
-    PowerUp p = new PowerUpFireBall(0,0,myGame.getPowerUpManager());
+  public void testFieryBallPowerUpChangesBallDesign() {
+    PowerUp p = new PowerUpFireBall(0, 0, myGame.getPowerUpManager());
     assertEquals(myBall.getFill(), Color.BLACK);
     p.activatePowerUp();
     assertNotEquals(myBall.getFill(), Color.BLACK);

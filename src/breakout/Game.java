@@ -32,7 +32,7 @@ public class Game extends Application {
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final Paint BACKGROUND = Color.AZURE;
   private static final int PADDLE_SPEED_CHANGE = 10;
-  private static final int LEVEL_THREE  = 3;
+  private static final int LEVEL_THREE = 3;
   private static final int LEVEL_TWO = 2;
   private static final int LEVEL_ONE = 1;
   private static final int TESTING_LEVEL = 0;
@@ -67,7 +67,7 @@ public class Game extends Application {
     animation.play();
   }
 
-  Scene setupScene(int width, int height,Paint background) {
+  Scene setupScene(int width, int height, Paint background) {
     root = new Group();
     createGameComponents();
     root.getChildren().add(myPaddle);
@@ -75,20 +75,21 @@ public class Game extends Application {
     root.getChildren().add(myPlayer);
     root.getChildren().add(myScoreBoard);
     myScoreBoard.addDisplaysToRoot(root);
-    Scene scene = new Scene(root, width, height,background);
+    Scene scene = new Scene(root, width, height, background);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     scene.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
     return scene;
   }
 
-  private void createGameComponents(){
+  private void createGameComponents() {
     myScoreBoard = new ScoreBoard();
     createPlayer();
     createPaddle();
     myPaddle = myPaddles.get(0);
     createBall();
     powerUpManager = new PowerUpManager(root, myPaddles, myBalls, myPlayer, SCREEN_HEIGHT);
-    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager, SCREEN_WIDTH, SCREEN_HEIGHT);
+    levelManager = new LevelManager(root, myPaddles, myBalls, myPlayer, powerUpManager,
+        SCREEN_WIDTH, SCREEN_HEIGHT);
     myBall = myBalls.get(0);
   }
 
@@ -98,16 +99,16 @@ public class Game extends Application {
   }
 
   public void createBall() {
-    if (myBalls == null){
+    if (myBalls == null) {
       myBalls = new ArrayList<>();
     }
-    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT,myPaddle,myPlayer);
+    Ball b = new Ball(SCREEN_WIDTH, SCREEN_HEIGHT, myPaddle, myPlayer);
     b.setId("ball" + myBalls.size());
     myBalls.add(b);
   }
 
   private void createPaddle() {
-    if (myPaddles == null){
+    if (myPaddles == null) {
       myPaddles = new ArrayList<>();
     }
     Paddle p = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -124,7 +125,7 @@ public class Game extends Application {
     powerUpManager.handlePowerUpPaddleCollision();
     levelManager.determineBallCollision();
     myBall.controlBall(elapsedTime);
-    myScoreBoard.updateScoreBoard(root,myPlayer);
+    myScoreBoard.updateScoreBoard(root, myPlayer);
     endGame();
   }
 
@@ -188,9 +189,9 @@ public class Game extends Application {
   }
 
   private void pauseGame() {
-    if(!paused){
+    if (!paused) {
       animation.pause();
-    }else{
+    } else {
       animation.play();
     }
     paused = !paused;
@@ -209,7 +210,8 @@ public class Game extends Application {
   }
 
   private void endGame() {
-    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0 && levelManager.getNumberOfLevels() <= levelManager.currentLevel())) {
+    if (myPlayer.livesLeft() <= 0 || (levelManager.getCurrentBlocks().size() == 0
+        && levelManager.getNumberOfLevels() <= levelManager.currentLevel())) {
       animation.stop();
       root.getChildren().clear();
       Text t = new Text(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, GAME_OVER + myPlayer.getScore());
@@ -221,7 +223,10 @@ public class Game extends Application {
   public PowerUpManager getPowerUpManager() {
     return powerUpManager;
   }
-  public LevelManager getLevelManager(){ return levelManager;}
+
+  public LevelManager getLevelManager() {
+    return levelManager;
+  }
 
   /**
    * Start the program.

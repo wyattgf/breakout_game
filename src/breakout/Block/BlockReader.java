@@ -1,14 +1,8 @@
 package breakout.Block;
 
-import breakout.PowerUp.PowerUp;
-import breakout.PowerUp.PowerUpLife;
-import breakout.PowerUp.PowerUpPaddleSize;
-import breakout.PowerUp.PowerUpPaddleSpeed;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +26,7 @@ public class BlockReader {
   }
 
   private void readCreateBlocks(String filename) {
-    File file = new File(DIRECTORY + "/" +filename);
+    File file = new File(DIRECTORY + "/" + filename);
     try {
       BufferedReader br = new BufferedReader(new FileReader(file));
       String line;

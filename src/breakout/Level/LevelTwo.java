@@ -13,7 +13,9 @@ public class LevelTwo extends Level {
 
   /**
    * This is a constructor for a LevelTwo object
-   * @param myLevelManager LevelManager corresponding to the associated LevelManager with this level
+   *
+   * @param myLevelManager LevelManager corresponding to the associated LevelManager with this
+   *                       level
    */
   public LevelTwo(LevelManager myLevelManager) {
     super(BLOCK_FILE, myLevelManager);
@@ -36,7 +38,7 @@ public class LevelTwo extends Level {
     if (!paused) {
       for (Block block : getBlocks()) {
         block.moveBlock(elapsedTime);
-        checkBlockReachedBottom(block,screenHeight,blocksToRemove);
+        checkBlockReachedBottom(block, screenHeight, blocksToRemove);
       }
     }
     removeBlocks(blocksToRemove);
@@ -45,19 +47,21 @@ public class LevelTwo extends Level {
 
   @Override
   public void emptyRootOfLevelSpecificObjects() {
-
+    //not necessary for this level
   }
 
-  private void checkBlockReachedBottom(Block block, int screenHeight, List<Block> blocksToRemove){
-    if (myPlayer==null) myPlayer = myLevelManager.getPlayer();
-    if(block.getY() + block.getBlockHeight() >= screenHeight){
+  private void checkBlockReachedBottom(Block block, int screenHeight, List<Block> blocksToRemove) {
+    if (myPlayer == null) {
+      myPlayer = myLevelManager.getPlayer();
+    }
+    if (block.getY() + block.getBlockHeight() >= screenHeight) {
       blocksToRemove.add(block);
       myPlayer.lostLife();
     }
   }
 
-  private void removeBlocks(List<Block> blocksToRemove){
-    for(Block block : blocksToRemove){
+  private void removeBlocks(List<Block> blocksToRemove) {
+    for (Block block : blocksToRemove) {
       getLevelManager().getPlayer().lostLife();
       getLevelManager().removeSingularBlockFromRoot(block);
       getLevelManager().updateLevelBlocks();

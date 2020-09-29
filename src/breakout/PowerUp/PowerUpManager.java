@@ -12,7 +12,7 @@ public class PowerUpManager {
 
   private final List<PowerUp> POSSIBLE_POWER_UPS = List
       .of(new PowerUpPaddleSize(0, 0, this), new PowerUpFireBall(0, 0, this),
-          new PowerUpPaddleSpeed(0, 0, this),new PowerUpLife(0,0,this));
+          new PowerUpPaddleSpeed(0, 0, this), new PowerUpLife(0, 0, this));
 
   private Group myRoot;
   private List<Paddle> myPaddles;
@@ -28,7 +28,7 @@ public class PowerUpManager {
    * This method creates a PowerUpManager object
    *
    * @param myRoot       Group that refers to the root that the game is displaying
-   * @param myPaddles    List that refers to all exsiting paddles in the current game
+   * @param myPaddles    List that refers to all existing paddles in the current game
    * @param myBalls      List that refers to all existing balls in the current game
    * @param myPlayer     Player that refers to the player playing the current game
    * @param screenHeight int that refers to the height of the screen of the current game
@@ -51,9 +51,8 @@ public class PowerUpManager {
    *
    * @param xPosition double representing the x position of the new power up
    * @param yPosition double representing the y position of the new power up
-   * @return
    */
-  public PowerUp createPowerUp(double xPosition, double yPosition) {
+  public void createPowerUp(double xPosition, double yPosition) {
     PowerUp placeHolder = POSSIBLE_POWER_UPS.get(new Random().nextInt(POSSIBLE_POWER_UPS.size()));
     PowerUp newPowerUp = placeHolder.newCopy();
     newPowerUp.setCenterX(xPosition);
@@ -62,8 +61,6 @@ public class PowerUpManager {
     powerUpCount++;
     currentPowerUps.add(newPowerUp);
     addPowerUpToRoot(newPowerUp);
-
-    return newPowerUp;
   }
 
   /**
@@ -175,7 +172,7 @@ public class PowerUpManager {
     return myPlayer;
   }
 
-  public List<Ball> getMyBalls(){
+  public List<Ball> getMyBalls() {
     return myBalls;
   }
 

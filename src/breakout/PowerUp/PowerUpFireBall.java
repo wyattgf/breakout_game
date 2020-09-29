@@ -1,13 +1,12 @@
 package breakout.PowerUp;
 
 import breakout.Ball;
-import breakout.Player;
 import java.util.List;
 
 public class PowerUpFireBall extends PowerUp {
+
   private static final String POWER_UP_IMAGE = "data/sun.jpg";
   private static final boolean MAKE_FIERY_BALL = true;
-  private Player myPlayer;
   private List<Ball> myBalls;
 
   /**
@@ -20,7 +19,6 @@ public class PowerUpFireBall extends PowerUp {
    */
   public PowerUpFireBall(double initialX, double initialY, PowerUpManager myPowerUpManager) {
     super(initialX, initialY, myPowerUpManager);
-    myPlayer = getPowerUpManager().getPlayer();
     myBalls = getPowerUpManager().getMyBalls();
     setPowerUpImage(POWER_UP_IMAGE);
   }

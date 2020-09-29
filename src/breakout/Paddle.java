@@ -96,7 +96,6 @@ public class Paddle extends Rectangle {
   }
 
   /**
-   *
    * @param paddleSpeedChange the amount for the paddle speed to change
    */
   public void incrementPaddleSpeed(int paddleSpeedChange) {
@@ -106,8 +105,8 @@ public class Paddle extends Rectangle {
   /**
    * This method teleports the paddle's location to the other half of the screen
    */
-  public void teleportPaddle(){
-    double reflectAxis = screenHeight/2.0;
+  public void teleportPaddle() {
+    double reflectAxis = screenHeight / 2.0;
     double distanceFromOrigin = (this.getX() + myWidth - reflectAxis);
     this.setX(reflectAxis - distanceFromOrigin);
   }

@@ -3,6 +3,7 @@ package breakout.Block;
 import javafx.scene.paint.Color;
 
 public class MovingBlock extends Block {
+
   private static final Color MOVING_BLOCK_COLOR = Color.BLUE;
   private static final int MOVING_BLOCK_DURABILITY = 1;
   private static final int MOVING_BLOCK_SPEED = 10;
@@ -17,23 +18,22 @@ public class MovingBlock extends Block {
   }
 
   @Override
-  public Block newBlock(){
+  public Block newBlock() {
     return new MovingBlock(this.getX(), this.getY());
   }
 
-  public void moveBlockHorizontally(double elapsedTime,int screenWidth){
-    if(getX() < 0 ||
-        getX() + getWidth() >= screenWidth){
+  public void moveBlockHorizontally(double elapsedTime, int screenWidth) {
+    if (getX() < 0 ||
+        getX() + getWidth() >= screenWidth) {
       movingBlockXDirection *= -1;
     }
-    this.setX(this.getX() +  MOVING_BLOCK_SPEED * movingBlockXDirection * elapsedTime);
+    this.setX(this.getX() + MOVING_BLOCK_SPEED * movingBlockXDirection * elapsedTime);
   }
 
   @Override
   public void setColor(int myDurability) {
     this.setFill(MOVING_BLOCK_COLOR);
   }
-
 
 
 }

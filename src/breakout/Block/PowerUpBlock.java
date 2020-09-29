@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 public class PowerUpBlock extends Block {
+
   private static final int POWER_UP_BLOCK_DURABILITY = 1;
   private static final String POWER_UP_BLOCK_BACKGROUND = "data/question.jpg";
 
@@ -18,7 +19,7 @@ public class PowerUpBlock extends Block {
   }
 
   @Override
-  public Block newBlock(){
+  public Block newBlock() {
     return new PowerUpBlock(this.getX(), this.getY());
   }
 
@@ -28,7 +29,7 @@ public class PowerUpBlock extends Block {
       InputStream stream = new FileInputStream(POWER_UP_BLOCK_BACKGROUND);
       image = new Image(stream);
       this.setFill(new ImagePattern(image));
-    }catch(Exception e){
+    } catch (Exception e) {
       this.setFill(Color.RED);
     }
   }
