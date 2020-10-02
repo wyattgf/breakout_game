@@ -3,6 +3,9 @@ package breakout.PowerUp;
 import breakout.Ball;
 import java.util.List;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class PowerUpFireBall extends PowerUp {
 
   private static final String POWER_UP_IMAGE = "data/sun.jpg";

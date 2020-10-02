@@ -9,6 +9,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
+ * The PowerUp class organizes all the shared characteristics of each PowerUp and allows for
+ * extension when creating the different power ups. To create a new powerup, simply extend this
+ * class and override the abstract methods.
+ *
  * @author Hosam Tageldin, Wyatt Focht
  */
 

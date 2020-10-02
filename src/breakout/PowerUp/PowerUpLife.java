@@ -2,6 +2,9 @@ package breakout.PowerUp;
 
 import breakout.Player;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class PowerUpLife extends PowerUp {
 
   private static final String POWER_UP_IMAGE = "data/heart.png";

@@ -3,6 +3,12 @@ package breakout;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 
+/**
+ * Implements the Paddle used to stop the ball from reaching the bottom of the screen
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
+
 public class Paddle extends Rectangle {
 
   //constants
@@ -50,7 +56,7 @@ public class Paddle extends Rectangle {
   }
 
   /**
-   * This method changes the myWidth of a Paddle object to a new, desired double
+   * This method changes the width of a Paddle object to the new, desired double
    *
    * @param newWidth double representing the new desired width of a Paddle object
    */
@@ -61,6 +67,11 @@ public class Paddle extends Rectangle {
     }
   }
 
+  /**
+   * Moves the paddle in a certain direction for as long as it is called for
+   *
+   * @param elapsedTime the time that has passed in the game
+   */
   public void movePaddle(double elapsedTime) {
     if (paddleNotOnExtremeLeft() && (paddleNotOnExtremeRight())) {
       this.setX(this.getX() + elapsedTime * mySpeed);
@@ -115,16 +126,27 @@ public class Paddle extends Rectangle {
   }
 
 
+  /**
+   * Changes the paddle speed
+   */
   public void setSpeedFromDelta() {
     if (paddleSpeedAtKeyPress < MAX_SPEED) {
       paddleSpeedAtKeyPress += SPEED_DELTA;
     }
   }
 
+  /**
+   * Changes the paddle width
+   */
   public void setWidthFromDelta() {
     changeWidth(WIDTH_DELTA + getWidth());
   }
 
+  /**
+   * Getter method for the paddle speed
+   *
+   * @return int representing the paddle speed
+   */
   public int getKeyPressSpeed() {
     return paddleSpeedAtKeyPress;
   }

@@ -21,8 +21,12 @@ import javafx.util.Duration;
 
 
 /**
+ * This class is the main class and runs the entire game when it is run. It controls the rules of
+ * the game and decides whether it is time to end the game or not.
+ *
  * @author Hosam Tageldin, Wyatt Focht
  */
+
 public class Game extends Application {
 
   private static final String TITLE = "Breakout JavaFX";
@@ -73,6 +77,14 @@ public class Game extends Application {
     animation.play();
   }
 
+  /**
+   * Set the scene of the game up
+   *
+   * @param width      width of the screen
+   * @param height     height of the screen
+   * @param background the color of the background
+   * @return the Scene representing the current game layout
+   */
   Scene setupScene(int width, int height, Paint background) {
     root = new Group();
     createGameComponents();
@@ -104,7 +116,7 @@ public class Game extends Application {
     currentPlayer.setId("player");
   }
 
-  public void createBall() {
+  private void createBall() {
     if (myBalls == null) {
       myBalls = new ArrayList<>();
     }
@@ -122,7 +134,11 @@ public class Game extends Application {
     myPaddles.add(p);
   }
 
-
+  /**
+   * Calls the appropriate classes and method to update with the elapsed time
+   *
+   * @param elapsedTime the length of time that has passed
+   */
   void step(double elapsedTime) {
     currentPaddle.movePaddle(elapsedTime);
     levelManager.levelFunctionality(elapsedTime);
@@ -233,13 +249,23 @@ public class Game extends Application {
     } else {
       gameResult = GAME_WON;
     }
-    return new Text(0, SCREEN_HEIGHT/2.0, gameResult + FINAL_SCORE + currentPlayer.getScore());
+    return new Text(0, SCREEN_HEIGHT / 2.0, gameResult + FINAL_SCORE + currentPlayer.getScore());
   }
 
+  /**
+   * Used for testing purposes
+   *
+   * @return the PowerUpManager
+   */
   public PowerUpManager getPowerUpManager() {
     return powerUpManager;
   }
 
+  /**
+   * Used for testing purposes
+   *
+   * @return the LevelManager
+   */
   public LevelManager getLevelManager() {
     return levelManager;
   }

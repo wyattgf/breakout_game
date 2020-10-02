@@ -6,6 +6,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * BlockReader is used in reading the provided datafiles and returning blocks out of each line
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class BlockReader {
 
   //constants
@@ -41,7 +46,13 @@ public class BlockReader {
     }
   }
 
-
+  /**
+   * This method uses all the methods in this class to help provide a list of blocks in each level
+   * for the LevelManager to utilize
+   *
+   * @param filename the name of the file to read the blocks from
+   * @return a list of all the blocks from the provided file
+   */
   public List<Block> getBlocks(String filename) {
     readCreateBlocks(filename);
     return listOfBlocks;

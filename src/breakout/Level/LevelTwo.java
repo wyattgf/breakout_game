@@ -5,6 +5,9 @@ import breakout.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class LevelTwo extends Level {
 
   private static final String BLOCK_FILE = "levelTwo.txt";
@@ -32,6 +35,11 @@ public class LevelTwo extends Level {
     }
   }
 
+  /**
+   * @param elapsedTime  double representing how much time has passed
+   * @param paused       boolean representing whether the game is paused
+   * @param screenHeight int representing the height of the screen
+   */
   @Override
   public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight) {
     List<Block> blocksToRemove = new ArrayList<>();
@@ -45,6 +53,9 @@ public class LevelTwo extends Level {
     blocksToRemove.clear();
   }
 
+  /**
+   *
+   */
   @Override
   public void emptyRootOfLevelSpecificObjects() {
     //not necessary for this level

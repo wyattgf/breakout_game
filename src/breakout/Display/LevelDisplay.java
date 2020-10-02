@@ -1,5 +1,8 @@
 package breakout.Display;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 
 import breakout.Player;
 import javafx.scene.Group;
@@ -16,6 +19,12 @@ public class LevelDisplay extends StatusDisplay {
     super(LEVEL_DISPLAY_YPOS);
   }
 
+  /**
+   * Updates the Level Display depending on the current level of the player
+   *
+   * @param root     the root to add the new value to
+   * @param myPlayer the current player to extract the data from
+   */
   @Override
   public void update(Group root, Player myPlayer) {
     root.getChildren().remove(currentLevel);

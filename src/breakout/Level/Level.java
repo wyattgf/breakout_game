@@ -6,6 +6,13 @@ import breakout.Block.BlockReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class organizes the general characteristics of each Level and allows for extension when
+ * developing the levels. The methods each class should override to implement a new functionality is
+ * activateLevelFunctionality.
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public abstract class Level {
 
   private BlockReader myBlockReader;

@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The PowerUP Manager controls which power up is selected when a PowerUpBlock is destroyed or when
+ * the cheat key "P" is pressed. It also controls the activation of the power up and the removal of
+ * the power up if it falls beyond the screen.
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class PowerUpManager {
 
   private final List<PowerUp> POSSIBLE_POWER_UPS = List
@@ -172,6 +179,11 @@ public class PowerUpManager {
     return myPlayer;
   }
 
+  /**
+   * This method is a getter method for the current list of balls
+   *
+   * @return the balls included in the current game
+   */
   public List<Ball> getMyBalls() {
     return myBalls;
   }

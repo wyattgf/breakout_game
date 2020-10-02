@@ -2,6 +2,10 @@ package breakout.PowerUp;
 
 import breakout.Paddle;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
+
 public class PowerUpPaddleSize extends PowerUp {
 
   private static final String POWER_UP_IMAGE = "data/plus.png";

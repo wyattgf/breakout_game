@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class LevelThree extends Level {
 
   private static final String BLOCK_FILE = "levelThree.txt";
@@ -31,6 +34,11 @@ public class LevelThree extends Level {
     whenToShoot = 0;
   }
 
+  /**
+   * @param elapsedTime  double representing how much time has passed
+   * @param paused       boolean representing whether the game is paused
+   * @param screenHeight int representing the height of the screen
+   */
   @Override
   public void activateLevelFunctionality(double elapsedTime, boolean paused, int screenHeight) {
     initializePaddleAndScreenWidth();
@@ -52,6 +60,10 @@ public class LevelThree extends Level {
     }
   }
 
+  /**
+   * This method empties the current root of all objects that are created specifically for a single
+   * levels functionality
+   */
   @Override
   public void emptyRootOfLevelSpecificObjects() {
     ArrayList<LaserBeam> copy = new ArrayList<>(currentLasers);

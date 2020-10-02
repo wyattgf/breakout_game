@@ -8,8 +8,11 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
+ * Implements the functionality of the ball
+ *
  * @author Hosam Tageldin, Wyatt Focht
  */
+
 public class Ball extends Circle {
 
   //constants
@@ -52,6 +55,23 @@ public class Ball extends Circle {
     }
   }
 
+  /**
+   * Controls the movements of the Ball
+   *
+   * @param elapsedTime the length of time that has passed in the game
+   */
+  public void controlBall(double elapsedTime) {
+    checkCollisions();
+    timeBallPowerUp();
+    if (!paused) {
+      this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
+      this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
+    }
+  }
+
+  /**
+   * Checks the collisions of the ball with the paddle, wall and whether it is out of the screen
+   */
   public void checkCollisions() {
     if (!paused) {
       if (this.getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
@@ -95,23 +115,11 @@ public class Ball extends Circle {
   }
 
   /**
-   * This method moves a Ball object to the center of the screen
+   * This method moves a Ball object to the center of the screen as a reset
    */
   public void moveToCenter() {
     this.setCenterX(screenWidth / 2.0);
     this.setCenterY(screenHeight / 2.0);
-  }
-
-  /**
-   * @param elapsedTime
-   */
-  public void controlBall(double elapsedTime) {
-    checkCollisions();
-    timeBallPowerUp();
-    if (!paused) {
-      this.setCenterX(this.getCenterX() + myXDirection * mySpeed * elapsedTime);
-      this.setCenterY(this.getCenterY() + myYDirection * mySpeed * elapsedTime);
-    }
   }
 
   private void timeBallPowerUp() {
@@ -121,6 +129,11 @@ public class Ball extends Circle {
     }
   }
 
+  /**
+   * Turns the ball into a fire ball when the power up is activated
+   *
+   * @param isFiery boolean to see if the ball should be a fire ball
+   */
   public void ballPowerUp(boolean isFiery) {
     fieryBall = isFiery;
     fieryBallTimer = 0;
@@ -133,14 +146,25 @@ public class Ball extends Circle {
     }
   }
 
+  /**
+   * Method is used for other classes to know if the ball should be functioning as a fire ball
+   *
+   * @return boolean regarding whether the ball is fiery or not
+   */
   public boolean isFiery() {
     return fieryBall;
   }
 
+  /**
+   * Bounce the ball in the X direction
+   */
   public void bounceX() {
     myXDirection *= -1;
   }
 
+  /**
+   * Bounce the ball in the Y direction
+   */
   public void bounceY() {
     myYDirection *= -1;
   }
@@ -163,14 +187,27 @@ public class Ball extends Circle {
     mySpeed = speed;
   }
 
+  /**
+   * Sets the X direction of the balls movement
+   *
+   * @param direction requested direction for the X movement of the ball
+   */
   public void setMyXDirection(int direction) {
     myXDirection = direction;
   }
 
+  /**
+   * Sets the Y direction of the balls movement
+   *
+   * @param direction requested direction for the Y movement of the ball
+   */
   public void setMyYDirection(int direction) {
     myYDirection = direction;
   }
 
+  /**
+   * Used to freeze the ball from moving if the Freeze cheat key has been activated
+   */
   public void controlFreeze() {
     paused = !paused;
   }

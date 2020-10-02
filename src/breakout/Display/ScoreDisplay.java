@@ -5,6 +5,9 @@ import javafx.scene.text.Text;
 
 import javafx.scene.Group;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class ScoreDisplay extends StatusDisplay {
 
   private static final int SCORE_DISPLAY_YPOS = 220;
@@ -16,6 +19,12 @@ public class ScoreDisplay extends StatusDisplay {
     super(SCORE_DISPLAY_YPOS);
   }
 
+  /**
+   * Updates the score on the screen depending on the current score of the player
+   *
+   * @param root     the root to add the new value to
+   * @param myPlayer the current player to extract the data from
+   */
   @Override
   public void update(Group root, Player myPlayer) {
     root.getChildren().remove(currentScore);

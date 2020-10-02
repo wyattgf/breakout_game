@@ -1,5 +1,8 @@
 package breakout.Display;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 
 import breakout.Player;
 import java.io.BufferedReader;
@@ -31,6 +34,13 @@ public class HighScoreDisplay extends StatusDisplay {
 
   }
 
+  /**
+   * Updates the high score depending on the current value of the player score and the highest score
+   * found in the high score file, writes the new high score to the file
+   *
+   * @param root     the root to add the new value to
+   * @param myPlayer the current player to extract the data from
+   */
   @Override
   public void update(Group root, Player myPlayer) {
     root.getChildren().remove(currentHighScore);
@@ -49,6 +59,9 @@ public class HighScoreDisplay extends StatusDisplay {
     root.getChildren().add(currentHighScore);
   }
 
+  /**
+   * @return the high score from the file
+   */
   public int getCurrentHighScore() {
     return highScoreFromFile;
   }

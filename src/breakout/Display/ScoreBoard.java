@@ -12,7 +12,12 @@ import java.io.FileInputStream;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
-
+/**
+ * Sets up the layout to the ScoreBoard with the labels and the display boxes on the right side of
+ * the screen
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class ScoreBoard extends Rectangle {
 
   private static final double SCOREBOARD_WIDTH = 200;
@@ -43,12 +48,25 @@ public class ScoreBoard extends Rectangle {
     statusDisplayOrderedList.add(new HighScoreDisplay());
   }
 
+  /**
+   * Updates each status display currently in use for the ScoreBoard to have the most up to date
+   * value
+   *
+   * @param root     the currently used root to add the values to
+   * @param myPlayer the current player to extract the necessary values from
+   */
   public void updateScoreBoard(Group root, Player myPlayer) {
     for (StatusDisplay display : statusDisplayOrderedList) {
       display.update(root, myPlayer);
     }
   }
 
+  /**
+   * Called once to show each display label and the display boxes so that they don't get called with
+   * each step since they wil be static on the screen.
+   *
+   * @param root the root to add the elements to
+   */
   public void addDisplaysToRoot(Group root) {
     int i = 1;
     for (StatusDisplay display : statusDisplayOrderedList) {

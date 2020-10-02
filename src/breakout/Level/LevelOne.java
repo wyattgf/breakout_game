@@ -1,5 +1,8 @@
 package breakout.Level;
 
+/**
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class LevelOne extends Level {
 
   private static final String BLOCK_FILE = "levelOne.txt";

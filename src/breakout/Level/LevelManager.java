@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 
+/**
+ * The LevelManager class manages the flow of each level and the incrementing and switching between
+ * levels. It allows the blocks to be added and removed from the root to allow for new levels to set
+ * the scene.
+ *
+ * @author Hosam Tageldin, Wyatt Focht
+ */
 public class LevelManager {
 
   private final List<Level> POSSIBLE_LEVELS = List
