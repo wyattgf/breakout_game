@@ -77,3 +77,13 @@ Adding a new power up to the game should be simple enough as it only involves a 
 
 #### Other Features not yet Done
 
+**Additional Splash Screens**
+
+The current implementation of this project solely involves a splash screen at the end of the game to indicate whether a player has won or lost as well as the player's curent score.  Therefore, potential features that could have been added include an initial splash screen, introducing the player to the game's name and rules, as well as splash screens between each level indicating current score, current lives, and the new functionality that is being added to the next level.  In order to implement such functionality, a future programmer should adhere to the following steps:
+
+1. Create a new class(es) extending the StatusDisplay class
+2. Populate the previously created class(es) with the desired information for the specific splash screen
+3. Create a Map within ScoreBoard with Integer keys (corresponding to the level that is about to be played) and StatusDisplay values (corresponding to the desired splash screen to be displayed before the corresponding level)
+4. Relay information from the Game class to the ScoreBoard class to display the StatusDisplay object that is mapped to the new level
+5. Include simple, additional logic in the ScoreBoard class to indicate to the Game when the player is ready to move on to the level past the splash screen
+
