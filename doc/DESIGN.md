@@ -1,14 +1,11 @@
 # Simulation Design Final
-### Names
+### Names: Wyatt Focht (wgf6), Hosam Tageldin (jt120)
 
 ## Team Roles and Responsibilities
 
- * Team Member #1
+ * Team Member #1: Wyatt Focht
 
- * Team Member #2
-
- * Team Member #3
-
+ * Team Member #2: Hosam Tageldin
 
 ## Design goals
 
