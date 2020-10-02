@@ -1,15 +1,41 @@
-# Simulation Design Final
+# Game Design Final
 ### Names: Wyatt Focht (wgf6), Hosam Tageldin (jt120)
 
 ## Team Roles and Responsibilities
 
  * Team Member #1: Wyatt Focht
+ 
+ Responsible for the contents of the Level folder (LevelManager,Level and the 
+ subclasses extending Level) and the PowerUp folder (PowerUpManager, PowerUp, and
+ three of the PowerUp subclasses). Also responsible for the downward movement
+ of the blocks found in Level 2. For Level 3, developed the LaserBeam class. 
+ Was also responsible for a good amount of the cheat keys and the Paddle class.
+ Also developed the BlockReader class which reads in all the data regarding
+ the blocks to be formed at a specific level and returns a list of these blocks.
 
  * Team Member #2: Hosam Tageldin
+ 
+ Responsible for the contents of the Block folder and responsible for the Display on the right side of the screen which includes all the player statuses. 
+ Worked a lot with the Ball class, specifically the movement and what happens after a collision.
+ Responsible for creating the Player class which kept track and updated the data regarding the player
+ including score, lives, and the current level. Created the ending screen regarding whether a player
+ lost or won and the final score. Worked on the PowerUpFireBall to test out
+ the ease of adding new PowerUps in our current design. Also worked on the cheat keys and a lot of other
+ features in the Game Class.
 
 ## Design goals
 
 #### What Features are Easy to Add
+
+The design goals that we made were focused on developing a program that allows
+for easy extension of functionality in the future. Adding new powerups and 
+new levels are a very easy feature to add based on the way the code is currently
+implemented. We attempted to make the implementation of new types of Balls and 
+Paddles easy to add by allowing the Game class to work with both a list of 
+Balls and Paddles. This would allow for an easy implementation of a power up
+that creates multiple balls and multiple paddles at the bottom. It is also 
+very easy to add new types of blocks for the game. These features are easy
+to add because of the program's use of extractions.
 
 
 ## High-level Design
@@ -32,7 +58,6 @@ The four classes that were previously mentioned are the most important classes i
 ## Assumptions that Affect the Design
 
 
-
 #### Features Affected by Assumptions
 
 **Main Assumptions**
@@ -43,6 +68,24 @@ The four classes that were previously mentioned are the most important classes i
 Currently, the Game class is equipped with a list of current paddles (myPaddles) and a list of current balls (myBalls).  So, essentially, the two main assumptions in this project are that the first paddle in myPaddles (index 0) and the first ball in myBalls (index 0).  In essence, the program only "cares" about the first values of these lists.  The reason for these assumptions is that the current version of the game does not have any features relating to multiple paddles or multiple balls at a time.  However, we did see the potential for adding in these features, so our team chose to include support for them (i.e. the use of the lists).  But, since there is no functionality associated with having many of these items, we decided to leave out any logic that had to do with integrating them.
 
 As a result of these assumptions, several classes, when accessing myBalls and myPaddles, "know" to access only the first elements of each list.
+
+
+## Plan Changes
+
+#### Differences between Plan and Final Product
+
+We initially had the idea of pressing multiple buttons (Left,Right,Left,Right,
+Down,Up,Down,Up) in order to create a power up. This became different from the 
+final product because the complexity of creating such a power up would have taken
+focus away from the design of our program. We tried to keep the level implementations
+as close as possible to the initial plan, for example, in level 3, the laser
+beams replaced the idea of the falling blocks. Instead of the multiple balls
+power up, our fourth power up was the fiery ball power up. When creating our
+plan we chose that our different types of blocks would require different numbers
+of hits to get destroyed. However, as we were implementing it we decided 
+we can implement something more complicated and ended up going with 
+moving blocks, a power up block and then one block that required more hits
+than the others to get destroyed.
 
 ## New Features HowTo
 
