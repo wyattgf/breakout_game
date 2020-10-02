@@ -1,5 +1,5 @@
 # Game Design Final
-### Names: Wyatt Focht (wgf6), Hosam Tageldin (jt120)
+### Names: Wyatt Focht (wgf6), Hosam Tageldin (ht120)
 
 ## Team Roles and Responsibilities
 
