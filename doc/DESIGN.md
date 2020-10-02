@@ -20,8 +20,7 @@
  Responsible for creating the Player class which kept track and updated the data regarding the player
  including score, lives, and the current level. Created the ending screen regarding whether a player
  lost or won and the final score. Worked on the PowerUpFireBall to test out
- the ease of adding new PowerUps in our current design. Also worked on the cheat keys and a lot of other
- features in the Game Class.
+ the ease of adding new PowerUps in our current design.
 
 ## Design goals
 
