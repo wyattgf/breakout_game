@@ -35,6 +35,14 @@ The four classes that were previously mentioned are the most important classes i
 
 #### Features Affected by Assumptions
 
+**Main Assumptions**
+
+1. Assumes first paddle in list of paddles is the desired paddle
+2. Assumes second ball in list of balls is the desired ball
+
+Currently, the Game class is equipped with a list of current paddles (myPaddles) and a list of current balls (myBalls).  So, essentially, the two main assumptions in this project are that the first paddle in myPaddles (index 0) and the first ball in myBalls (index 0).  In essence, the program only "cares" about the first values of these lists.  The reason for these assumptions is that the current version of the game does not have any features relating to multiple paddles or multiple balls at a time.  However, we did see the potential for adding in these features, so our team chose to include support for them (i.e. the use of the lists).  But, since there is no functionality associated with having many of these items, we decided to leave out any logic that had to do with integrating them.
+
+As a result of these assumptions, several classes, when accessing myBalls and myPaddles, "know" to access only the first elements of each list.
 
 ## New Features HowTo
 
